@@ -1,0 +1,15 @@
+{
+  "name": "rehax-cli",
+  "url" : "https://github.com/rehax-native/rehax-cli",
+  "license": "MIT",
+  "tags": ["cross", "cli"],
+  "description": "CLI for Rehax",
+  "version": "0.0.1",
+  "classPath": "src/",
+  "releasenote": "Alpha release",
+  "contributors": ["Denis"],
+  "dependencies": {
+    "mcli": "0.1.7"
+  },
+  "main": "src.Main"
+}

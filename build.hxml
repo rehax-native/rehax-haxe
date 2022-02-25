@@ -1,0 +1,13 @@
+-p src
+-cpp bin
+-main Main
+-lib mcli
+-lib hxcpp
+
+--resource template/README.md@README.md
+--resource template/src/MyApp.hx@MyApp.hx
+
+--resource template/targets/web/.gitignore@web_.gitignore
+--resource template/targets/web/index.html@web_index.html
+--resource template/targets/web/package.json@web_package.json
+--resource template/targets/web/webpack.config.js@web_webpack.config.js
