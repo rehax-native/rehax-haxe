@@ -70,6 +70,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 920D8A3427C9A2ED00540211 /* Build configuration list for PBXNativeTarget "Rehax Template" */;
 			buildPhases = (
+				927DA14D27C9B1EB006BBC2E /* Build Rehax */,
 				920D8A2027C9A2EB00540211 /* Sources */,
 				920D8A2127C9A2EB00540211 /* Frameworks */,
 				920D8A2227C9A2EB00540211 /* Resources */,
@@ -126,6 +127,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		927DA14D27C9B1EB006BBC2E /* Build Rehax */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rehax";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# cd $(PROJECTROOT)/../.. && echo $(pwd)\ncd $PROJECT_DIR/../.. && haxe -cpp bin/macos\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		920D8A2027C9A2EB00540211 /* Sources */ = {
