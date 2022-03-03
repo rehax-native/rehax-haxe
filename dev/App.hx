@@ -1,0 +1,27 @@
+package dev;
+
+import Type as RunTimeType;
+
+using rehax.components.Components;
+using rehax.Rehax;
+using rehax.Style;
+using dev.LayoutTest;
+
+
+class App extends Component {
+  static function main() {
+    Rehax.mountRoot(new App());
+  }
+
+  public function new() {
+    super();
+  }
+
+  var body = <View size={{ width: Fill, height: Fill }}>
+    <LayoutTest4 />
+  </View>;
+    // <LayoutTest2 />
+    // <LayoutTest3 />
+    // <LayoutTest3 />
+    // <LayoutTest4 />
+}

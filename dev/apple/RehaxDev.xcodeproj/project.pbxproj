@@ -1,0 +1,927 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9264A7C727D0C85A00CEA175 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9264A7C427D0C85A00CEA175 /* main.m */; };
+		9264A7C827D0C85A00CEA175 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A7C627D0C85A00CEA175 /* AppDelegate.mm */; };
+		9264A82527D0DD0700CEA175 /* NativeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A82427D0DD0700CEA175 /* NativeView.h */; };
+		9264A82727D0DD1400CEA175 /* NativeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A82627D0DD1400CEA175 /* NativeView.mm */; };
+		9264A82A27D0DD2900CEA175 /* NativeVectorContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A82827D0DD2900CEA175 /* NativeVectorContainer.h */; };
+		9264A82B27D0DD2900CEA175 /* NativeVectorContainer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A82927D0DD2900CEA175 /* NativeVectorContainer.mm */; };
+		9264A82E27D0DD3400CEA175 /* NativeTextInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A82C27D0DD3300CEA175 /* NativeTextInput.h */; };
+		9264A82F27D0DD3400CEA175 /* NativeTextInput.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A82D27D0DD3400CEA175 /* NativeTextInput.mm */; };
+		9264A83227D0DD3C00CEA175 /* NativeText.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A83027D0DD3C00CEA175 /* NativeText.mm */; };
+		9264A83327D0DD3C00CEA175 /* NativeText.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A83127D0DD3C00CEA175 /* NativeText.h */; };
+		9264A83627D0DD4500CEA175 /* NativeRoot.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A83427D0DD4500CEA175 /* NativeRoot.h */; };
+		9264A83727D0DD4500CEA175 /* NativeRoot.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A83527D0DD4500CEA175 /* NativeRoot.mm */; };
+		9264A83927D0DD4D00CEA175 /* NativeFragment.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A83827D0DD4D00CEA175 /* NativeFragment.h */; };
+		9264A83C27D0DD5400CEA175 /* NativeButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264A83A27D0DD5400CEA175 /* NativeButton.h */; };
+		9264A83D27D0DD5500CEA175 /* NativeButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A83B27D0DD5400CEA175 /* NativeButton.mm */; };
+		9264A83F27D0DE6100CEA175 /* liboutput-debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A83E27D0DE6100CEA175 /* liboutput-debug.a */; };
+		9264A84027D0E08800CEA175 /* libRehaxMacBackend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */; };
+		92A5CD4727D043990048519F /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4627D043990048519F /* Tests_iOS.swift */; };
+		92A5CD4927D043990048519F /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4827D043990048519F /* Tests_iOSLaunchTests.swift */; };
+		92A5CD5327D043990048519F /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD5227D043990048519F /* Tests_macOS.swift */; };
+		92A5CD5527D043990048519F /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD5427D043990048519F /* Tests_macOSLaunchTests.swift */; };
+		92A5CD5A27D043990048519F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
+		92A5CD5B27D043990048519F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9264A80227D0D9B500CEA175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92A5CD2927D043970048519F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9264A7F927D0D95800CEA175;
+			remoteInfo = RehaxMacBackend;
+		};
+		9264A84127D0E08800CEA175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92A5CD2927D043970048519F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9264A7F927D0D95800CEA175;
+			remoteInfo = RehaxMacBackend;
+		};
+		92A5CD4327D043990048519F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92A5CD2927D043970048519F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92A5CD3427D043990048519F;
+			remoteInfo = "RehaxDev (iOS)";
+		};
+		92A5CD4F27D043990048519F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92A5CD2927D043970048519F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92A5CD3A27D043990048519F;
+			remoteInfo = "RehaxDev (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9264A7C427D0C85A00CEA175 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9264A7C527D0C85A00CEA175 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9264A7C627D0C85A00CEA175 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		9264A7F427D0D8E500CEA175 /* libRehaxMacBackend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRehaxMacBackend.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRehaxMacBackend.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9264A82427D0DD0700CEA175 /* NativeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeView.h; path = ../../rehax/components/view/cpp/NativeView.h; sourceTree = "<group>"; };
+		9264A82627D0DD1400CEA175 /* NativeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeView.mm; path = ../../rehax/components/view/cpp/NativeView.mm; sourceTree = "<group>"; };
+		9264A82827D0DD2900CEA175 /* NativeVectorContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeVectorContainer.h; path = ../../rehax/components/vector/cpp/NativeVectorContainer.h; sourceTree = "<group>"; };
+		9264A82927D0DD2900CEA175 /* NativeVectorContainer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeVectorContainer.mm; path = ../../rehax/components/vector/cpp/NativeVectorContainer.mm; sourceTree = "<group>"; };
+		9264A82C27D0DD3300CEA175 /* NativeTextInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeTextInput.h; path = ../../rehax/components/textInput/cpp/NativeTextInput.h; sourceTree = "<group>"; };
+		9264A82D27D0DD3400CEA175 /* NativeTextInput.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeTextInput.mm; path = ../../rehax/components/textInput/cpp/NativeTextInput.mm; sourceTree = "<group>"; };
+		9264A83027D0DD3C00CEA175 /* NativeText.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeText.mm; path = ../../rehax/components/text/cpp/NativeText.mm; sourceTree = "<group>"; };
+		9264A83127D0DD3C00CEA175 /* NativeText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeText.h; path = ../../rehax/components/text/cpp/NativeText.h; sourceTree = "<group>"; };
+		9264A83427D0DD4500CEA175 /* NativeRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeRoot.h; path = ../../rehax/components/root/cpp/NativeRoot.h; sourceTree = "<group>"; };
+		9264A83527D0DD4500CEA175 /* NativeRoot.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeRoot.mm; path = ../../rehax/components/root/cpp/NativeRoot.mm; sourceTree = "<group>"; };
+		9264A83827D0DD4D00CEA175 /* NativeFragment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeFragment.h; path = ../../rehax/components/fragment/cpp/NativeFragment.h; sourceTree = "<group>"; };
+		9264A83A27D0DD5400CEA175 /* NativeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeButton.h; path = ../../rehax/components/button/cpp/NativeButton.h; sourceTree = "<group>"; };
+		9264A83B27D0DD5400CEA175 /* NativeButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeButton.mm; path = ../../rehax/components/button/cpp/NativeButton.mm; sourceTree = "<group>"; };
+		9264A83E27D0DE6100CEA175 /* liboutput-debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboutput-debug.a"; path = "lib/liboutput-debug.a"; sourceTree = "<group>"; };
+		92A5CD3027D043990048519F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		92A5CD3527D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92A5CD3B27D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		92A5CD3D27D043990048519F /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		92A5CD4227D043990048519F /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92A5CD4627D043990048519F /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
+		92A5CD4827D043990048519F /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		92A5CD4E27D043990048519F /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92A5CD5227D043990048519F /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
+		92A5CD5427D043990048519F /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9264A7F827D0D95800CEA175 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3227D043990048519F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3827D043990048519F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9264A83F27D0DE6100CEA175 /* liboutput-debug.a in Frameworks */,
+				9264A84027D0E08800CEA175 /* libRehaxMacBackend.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3F27D043990048519F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD4B27D043990048519F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9264A7F327D0D8E500CEA175 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9264A83E27D0DE6100CEA175 /* liboutput-debug.a */,
+				9264A7F427D0D8E500CEA175 /* libRehaxMacBackend.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9264A81B27D0DC7600CEA175 /* MacBackend */ = {
+			isa = PBXGroup;
+			children = (
+				9264A82427D0DD0700CEA175 /* NativeView.h */,
+				9264A82627D0DD1400CEA175 /* NativeView.mm */,
+				9264A82827D0DD2900CEA175 /* NativeVectorContainer.h */,
+				9264A82927D0DD2900CEA175 /* NativeVectorContainer.mm */,
+				9264A82C27D0DD3300CEA175 /* NativeTextInput.h */,
+				9264A82D27D0DD3400CEA175 /* NativeTextInput.mm */,
+				9264A83127D0DD3C00CEA175 /* NativeText.h */,
+				9264A83027D0DD3C00CEA175 /* NativeText.mm */,
+				9264A83427D0DD4500CEA175 /* NativeRoot.h */,
+				9264A83527D0DD4500CEA175 /* NativeRoot.mm */,
+				9264A83827D0DD4D00CEA175 /* NativeFragment.h */,
+				9264A83A27D0DD5400CEA175 /* NativeButton.h */,
+				9264A83B27D0DD5400CEA175 /* NativeButton.mm */,
+			);
+			name = MacBackend;
+			sourceTree = "<group>";
+		};
+		92A5CD2827D043970048519F = {
+			isa = PBXGroup;
+			children = (
+				9264A81B27D0DC7600CEA175 /* MacBackend */,
+				92A5CD2D27D043970048519F /* Shared */,
+				92A5CD3C27D043990048519F /* macOS */,
+				92A5CD4527D043990048519F /* Tests iOS */,
+				92A5CD5127D043990048519F /* Tests macOS */,
+				92A5CD3627D043990048519F /* Products */,
+				9264A7F327D0D8E500CEA175 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		92A5CD2D27D043970048519F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				92A5CD3027D043990048519F /* Assets.xcassets */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		92A5CD3627D043990048519F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				92A5CD3527D043990048519F /* RehaxDev.app */,
+				92A5CD3B27D043990048519F /* RehaxDev.app */,
+				92A5CD4227D043990048519F /* Tests iOS.xctest */,
+				92A5CD4E27D043990048519F /* Tests macOS.xctest */,
+				9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		92A5CD3C27D043990048519F /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				9264A7C527D0C85A00CEA175 /* AppDelegate.h */,
+				9264A7C627D0C85A00CEA175 /* AppDelegate.mm */,
+				9264A7C427D0C85A00CEA175 /* main.m */,
+				92A5CD3D27D043990048519F /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		92A5CD4527D043990048519F /* Tests iOS */ = {
+			isa = PBXGroup;
+			children = (
+				92A5CD4627D043990048519F /* Tests_iOS.swift */,
+				92A5CD4827D043990048519F /* Tests_iOSLaunchTests.swift */,
+			);
+			path = "Tests iOS";
+			sourceTree = "<group>";
+		};
+		92A5CD5127D043990048519F /* Tests macOS */ = {
+			isa = PBXGroup;
+			children = (
+				92A5CD5227D043990048519F /* Tests_macOS.swift */,
+				92A5CD5427D043990048519F /* Tests_macOSLaunchTests.swift */,
+			);
+			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9264A7F627D0D95800CEA175 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9264A83C27D0DD5400CEA175 /* NativeButton.h in Headers */,
+				9264A82A27D0DD2900CEA175 /* NativeVectorContainer.h in Headers */,
+				9264A82E27D0DD3400CEA175 /* NativeTextInput.h in Headers */,
+				9264A83627D0DD4500CEA175 /* NativeRoot.h in Headers */,
+				9264A83327D0DD3C00CEA175 /* NativeText.h in Headers */,
+				9264A82527D0DD0700CEA175 /* NativeView.h in Headers */,
+				9264A83927D0DD4D00CEA175 /* NativeFragment.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9264A7F927D0D95800CEA175 /* RehaxMacBackend */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9264A7FB27D0D95800CEA175 /* Build configuration list for PBXNativeTarget "RehaxMacBackend" */;
+			buildPhases = (
+				9264A7F627D0D95800CEA175 /* Headers */,
+				9264A7F727D0D95800CEA175 /* Sources */,
+				9264A7F827D0D95800CEA175 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RehaxMacBackend;
+			productName = RehaxMacBackend;
+			productReference = 9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		92A5CD3427D043990048519F /* RehaxDev (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92A5CD5E27D043990048519F /* Build configuration list for PBXNativeTarget "RehaxDev (iOS)" */;
+			buildPhases = (
+				92A5CD3127D043990048519F /* Sources */,
+				92A5CD3227D043990048519F /* Frameworks */,
+				92A5CD3327D043990048519F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RehaxDev (iOS)";
+			productName = "RehaxDev (iOS)";
+			productReference = 92A5CD3527D043990048519F /* RehaxDev.app */;
+			productType = "com.apple.product-type.application";
+		};
+		92A5CD3A27D043990048519F /* RehaxDev (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92A5CD6127D043990048519F /* Build configuration list for PBXNativeTarget "RehaxDev (macOS)" */;
+			buildPhases = (
+				92A5CD6A27D044B20048519F /* Build Rehax */,
+				92A5CD3727D043990048519F /* Sources */,
+				92A5CD3827D043990048519F /* Frameworks */,
+				92A5CD3927D043990048519F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9264A80327D0D9B500CEA175 /* PBXTargetDependency */,
+				9264A84227D0E08800CEA175 /* PBXTargetDependency */,
+			);
+			name = "RehaxDev (macOS)";
+			productName = "RehaxDev (macOS)";
+			productReference = 92A5CD3B27D043990048519F /* RehaxDev.app */;
+			productType = "com.apple.product-type.application";
+		};
+		92A5CD4127D043990048519F /* Tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92A5CD6427D043990048519F /* Build configuration list for PBXNativeTarget "Tests iOS" */;
+			buildPhases = (
+				92A5CD3E27D043990048519F /* Sources */,
+				92A5CD3F27D043990048519F /* Frameworks */,
+				92A5CD4027D043990048519F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				92A5CD4427D043990048519F /* PBXTargetDependency */,
+			);
+			name = "Tests iOS";
+			productName = "Tests iOS";
+			productReference = 92A5CD4227D043990048519F /* Tests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		92A5CD4D27D043990048519F /* Tests macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92A5CD6727D043990048519F /* Build configuration list for PBXNativeTarget "Tests macOS" */;
+			buildPhases = (
+				92A5CD4A27D043990048519F /* Sources */,
+				92A5CD4B27D043990048519F /* Frameworks */,
+				92A5CD4C27D043990048519F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				92A5CD5027D043990048519F /* PBXTargetDependency */,
+			);
+			name = "Tests macOS";
+			productName = "Tests macOS";
+			productReference = 92A5CD4E27D043990048519F /* Tests macOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		92A5CD2927D043970048519F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					9264A7F927D0D95800CEA175 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					92A5CD3427D043990048519F = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					92A5CD3A27D043990048519F = {
+						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
+					};
+					92A5CD4127D043990048519F = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 92A5CD3427D043990048519F;
+					};
+					92A5CD4D27D043990048519F = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 92A5CD3A27D043990048519F;
+					};
+				};
+			};
+			buildConfigurationList = 92A5CD2C27D043970048519F /* Build configuration list for PBXProject "RehaxDev" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 92A5CD2827D043970048519F;
+			productRefGroup = 92A5CD3627D043990048519F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				92A5CD3427D043990048519F /* RehaxDev (iOS) */,
+				92A5CD3A27D043990048519F /* RehaxDev (macOS) */,
+				92A5CD4127D043990048519F /* Tests iOS */,
+				92A5CD4D27D043990048519F /* Tests macOS */,
+				9264A7F927D0D95800CEA175 /* RehaxMacBackend */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		92A5CD3327D043990048519F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92A5CD5A27D043990048519F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3927D043990048519F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92A5CD5B27D043990048519F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD4027D043990048519F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD4C27D043990048519F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		92A5CD6A27D044B20048519F /* Build Rehax */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rehax";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ../.. && haxe -lib hxcpp -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE \n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9264A7F727D0D95800CEA175 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9264A82727D0DD1400CEA175 /* NativeView.mm in Sources */,
+				9264A83727D0DD4500CEA175 /* NativeRoot.mm in Sources */,
+				9264A83D27D0DD5500CEA175 /* NativeButton.mm in Sources */,
+				9264A83227D0DD3C00CEA175 /* NativeText.mm in Sources */,
+				9264A82F27D0DD3400CEA175 /* NativeTextInput.mm in Sources */,
+				9264A82B27D0DD2900CEA175 /* NativeVectorContainer.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3127D043990048519F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3727D043990048519F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9264A7C827D0C85A00CEA175 /* AppDelegate.mm in Sources */,
+				9264A7C727D0C85A00CEA175 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD3E27D043990048519F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92A5CD4927D043990048519F /* Tests_iOSLaunchTests.swift in Sources */,
+				92A5CD4727D043990048519F /* Tests_iOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92A5CD4A27D043990048519F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92A5CD5527D043990048519F /* Tests_macOSLaunchTests.swift in Sources */,
+				92A5CD5327D043990048519F /* Tests_macOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9264A80327D0D9B500CEA175 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9264A7F927D0D95800CEA175 /* RehaxMacBackend */;
+			targetProxy = 9264A80227D0D9B500CEA175 /* PBXContainerItemProxy */;
+		};
+		9264A84227D0E08800CEA175 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9264A7F927D0D95800CEA175 /* RehaxMacBackend */;
+			targetProxy = 9264A84127D0E08800CEA175 /* PBXContainerItemProxy */;
+		};
+		92A5CD4427D043990048519F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92A5CD3427D043990048519F /* RehaxDev (iOS) */;
+			targetProxy = 92A5CD4327D043990048519F /* PBXContainerItemProxy */;
+		};
+		92A5CD5027D043990048519F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92A5CD3A27D043990048519F /* RehaxDev (macOS) */;
+			targetProxy = 92A5CD4F27D043990048519F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9264A7FC27D0D95800CEA175 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9264A7FD27D0D95800CEA175 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		92A5CD5C27D043990048519F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		92A5CD5D27D043990048519F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		92A5CD5F27D043990048519F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
+				PRODUCT_NAME = RehaxDev;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		92A5CD6027D043990048519F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
+				PRODUCT_NAME = RehaxDev;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		92A5CD6227D043990048519F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/lib/haxe/lib/hxcpp/4,2,1/include",
+					$SRCROOT/lib/include,
+					$SRCROOT/../..,
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-L$(SRCROOT)/lib",
+					"-loutput-debug",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
+				PRODUCT_NAME = RehaxDev;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		92A5CD6327D043990048519F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/lib/haxe/lib/hxcpp/4,2,1/include",
+					$SRCROOT/lib/include,
+					$SRCROOT/../..,
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-L$(SRCROOT)/lib",
+					"-loutput-debug",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
+				PRODUCT_NAME = RehaxDev;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		92A5CD6527D043990048519F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "RehaxDev (iOS)";
+			};
+			name = Debug;
+		};
+		92A5CD6627D043990048519F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "RehaxDev (iOS)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		92A5CD6827D043990048519F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "RehaxDev (macOS)";
+			};
+			name = Debug;
+		};
+		92A5CD6927D043990048519F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "RehaxDev (macOS)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9264A7FB27D0D95800CEA175 /* Build configuration list for PBXNativeTarget "RehaxMacBackend" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9264A7FC27D0D95800CEA175 /* Debug */,
+				9264A7FD27D0D95800CEA175 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92A5CD2C27D043970048519F /* Build configuration list for PBXProject "RehaxDev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92A5CD5C27D043990048519F /* Debug */,
+				92A5CD5D27D043990048519F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92A5CD5E27D043990048519F /* Build configuration list for PBXNativeTarget "RehaxDev (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92A5CD5F27D043990048519F /* Debug */,
+				92A5CD6027D043990048519F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92A5CD6127D043990048519F /* Build configuration list for PBXNativeTarget "RehaxDev (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92A5CD6227D043990048519F /* Debug */,
+				92A5CD6327D043990048519F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92A5CD6427D043990048519F /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92A5CD6527D043990048519F /* Debug */,
+				92A5CD6627D043990048519F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92A5CD6727D043990048519F /* Build configuration list for PBXNativeTarget "Tests macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92A5CD6827D043990048519F /* Debug */,
+				92A5CD6927D043990048519F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 92A5CD2927D043970048519F /* Project object */;
+}
