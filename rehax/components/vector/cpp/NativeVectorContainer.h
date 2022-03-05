@@ -6,24 +6,24 @@
 class NativeVectorContainer : public NativeView
 {
 public:
-  void createFragment() override;
+  RHX_EXPORT void createFragment() override;
 
-  void setDrawCallback(std::function<void(void)> cb);
+  RHX_EXPORT void setDrawCallback(std::function<void(void)> cb);
 
-  void setFillColor();
-  void setStrokeColor();
+  RHX_EXPORT void setFillColor();
+  RHX_EXPORT void setStrokeColor();
 
-  void beginPath();
-  void pathHorizontalTo(float x);
-  void pathVerticalTo(float y);
-  void pathMoveTo(float x, float y);
-  void pathMoveBy(float x, float y);
-  void pathLineTo(float x, float y);
-  void pathArc(float rx, float ry, float xAxisRotation, int largeArcFlag, int sweepFlag, float x, float y);
-  void pathCubicBezier(float x1, float y1, float x2, float y2, float x, float y);
-  void pathQuadraticBezier(float x1, float y1, float x, float y);
-  void pathClose();
-  void pathStroke(float width, int capsStyle, int joinStyle);
-  void pathFill();
-  void endPath();
+  RHX_EXPORT void beginPath();
+  RHX_EXPORT void pathHorizontalTo(float x);
+  RHX_EXPORT void pathVerticalTo(float y);
+  RHX_EXPORT void pathMoveTo(float x, float y);
+  RHX_EXPORT void pathMoveBy(float x, float y);
+  RHX_EXPORT void pathLineTo(float x, float y);
+  RHX_EXPORT void pathArc(float rx, float ry, float xAxisRotation, int largeArcFlag, int sweepFlag, float x, float y);
+  RHX_EXPORT void pathCubicBezier(float x1, float y1, float x2, float y2, float x, float y);
+  RHX_EXPORT void pathQuadraticBezier(float x1, float y1, float x, float y);
+  RHX_EXPORT void pathClose();
+  RHX_EXPORT void pathStroke(float width, int capsStyle, int joinStyle);
+  RHX_EXPORT void pathFill();
+  RHX_EXPORT void endPath();
 };
