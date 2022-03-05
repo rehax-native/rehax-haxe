@@ -16,3 +16,7 @@ void NativeButton::setTextColor(NativeColor color)
 
 void NativeButton::addView(NativeView * child)
 {}
+
+void NativeButton::setOnClick(std::function<void(void)> onClick)
+{
+}

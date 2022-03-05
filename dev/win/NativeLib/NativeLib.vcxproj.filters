@@ -33,6 +33,12 @@
     <ClInclude Include="..\..\..\rehax\components\text\cpp\NativeText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\rehax\components\textInput\cpp\NativeTextInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\rehax\components\vector\cpp\NativeVectorContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -48,6 +54,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\rehax\components\view\cpp\NativeView.win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\rehax\components\textInput\cpp\NativeTextInput.win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\rehax\components\vector\cpp\NativeVectorContainer.win.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

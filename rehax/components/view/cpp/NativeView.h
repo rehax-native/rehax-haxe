@@ -12,21 +12,21 @@ struct NativePosition
 {
   float x;
   float y;
-  static NativePosition create(float x, float y);
+  RHX_EXPORT static NativePosition create(float x, float y);
 };
 
 struct NativeSize
 {
   float width;
   float height;
-  static NativeSize create(float width, float height);
+  RHX_EXPORT static NativeSize create(float width, float height);
 };
 
 struct NativeFrame
 {
   NativePosition position;
   NativeSize size;
-  static NativeFrame create(NativePosition position, NativeSize size);
+  RHX_EXPORT static NativeFrame create(NativePosition position, NativeSize size);
 };
 
 struct NativeColor
@@ -35,7 +35,7 @@ struct NativeColor
   float g;
   float b;
   float a;
-  static NativeColor create(float r, float g, float b, float a);
+  RHX_EXPORT static NativeColor create(float r, float g, float b, float a);
 };
 
 class NativeView

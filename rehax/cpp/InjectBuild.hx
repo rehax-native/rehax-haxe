@@ -26,6 +26,7 @@ class InjectBuild {
 		var compilerFlags = ['<compilerflag value="-std=c++20" />'];
 		if (location != null && location.length > 0) {
 			compilerFlags.push('<compilerflag value="-I$location" />');
+			compilerFlags.push('<compilerflag value="/MDd" />');
 		} else {
 			trace("REHAX_INCLUDE not defined. This is necessary in order to compile rehax for cpp");
 		}

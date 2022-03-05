@@ -24,7 +24,7 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowsProject3.h">
+    <ClInclude Include="RehaxWindows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

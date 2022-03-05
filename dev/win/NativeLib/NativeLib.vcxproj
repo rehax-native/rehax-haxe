@@ -149,7 +149,8 @@
     <ClInclude Include="..\..\..\rehax\components\fragment\cpp\NativeFragment.h" />
     <ClInclude Include="..\..\..\rehax\components\root\cpp\NativeRoot.h" />
     <ClInclude Include="..\..\..\rehax\components\text\cpp\NativeText.h" />
-    <!-- <ClInclude Include="..\..\..\rehax\components\text\cpp\NativeTextInput.h" /> -->
+    <ClInclude Include="..\..\..\rehax\components\textInput\cpp\NativeTextInput.h" />
+    <ClInclude Include="..\..\..\rehax\components\vector\cpp\NativeVectorContainer.h" />
     <ClInclude Include="..\..\..\rehax\components\view\cpp\NativeView.h" />
     <ClInclude Include="framework.h" />
   </ItemGroup>
@@ -161,6 +162,8 @@
     <ClCompile Include="..\..\..\rehax\components\button\cpp\NativeButton.win.cpp" />
     <ClCompile Include="..\..\..\rehax\components\root\cpp\NativeRoot.win.cpp" />
     <ClCompile Include="..\..\..\rehax\components\text\cpp\NativeText.win.cpp" />
+    <ClCompile Include="..\..\..\rehax\components\textInput\cpp\NativeTextInput.win.cpp" />
+    <ClCompile Include="..\..\..\rehax\components\vector\cpp\NativeVectorContainer.win.cpp" />
     <ClCompile Include="..\..\..\rehax\components\view\cpp\NativeView.win.cpp" />
     <ClCompile Include="dllmain.cpp" />
   </ItemGroup>

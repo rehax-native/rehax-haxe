@@ -81,7 +81,8 @@ int initWindows()
     // LoadStringW(hInstance, IDC_WINDOWSPROJECT3, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    winrt::init_apartment(apartment_type::single_threaded);
+    // Usually we would have to do this, but seems like haxe is doing for us when we compile with -win_rt
+    // winrt::init_apartment(apartment_type::single_threaded);
     std::cout << "Apartment inited" << std::endl;
 
     desktopXamlSource = DesktopWindowXamlSource();

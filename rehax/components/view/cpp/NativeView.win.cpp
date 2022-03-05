@@ -46,16 +46,46 @@ void NativeView::removeView(NativeView *child)
 void NativeView::removeFromParent()
 {}
 
+void NativeView::setWidthFill()
+{}
+
+void NativeView::setHeightFill()
+{}
+
+void NativeView::setWidthNatural()
+{}
+
+void NativeView::setHeightNatural()
+{}
+
 void NativeView::setWidthFixed(float width)
 {}
 
 void NativeView::setHeightFixed(float height)
 {}
 
-void NativeView::setWidthFill()
+void NativeView::setWidthPercentage(float percent)
 {}
 
-void NativeView::setHeightFill()
+void NativeView::setHeightPercentage(float percent)
+{}
+
+void NativeView::setWidthFlex(float flex, float totalFlex)
+{}
+
+void NativeView::setHeightFlex(float flex, float totalFlex)
+{}
+
+void NativeView::setVerticalPositionNatural(NativeView *previousView)
+{}
+
+void NativeView::setHorizontalPositionNatural(NativeView *previousView)
+{}
+
+void NativeView::setVerticalPositionFixed(float x)
+{}
+
+void NativeView::setHorizontalPositionFixed(float y)
 {}
 
 void NativeView::setBackgroundColor(NativeColor color)
