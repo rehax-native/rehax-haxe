@@ -1,0 +1,4 @@
+-p ../..
+-main dev.App
+-lib haxe-loader
+-js out.js
