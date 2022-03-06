@@ -14,9 +14,19 @@ enum StrokeLineJoin {
   Bevel;
 }
 
+typedef GradientDefintion = {
+  var name:String;
+  var stops:Array<{
+    var offset:Float;
+    var color:Color;
+  }>;
+}
+
 enum VectorStyleProperty {
   Fill(color:Color);
   Stroke(color:Color);
+  FillWithDefinition(name:String);
+  StrokeWithDefinition(name:String);
   StrokeWidth(width:Float);
   StrokeLineCap(cap:StrokeLineCap);
   StrokeLineJoin(join:StrokeLineJoin);

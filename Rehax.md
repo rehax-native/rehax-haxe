@@ -113,8 +113,8 @@ On web it uses <svg> elements.
 | Stroke Line Join round  | done | done |     |     |         |
 | Stroke Line Join bevel  | done | done |     |     |         |
 | Text                    |      |      |     |     |         |
-| Linear gradients        |      |      |     |     |         |
-| Radial gradients        |      |      |     |     |         |
+| Linear gradients        | done |      |     |     |         |
+| Radial gradients        | done |      |     |     |         |
 | Pattern                 |      |      |     |     |         |
 | Polygon                 |      |      |     |     |         |
 | Polyline                |      |      |     |     |         |
