@@ -5,12 +5,12 @@
 class NativeText : public NativeView
 {
 public:
-  void createFragment() override;
+  RHX_EXPORT void createFragment() override;
   // void mount(NativeView *parent) override;
 
-  void setText(const char *text);
-  const char *getText();
+  RHX_EXPORT void setText(const char *text);
+  RHX_EXPORT const char *getText();
 
-  void setTextColor(NativeColor color);
-  void addView(NativeView *child) override;
+  RHX_EXPORT void setTextColor(NativeColor color);
+  RHX_EXPORT void addView(NativeView *child) override;
 };

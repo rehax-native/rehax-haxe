@@ -5,11 +5,11 @@
 class NativeFragment : public NativeView
 {
 public:
-  void createFragment() override
+  RHX_EXPORT void createFragment() override
   {
   }
 
-  void mount(NativeView *parent) override
+  RHX_EXPORT void mount(NativeView *parent) override
   {
   }
 };
