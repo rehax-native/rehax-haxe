@@ -11,6 +11,8 @@ public:
   RHX_EXPORT void setText(const char *text);
   RHX_EXPORT const char *getText();
 
+  RHX_EXPORT void setPlaceholder(const char *text);
+
   RHX_EXPORT void setTextColor(NativeColor color);
   RHX_EXPORT void addView(NativeView *child) override;
 };

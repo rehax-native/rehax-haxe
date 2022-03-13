@@ -7,7 +7,6 @@ using rehax.Rehax;
 using rehax.Style;
 using dev.LayoutTest;
 
-
 class App extends Component {
   static function main() {
     Rehax.mountRoot(new App());
@@ -17,9 +16,19 @@ class App extends Component {
     super();
   }
 
-  var body = <View size={{ width: Fill, height: Fill }}>
-    <LayoutTest4 />
+  var email = "";
+  // var body = <Text text={"Hey there"} />;
+  var body = <View>
+    Email
+    <TextInput text={email} placeholder={"Email"} />
+
+    <Button text={"Login"} onClick={() -> trace("OK")} />
   </View>;
+    // <Button text={"General Kenobi"} />;
+
+  // var body = <View size={{ width: Fill, height: Fill }}>
+  //   <LayoutTest4 />
+  // </View>;
     // <LayoutTest2 />
     // <LayoutTest3 />
     // <LayoutTest3 />
