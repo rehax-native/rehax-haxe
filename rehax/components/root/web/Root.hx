@@ -10,7 +10,7 @@ import js.html.DOMElement;
 using Root.ElementStyleExtender;
 
 class ElementStyleExtender {
-  static public function setElementStyle(el:DOMElement, style:Style) {
+  static public function setElementStyle(el:Element, style:Style) {
     for (item in style) {
       switch (item) {
         case backgroundColor(color):

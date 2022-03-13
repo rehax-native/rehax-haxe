@@ -6,6 +6,7 @@ using rehax.components.Components;
 using rehax.Rehax;
 using rehax.Style;
 using dev.LayoutTest;
+using dev.VectorTest;
 
 class App extends Component {
   static function main() {
@@ -29,6 +30,11 @@ class App extends Component {
   // var body = <View size={{ width: Fill, height: Fill }}>
   //   <LayoutTest4 />
   // </View>;
+  // var body = <View size={{ width: Fill, height: Fill }}>
+  //   <HeartShape />
+  // </View>;
+    // <LayoutTest4 />
+
     // <LayoutTest2 />
     // <LayoutTest3 />
     // <LayoutTest3 />

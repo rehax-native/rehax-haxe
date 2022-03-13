@@ -40,6 +40,10 @@ class VectorElement extends View {
             case Bevel:
               el.setAttribute('stroke-linejoin', 'bevel');
           }
+        case FillWithDefinition(name):
+          el.setAttribute('fill', 'url(\'#$name\')');
+        case StrokeWithDefinition(name):
+          el.setAttribute('stroke', 'url(\'#$name\')');
       }
     }
     return styles;

@@ -112,7 +112,7 @@ class View {
 
   public function set_style(style:rehax.Style):rehax.Style {
     this.style = style;
-    var el = cast(element, js.html.DOMElement);
+    var el = cast(element, js.html.Element);
     el.setElementStyle(style);
     return style;
   }
@@ -125,7 +125,7 @@ class View {
 
   public function set_size(size:Size):Size {
     this.size = size;
-    var el = cast(element, js.html.Element);
+    var el = cast(element, js.html.DOMElement);
     el.style.flexGrow = '';
     switch (size.width) {
       case Natural:
@@ -173,7 +173,7 @@ class View {
 
   public function set_position(position:Position):Position {
     this.position = position;
-    var el = cast(element, js.html.Element);
+    var el = cast(element, js.html.DOMElement);
     switch (position.left) {
       case Natural:
         el.style.position = '';
@@ -202,7 +202,7 @@ class View {
   }
 
   public function get_frame():Frame {
-    var el = cast(element, js.html.Element);
+    var el = cast(element, js.html.DOMElement);
     return {
       position: position,
       size: size,
