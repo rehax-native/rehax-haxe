@@ -1,94 +1,288 @@
 #include "NativeVectorContainer.h"
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface NativeVectorView : NSView
+CAShapeLayer * getShapeAtIndex(CALayer * layer, int index)
 {
-@public
-  std::function<void(void)> drawCallback;
-  NSBezierPath * path;
-  float currentX, currentY;
+  CAGradientLayer * gradientLayer = (CAGradientLayer *) layer.sublayers[index];
+  CAShapeLayer * shapeLayer = (CAShapeLayer *) gradientLayer.mask;
+  return shapeLayer;
 }
 
-- (void)drawRect:(NSRect)aRect;
-- (BOOL)isFlipped;
-@end
-
-@implementation NativeVectorView
-- (void)drawRect:(NSRect)aRect
+CGMutablePathRef getPathAtIndex(CALayer * layer, int index)
 {
-  drawCallback();
+  CAShapeLayer * shapeLayer = getShapeAtIndex(layer, index);
+  CGMutablePathRef path = (CGMutablePathRef) shapeLayer.path;
+  return path;
 }
-- (BOOL)isFlipped {
-    return YES;
-}
-@end
-
 
 void NativeVectorContainer::createFragment() {
-  NativeVectorView * view = [NativeVectorView new];
-  // [view setFrame:NSMakeRect(0, 0, 200, 200)];
-  // [view setStringValue:@""];
-  // view.editable = YES;
-  // view.bezeled = NO;
-  // [view setBackgroundColor:[NSColor clearColor]];
-  // [view sizeToFit];
-  // // [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-  nativeView = (void *) CFBridgingRetain(view);
+  NativeView::createFragment();
+  NSView * view = (__bridge NSView *) nativeView;
+  view.layer = [CALayer layer];
+  view.layer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
 }
 
-void NativeVectorContainer::setDrawCallback(std::function<void(void)> cb)
+void NativeVectorContainer::addView(NativeView *child)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  view->drawCallback = cb;
+  NSView * view = (__bridge NSView *) nativeView;
+  CALayer * childView = (__bridge CALayer *) child->nativeView;
+  childView.frame = view.layer.bounds;
+  [view.layer addSublayer:childView];
 }
 
-void NativeVectorContainer::beginPath()
+
+void NativeVectorElement::setWidthNatural()
+{}
+
+void NativeVectorElement::setHeightNatural()
+{}
+
+void NativeVectorElement::setVerticalPositionNatural(NativeView *previousView)
+{}
+
+void NativeVectorElement::setHorizontalPositionNatural(NativeView *previousView)
+{}
+
+void NativeVectorElement::setLineWidth(float width)
 {
-  NSLog(@"Begin path");
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  view->path = [NSBezierPath bezierPath];
-  view->currentX = 0;
-  view->currentY = 0;
-  // [view->path setFlatness:100];
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAShapeLayer * shapeLayer = getShapeAtIndex(layer, 1);
+  shapeLayer.lineWidth = width;
 }
 
-void NativeVectorContainer::pathHorizontalTo(float x)
+void NativeVectorElement::setLineCap(int capsStyle)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path lineToPoint:NSMakePoint(x, view->currentY)];
-  view->currentX = x;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAShapeLayer * shapeLayer = getShapeAtIndex(layer, 1);
+  switch(capsStyle) {
+    case 0:
+      shapeLayer.lineCap = kCALineCapButt;
+      break;
+    case 1:
+      shapeLayer.lineCap = kCALineCapSquare;
+      break;
+    case 2:
+      shapeLayer.lineCap = kCALineCapRound;
+      break;
+  }
 }
 
-void NativeVectorContainer::pathVerticalTo(float y)
+void NativeVectorElement::setLineJoin(int joinStyle)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path lineToPoint:NSMakePoint(view->currentX, y)];
-  view->currentY = y;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAShapeLayer * shapeLayer = getShapeAtIndex(layer, 1);
+  switch(joinStyle) {
+    case 0:
+      shapeLayer.lineJoin = kCALineJoinMiter;
+      break;
+    case 1:
+      shapeLayer.lineJoin = kCALineJoinRound;
+      break;
+    case 2:
+      shapeLayer.lineJoin = kCALineJoinBevel;
+      break;
+  }
 }
 
-void NativeVectorContainer::pathMoveTo(float x, float y)
+void NativeVectorElement::setStrokeColor(NativeColor color)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path moveToPoint:NSMakePoint(x, y)];
-  view->currentX = x;
-  view->currentY = y;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAGradientLayer * strokeLayer = (CAGradientLayer *) layer.sublayers[1];
+  strokeLayer.colors = @[
+    (__bridge id) [NSColor colorWithRed:color.r/255.0 green:color.g/255.0 blue:color.b/255.0 alpha:color.a].CGColor,
+    (__bridge id) [NSColor colorWithRed:color.r/255.0 green:color.g/255.0 blue:color.b/255.0 alpha:color.a].CGColor,
+  ];
 }
 
-void NativeVectorContainer::pathMoveBy(float x, float y)
+void NativeVectorElement::setFillColor(NativeColor color)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  view->currentX += x;
-  view->currentY += y;
-  [view->path moveToPoint:NSMakePoint(view->currentX, view->currentY)];
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAGradientLayer * fillLayer = (CAGradientLayer *) layer.sublayers[0];
+  fillLayer.colors = @[
+    (__bridge id) [NSColor colorWithRed:color.r/255.0 green:color.g/255.0 blue:color.b/255.0 alpha:color.a].CGColor,
+    (__bridge id) [NSColor colorWithRed:color.r/255.0 green:color.g/255.0 blue:color.b/255.0 alpha:color.a].CGColor,
+  ];
+  fillLayer.frame = layer.bounds;
 }
 
-void NativeVectorContainer::pathLineTo(float x, float y)
+void NativeVectorElement::setFillGradient(NativeGradient gradient)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path lineToPoint:NSMakePoint(x, y)];
-  view->currentX = x;
-  view->currentY = y;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAGradientLayer * fillLayer = (CAGradientLayer *) layer.sublayers[0];
+  NSMutableArray * colorArr = [NSMutableArray array];
+  NSMutableArray * locationArr = [NSMutableArray array];
+  for (auto stop : gradient.stops) {
+    [colorArr addObject:(__bridge id) [NSColor colorWithRed:stop.color.r/255.0 green:stop.color.g/255.0 blue:stop.color.b/255.0 alpha:stop.color.a].CGColor];
+    [locationArr addObject:[NSNumber numberWithFloat:stop.offset]];
+  }
+  fillLayer.startPoint = CGPointMake(0.02, 0);
+  fillLayer.endPoint = CGPointMake(0.15, 0);
+  
+  fillLayer.colors = [NSArray arrayWithArray:colorArr];
+  fillLayer.locations = [NSArray arrayWithArray:locationArr];
+  fillLayer.frame = layer.bounds;
+}
+
+void NativeVectorElement::setStrokeGradient(NativeGradient gradient)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CAGradientLayer * strokeLayer = (CAGradientLayer *) layer.sublayers[1];
+  NSMutableArray * colorArr = [NSMutableArray array];
+  NSMutableArray * locationArr = [NSMutableArray array];
+  for (auto stop : gradient.stops) {
+    [colorArr addObject:(__bridge id) [NSColor colorWithRed:stop.color.r/255.0 green:stop.color.g/255.0 blue:stop.color.b/255.0 alpha:stop.color.a].CGColor];
+    [locationArr addObject:[NSNumber numberWithFloat:stop.offset]];
+  }
+  strokeLayer.startPoint = CGPointMake(0.02, 0);
+  strokeLayer.endPoint = CGPointMake(0.15, 0);
+  
+  strokeLayer.colors = [NSArray arrayWithArray:colorArr];
+  strokeLayer.locations = [NSArray arrayWithArray:locationArr];
+  strokeLayer.frame = layer.bounds;
+}
+
+
+void NativeVectorCircle::createFragment()
+{
+  CALayer * layer = [CALayer layer];
+  layer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  CAGradientLayer * fillGradientLayer = [CAGradientLayer layer];
+  fillGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(5, 5, 90.0, 90.0), nullptr);
+  CAShapeLayer * fillLayer = [CAShapeLayer layer];
+  fillLayer.path = path;
+  fillLayer.fillColor = [NSColor whiteColor].CGColor;
+  
+  fillLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  fillGradientLayer.mask = fillLayer;
+  
+  CAGradientLayer * strokeGradientLayer = [CAGradientLayer layer];
+  strokeGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  path = CGPathCreateWithEllipseInRect(CGRectMake(5, 5, 90.0, 90.0), nullptr);
+  CAShapeLayer * strokeLayer = [CAShapeLayer layer];
+  strokeLayer.path = path;
+  strokeLayer.fillColor = [NSColor clearColor].CGColor;
+  strokeLayer.strokeColor = [NSColor whiteColor].CGColor;
+  
+  strokeLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  strokeGradientLayer.mask = strokeLayer;
+  
+  [layer addSublayer:fillGradientLayer];
+  [layer addSublayer:strokeGradientLayer];
+  
+  nativeView = (__bridge void *) layer;
+}
+
+void NativeVectorCircle::setCenterX(float cx)
+{}
+
+void NativeVectorCircle::setCenterY(float cy)
+{}
+
+void NativeVectorCircle::setRadius(float r)
+{}
+
+
+void NativeVectorPath::createFragment()
+{
+  CALayer * layer = [CALayer layer];
+  layer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  CAGradientLayer * fillGradientLayer = [CAGradientLayer layer];
+  fillGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  CGPathRef path = CGPathCreateMutable();
+  CAShapeLayer * fillLayer = [CAShapeLayer layer];
+  fillLayer.path = path;
+  fillLayer.fillColor = [NSColor whiteColor].CGColor;
+  fillLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  fillGradientLayer.mask = fillLayer;
+  
+  CAGradientLayer * strokeGradientLayer = [CAGradientLayer layer];
+  
+  path = CGPathCreateMutable();
+  CAShapeLayer * strokeLayer = [CAShapeLayer layer];
+  strokeLayer.path = path;
+  strokeLayer.fillColor = [NSColor clearColor].CGColor;
+  strokeLayer.strokeColor = [NSColor whiteColor].CGColor;
+  strokeLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  
+  strokeGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  strokeGradientLayer.mask = strokeLayer;
+  
+  [layer addSublayer:fillGradientLayer];
+  [layer addSublayer:strokeGradientLayer];
+  
+  nativeView = (__bridge void *) layer;
+}
+
+void NativeVectorPath::beginPath()
+{
+}
+
+void NativeVectorPath::pathHorizontalTo(float x)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  
+  CGMutablePathRef path = getPathAtIndex(layer, 0);
+  CGPoint p = CGPathGetCurrentPoint(path);
+  CGPathAddLineToPoint(path, nullptr, x, p.y);
+  
+  path = getPathAtIndex(layer, 1);
+  p = CGPathGetCurrentPoint(path);
+  CGPathAddLineToPoint(path, nullptr, x, p.y);
+}
+
+void NativeVectorPath::pathVerticalTo(float y)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path = getPathAtIndex(layer, 0);
+  
+  CGPoint p = CGPathGetCurrentPoint(path);
+  CGPathAddLineToPoint(path, nullptr, p.x, y);
+  
+  path = getPathAtIndex(layer, 1);
+  p = CGPathGetCurrentPoint(path);
+  CGPathAddLineToPoint(path, nullptr, p.x, y);
+}
+
+void NativeVectorPath::pathMoveTo(float x, float y)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path = getPathAtIndex(layer, 0);
+  CGPathMoveToPoint(path, nullptr, x, y);
+  
+  path = getPathAtIndex(layer, 1);
+  CGPathMoveToPoint(path, nullptr, x, y);
+}
+
+void NativeVectorPath::pathMoveBy(float x, float y)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path = getPathAtIndex(layer, 0);
+  
+  CGPoint p = CGPathGetCurrentPoint(path);
+  CGPathMoveToPoint(path, nullptr, p.x + x, p.y + y);
+  
+  path = getPathAtIndex(layer, 1);
+  p = CGPathGetCurrentPoint(path);
+  CGPathMoveToPoint(path, nullptr, p.x + x, p.y + y);
+}
+
+void NativeVectorPath::pathLineTo(float x, float y)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path = getPathAtIndex(layer, 0);
+  CGPathAddLineToPoint(path, nullptr, x, y);
+  
+  path = getPathAtIndex(layer, 1);
+  CGPathAddLineToPoint(path, nullptr, x, y);
 }
 
 static double vectorAngle(double ux, double uy, double vx, double vy)
@@ -97,17 +291,17 @@ static double vectorAngle(double ux, double uy, double vx, double vy)
   const double umag = sqrt(ux * ux + uy * uy);
   const double vmag = sqrt(ux * ux + uy * uy);
   const double dot = ux * vx + uy * vy;
-
+  
   double div = dot / (umag * vmag);
-
+  
   if (div > 1) {
-      div = 1;
+    div = 1;
   }
-
+  
   if (div < -1) {
-      div = -1;
+    div = -1;
   }
-
+  
   return sign * acos(div);
 }
 
@@ -115,19 +309,23 @@ static CGPoint mapToEllipse(double x, double y, double rx, double ry, double cos
 {
   x *= rx;
   y *= ry;
-
+  
   const double xp = cosphi * x - sinphi * y;
   const double yp = sinphi * x + cosphi * y;
-
+  
   return CGPointMake((CGFloat)(xp + centerx), (CGFloat)(yp + centery));
 }
 
-void NativeVectorContainer::pathArc(float rx, float ry, float xAxisRotation, int largeArcFlag, int sweepFlag, float endX, float endY)
+void NativeVectorPath::pathArc(float rx, float ry, float xAxisRotation, int largeArcFlag, int sweepFlag, float endX, float endY)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-
-  double const px = view->currentX;
-  double const py = view->currentY;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path1 = getPathAtIndex(layer, 0);
+  CGMutablePathRef path2 = getPathAtIndex(layer, 1);
+  
+  CGPoint p = CGPathGetCurrentPoint(path1);
+  
+  double const px = p.x;
+  double const py = p.y;
   double const cx = endX;
   double const cy = endY;
   
@@ -140,7 +338,7 @@ void NativeVectorContainer::pathArc(float rx, float ry, float xAxisRotation, int
   const double pyp = -sinphi * (px - cx) / 2 + cosphi * (py - cy) / 2;
   
   if (pxp == 0 && pyp == 0) {
-      return;
+    return;
   }
   
   rx = abs(rx);
@@ -149,8 +347,8 @@ void NativeVectorContainer::pathArc(float rx, float ry, float xAxisRotation, int
   const double lambda = (CGFloat) (pow(pxp, 2) / pow(rx, 2) + pow(pyp, 2) / pow(ry, 2));
   
   if (lambda > 1) {
-      rx *= sqrt(lambda);
-      ry *= sqrt(lambda);
+    rx *= sqrt(lambda);
+    ry *= sqrt(lambda);
   }
   
   const double rxsq =  pow(rx, 2);
@@ -161,7 +359,7 @@ void NativeVectorContainer::pathArc(float rx, float ry, float xAxisRotation, int
   double radicant = (rxsq * rysq) - (rxsq * pypsq) - (rysq * pxpsq);
   
   if (radicant < 0) {
-      radicant = 0;
+    radicant = 0;
   }
   
   radicant /= (rxsq * pypsq) + (rysq * pxpsq);
@@ -182,11 +380,11 @@ void NativeVectorContainer::pathArc(float rx, float ry, float xAxisRotation, int
   double ang2 = vectorAngle(vx1, vy1, vx2, vy2);
   
   if (sweepFlag == 0 && ang2 > 0) {
-      ang2 -= TAU;
+    ang2 -= TAU;
   }
   
   if (sweepFlag == 1 && ang2 < 0) {
-      ang2 += TAU;
+    ang2 += TAU;
   }
   
   const int segments = (int) MAX(ceil(abs(ang2) / (TAU / 4.0)), 1.0);
@@ -194,103 +392,60 @@ void NativeVectorContainer::pathArc(float rx, float ry, float xAxisRotation, int
   ang2 /= segments;
   
   for (int i = 0; i < segments; i++) {
-      
-      const double a = 4.0 / 3.0 * tan(ang2 / 4.0);
-      
-      const double x1 = cos(ang1);
-      const double y1 = sin(ang1);
-      const double x2 = cos(ang1 + ang2);
-      const double y2 = sin(ang1 + ang2);
-      
-      CGPoint p1 = mapToEllipse(x1 - y1 * a, y1 + x1 * a, rx, ry, cosphi, sinphi, centerx, centery);
-      CGPoint p2 = mapToEllipse(x2 + y2 * a, y2 - x2 * a, rx, ry, cosphi, sinphi, centerx, centery);
-      CGPoint p = mapToEllipse(x2, y2, rx, ry, cosphi, sinphi, centerx, centery);
-      
-      [view->path curveToPoint:NSMakePoint(p.x, p.y) controlPoint1:NSMakePoint(p1.x, p1.y) controlPoint2:NSMakePoint(p2.x, p2.y)];
-      view->currentX = p.x;
-      view->currentY = p.y;
-      
-      ang1 += ang2;
+    
+    const double a = 4.0 / 3.0 * tan(ang2 / 4.0);
+    
+    const double x1 = cos(ang1);
+    const double y1 = sin(ang1);
+    const double x2 = cos(ang1 + ang2);
+    const double y2 = sin(ang1 + ang2);
+    
+    CGPoint p1 = mapToEllipse(x1 - y1 * a, y1 + x1 * a, rx, ry, cosphi, sinphi, centerx, centery);
+    CGPoint p2 = mapToEllipse(x2 + y2 * a, y2 - x2 * a, rx, ry, cosphi, sinphi, centerx, centery);
+    CGPoint p = mapToEllipse(x2, y2, rx, ry, cosphi, sinphi, centerx, centery);
+    
+    CGPathAddCurveToPoint(path1, nullptr, p1.x, p1.y, p2.x, p2.y, p.x, p.y);
+    CGPathAddCurveToPoint(path2, nullptr, p1.x, p1.y, p2.x, p2.y, p.x, p.y);
+    
+    ang1 += ang2;
   }
 }
 
-void NativeVectorContainer::pathCubicBezier(float x1, float y1, float x2, float y2, float x, float y)
+void NativeVectorPath::pathCubicBezier(float x1, float y1, float x2, float y2, float x, float y)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path curveToPoint:NSMakePoint(x, y) controlPoint1:NSMakePoint(x1, y1) controlPoint2:NSMakePoint(x2, y2)];
-  view->currentX = x;
-  view->currentY = y;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path = getPathAtIndex(layer, 0);
+  CGPathAddCurveToPoint(path, nullptr, x1, y1, x2, y2, x, y);
+  
+  path = getPathAtIndex(layer, 1);
+  CGPathAddCurveToPoint(path, nullptr, x1, y1, x2, y2, x, y);
 }
 
-void NativeVectorContainer::pathQuadraticBezier(float x1, float y1, float x, float y)
+void NativeVectorPath::pathQuadraticBezier(float x1, float y1, float x, float y)
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  float startX = view->currentX;
-  float startY = view->currentY;
-  NSPoint p1 = NSMakePoint(startX + (x1 - startX) * 2.0 / 3.0, startY + (y1 - startY) * 2.0 / 3.0);
-  NSPoint p2 = NSMakePoint(p1.x + (x - startX) / 3.0, p1.y + (y - startY) / 3.0);
-  [view->path
-    curveToPoint:NSMakePoint(x, y)
-    controlPoint1:p1
-    controlPoint2:p2
-  ];
-  view->currentX = x;
-  view->currentY = y;
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path1 = getPathAtIndex(layer, 0);
+  CGMutablePathRef path2 = getPathAtIndex(layer, 1);
+  CGPoint p = CGPathGetCurrentPoint(path1);
+  
+  CGPoint p1 = CGPointMake(p.x + (x1 - p.x) * 2.0 / 3.0, p.y + (y1 - p.y) * 2.0 / 3.0);
+  CGPoint p2 = CGPointMake(p1.x + (x - p.x) / 3.0, p1.y + (y - p.y) / 3.0);
+  
+  CGPathAddCurveToPoint(path1, nullptr, p1.x, p1.y, p2.x, p2.y, x, y);
+  CGPathAddCurveToPoint(path2, nullptr, p1.x, p1.y, p2.x, p2.y, x, y);
 }
 
-void NativeVectorContainer::pathClose()
+void NativeVectorPath::pathClose()
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path closePath];
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  CGMutablePathRef path1 = getPathAtIndex(layer, 0);
+  CGMutablePathRef path2 = getPathAtIndex(layer, 1);
+  CGPathCloseSubpath(path1);
+  CGPathCloseSubpath(path2);
 }
 
-void NativeVectorContainer::pathStroke(float width, int capsStyle, int joinStyle)
+void NativeVectorPath::endPath()
 {
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  view->path.lineWidth = width;
-
-  // enum StrokeLineCap {
-  //     Butt;
-  //     Square;
-  //     Round;
-  // }
-
-  // enum StrokeLineJoin {
-  //     Miter;
-  //     Round;
-  //     Bevel;
-  // }
-  switch(capsStyle) {
-    case 0:
-      view->path.lineCapStyle = NSLineCapStyleButt;
-      break;
-    case 1:
-      view->path.lineCapStyle = NSLineCapStyleSquare;
-      break;
-    case 2:
-      view->path.lineCapStyle = NSLineCapStyleRound;
-      break;
-  }
-  switch(joinStyle) {
-    case 0:
-      view->path.lineJoinStyle = NSLineJoinStyleMiter;
-      break;
-    case 1:
-      view->path.lineJoinStyle = NSLineJoinStyleRound;
-      break;
-    case 2:
-      view->path.lineJoinStyle = NSLineJoinStyleBevel;
-      break;
-  }
-  [view->path stroke];
-}
-
-void NativeVectorContainer::pathFill()
-{
-  NativeVectorView * view = (__bridge NativeVectorView *) nativeView;
-  [view->path fill];
-}
-
-void NativeVectorContainer::endPath()
-{
+  CAShapeLayer * layer = (__bridge CAShapeLayer *) nativeView;
+  [layer setNeedsDisplay];
 }

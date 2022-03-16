@@ -51,28 +51,31 @@ Rehax is in an early stage of development.
 
 ### Layouting
 
-|                                            | Web  | Mac | Win | iOS | Android |
-|--------------------------------------------|------|-----|-----|-----|---------|
-| FlexLayout row                             |      |     |     |     |         |
-| FlexLayout row-reverse                     |      |     |     |     |         |
-| FlexLayout column                          |      |     |     |     |         |
-| FlexLayout column-reverse                  |      |     |     |     |         |
-| FlexLayout justify-content flex-start      |      |     |     |     |         |
-| FlexLayout justify-content flex-end        |      |     |     |     |         |
-| FlexLayout justify-content center          |      |     |     |     |         |
-| FlexLayout justify-content space-between   |      |     |     |     |         |
-| FlexLayout justify-content space-around    |      |     |     |     |         |
-| FlexLayout justify-content space-evenly    |      |     |     |     |         |
-| FlexLayout align-items flex-start          |      |     |     |     |         |
-| FlexLayout align-items flex-end            |      |     |     |     |         |
-| FlexLayout align-items center              |      |     |     |     |         |
-| FlexLayout align-items stretch             |      |     |     |     |         |
-| FlexLayout align-items baseline            |      |     |     |     |         |
-| FlexLayout gap                             |      |     |     |     |         |
-| FlexLayout row-gap                         |      |     |     |     |         |
-| FlexLayout column-gap                      |      |     |     |     |         |
-| FlexLayout flex-grow                       |      |     |     |     |         |
-| FlexLayout align-self                      |      |     |     |     |         |
+|                                            | Web  | Mac  | Win | iOS | Android |
+|--------------------------------------------|------|------|-----|-----|---------|
+| FlexLayout row                             | done |      |     |     |         |
+| FlexLayout row-reverse                     | done |      |     |     |         |
+| FlexLayout column                          | done |      |     |     |         |
+| FlexLayout column-reverse                  | done |      |     |     |         |
+| FlexLayout justify-content flex-start      | done |      |     |     |         |
+| FlexLayout justify-content flex-end        | done |      |     |     |         |
+| FlexLayout justify-content center          | done |      |     |     |         |
+| FlexLayout justify-content space-between   | done |      |     |     |         |
+| FlexLayout justify-content space-around    | done |      |     |     |         |
+| FlexLayout justify-content space-evenly    | done |      |     |     |         |
+| FlexLayout align-items flex-start          | done |      |     |     |         |
+| FlexLayout align-items flex-end            | done |      |     |     |         |
+| FlexLayout align-items center              | done |      |     |     |         |
+| FlexLayout align-items stretch             | done |      |     |     |         |
+| FlexLayout align-items baseline            |      |      |     |     |         |
+| FlexLayout gap                             |      |      |     |     |         |
+| FlexLayout row-gap                         |      |      |     |     |         |
+| FlexLayout column-gap                      |      |      |     |     |         |
+| FlexLayout flex-grow                       | done |      |     |     |         |
+| FlexLayout align-self                      |      |      |     |     |         |
+| Fixed width                                | done | done |     |     |         |
+| Percentage width                           | done | done |     |     |         |
+| Fill width                                 | done |      |     |     |         |
 
 ### Components
 
@@ -103,8 +106,8 @@ On web it uses <svg> elements.
 | Path Cubic Bezier       | done | done |     |     |         |
 | Path Quadratic Bezier   | done | done |     |     |         |
 | Path Close              | done | done |     |     |         |
-| Fill Color              | done |      |     |     |         |
-| Stroke Color            | done |      |     |     |         |
+| Fill Color              | done | done |     |     |         |
+| Stroke Color            | done | done |     |     |         |
 | Stroke Width            | done | done |     |     |         |
 | Stroke Line Cap butt    | done | done |     |     |         |
 | Stroke Line Cap square  | done | done |     |     |         |
@@ -113,8 +116,8 @@ On web it uses <svg> elements.
 | Stroke Line Join round  | done | done |     |     |         |
 | Stroke Line Join bevel  | done | done |     |     |         |
 | Text                    |      |      |     |     |         |
-| Linear gradients        | done |      |     |     |         |
-| Radial gradients        | done |      |     |     |         |
+| Linear gradients        | done | do   |     |     |         |
+| Radial gradients        | done | do   |     |     |         |
 | Pattern                 |      |      |     |     |         |
 | Polygon                 |      |      |     |     |         |
 | Polyline                |      |      |     |     |         |

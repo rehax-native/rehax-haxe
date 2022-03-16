@@ -43,6 +43,8 @@ typedef Frame = {
 enum LayoutDirection {
   Vertical;
   Horizontal;
+  VerticalReverse;
+  HorizontalReverse;
 }
 
 enum AlignmentMainAxis {

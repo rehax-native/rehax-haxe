@@ -17,21 +17,17 @@ class VectorContainer extends View {
     var container = NativeVectorContainer.createInstance();
     native = container.reinterpret();
     container.ptr.createFragment();
-    container.ptr.setDrawCallback(() -> draw());
   }
 
-  var elements:Array<VectorElement> = [];
+  public var linearGradients:Array<VectorLinearGradient> = [];
+  public var radialGradients:Array<VectorRadialGradient> = [];
 
-  public override function addChild(child:View, atIndex:Int) {
-    super.addChild(child, atIndex);
-    elements.push(cast(child, VectorElement));
+  public function addLinearGradientDefinition(definition:VectorLinearGradient) {
+    linearGradients.push(definition);
   }
 
-  private function draw() {
-    var container:Pointer<NativeVectorContainer> = native.reinterpret();
-    for (el in elements) {
-      el.drawOp(container, width, height);
-    }
+  public function addRadialGradientDefinition(definition:VectorRadialGradient) {
+    radialGradients.push(definition);
   }
 
   public var width:Float;

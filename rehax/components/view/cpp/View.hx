@@ -63,6 +63,7 @@ extern class NativeView {
   function createFragment():Void;
   function addView(child:NativeView):Void;
   function removeFromParent():Void;
+  function teardown():Void;
 
   function setWidthFill():Void;
   function setHeightFill():Void;

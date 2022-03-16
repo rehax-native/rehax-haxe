@@ -15,7 +15,7 @@ class LayoutTest1 extends Component {
 
   var body = <View>
     <Button text={"Button"} />
-  </View>
+  </View>;
 }
 
 class LayoutTest2 extends Component {
@@ -28,7 +28,7 @@ class LayoutTest2 extends Component {
     <Button text={"Button"} />
     <View position={{ left: Fixed(20), top: Fixed(15) }} size={{ width: Fixed(20), height: Fixed(20) }} style={[ backgroundColor(Color.Green())]} />
     <Button text={"Button"} />
-  </View>
+  </View>;
 }
 
 class LayoutTest3 extends Component {
@@ -49,7 +49,7 @@ class LayoutTest3 extends Component {
       isDirVertical = !isDirVertical;
       updateViews();
     }} />
-  </View>
+  </View>;
 }
 
 class LayoutTest4 extends Component {
@@ -72,5 +72,5 @@ class LayoutTest4 extends Component {
     <Button text={"Button flex 1"} size={{ width: Flex(1), height: Flex(1) }} />
     <Button text={"Button fixed 200"} size={{ width: Fixed(200), height: Fixed(200) }} />
     <Button text={"Button natural/change dir"} />
-  </View>
+  </View>;
 }

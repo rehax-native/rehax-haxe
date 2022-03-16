@@ -56,6 +56,12 @@ void NativeView::createFragment()
   nativeView = (void *) CFBridgingRetain(view);
 }
 
+void NativeView::teardown()
+{
+  CFBridgingRelease(nativeView);
+  nativeView = nullptr;
+}
+
 // void NativeView::mount(NativeView *parent)
 // {
 //   NSView * parentView = (__bridge NSView *) parent->nativeView;

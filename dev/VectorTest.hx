@@ -23,7 +23,7 @@ class HeartShape extends Component {
           color: Color.Red()
         },
         {
-          offset: 0.8,
+          offset: 0.5,
           color: Color.Red()
         },
         {

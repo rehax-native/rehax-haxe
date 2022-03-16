@@ -64,6 +64,10 @@ class View {
         el.style.flexDirection = 'column';
       case Horizontal:
         el.style.flexDirection = 'row';
+      case VerticalReverse:
+        el.style.flexDirection = 'column-reverse';
+      case HorizontalReverse:
+        el.style.flexDirection = 'row-reverse';
     }
     return layoutDirection;
   }

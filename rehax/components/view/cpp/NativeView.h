@@ -47,11 +47,12 @@ public:
   RHX_EXPORT virtual void addView(NativeView *child);
   RHX_EXPORT virtual void removeView(NativeView *child);
   RHX_EXPORT virtual void removeFromParent();
+  RHX_EXPORT virtual void teardown();
 
   RHX_EXPORT void setWidthFill();
   RHX_EXPORT void setHeightFill();
-  RHX_EXPORT void setWidthNatural();
-  RHX_EXPORT void setHeightNatural();
+  RHX_EXPORT virtual void setWidthNatural();
+  RHX_EXPORT virtual void setHeightNatural();
   RHX_EXPORT void setWidthFixed(float width);
   RHX_EXPORT void setHeightFixed(float height);
   RHX_EXPORT void setWidthPercentage(float percent);
@@ -59,8 +60,8 @@ public:
   RHX_EXPORT void setWidthFlex(float flex, float totalFlex);
   RHX_EXPORT void setHeightFlex(float flex, float totalFlex);
 
-  RHX_EXPORT void setVerticalPositionNatural(NativeView *previousView);
-  RHX_EXPORT void setHorizontalPositionNatural(NativeView *previousView);
+  RHX_EXPORT virtual void setVerticalPositionNatural(NativeView *previousView);
+  RHX_EXPORT virtual void setHorizontalPositionNatural(NativeView *previousView);
   RHX_EXPORT void setVerticalPositionFixed(float x);
   RHX_EXPORT void setHorizontalPositionFixed(float y);
 

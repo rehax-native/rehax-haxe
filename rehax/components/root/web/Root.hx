@@ -40,6 +40,9 @@ class Root extends View {
   public function initialize(onReady:Void->Void) {
     document.addEventListener("DOMContentLoaded", function(event) {
       element = document.querySelector("#root-container");
+      while (element.firstChild != null) {
+        element.removeChild(element.firstChild);
+      }
       onReady();
     });
   }
