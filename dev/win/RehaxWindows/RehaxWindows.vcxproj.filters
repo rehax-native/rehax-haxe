@@ -24,6 +24,9 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="RehaxWindows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -50,6 +53,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="app.manifest" />
+    <Manifest Include="Application.manifest" />
   </ItemGroup>
 </Project>

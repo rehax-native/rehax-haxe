@@ -24,9 +24,11 @@ class InjectBuild {
 
 		var location = Context.definedValue("REHAX_INCLUDE");
 		var compilerFlags = ['<compilerflag value="-std=c++20" />'];
+		var runtimeCompilerFlags = [];
 		if (location != null && location.length > 0) {
 			compilerFlags.push('<compilerflag value="-I$location" />');
 			compilerFlags.push('<compilerflag value="/MDd" />');
+			runtimeCompilerFlags.push('<compilerflag value="/MDd" />');
 		} else {
 			trace("REHAX_INCLUDE not defined. This is necessary in order to compile rehax for cpp");
 		}
@@ -48,6 +50,8 @@ class InjectBuild {
 		<set name="HXCPP_GCC" value="1" if="macos" />
 		<set name="HXCPP_M64" value="1" if="macos" />
 		<files id="haxe">${compilerFlags.join("\n")}</files>
+		<files id="runtime">${runtimeCompilerFlags.join("\n")}</files>
+		<files id="__lib__">${runtimeCompilerFlags.join("\n")}</files>
 		';
 		// <target id="haxe" tool="linker" toolid="exe">${link.join("\n")}</target>
 

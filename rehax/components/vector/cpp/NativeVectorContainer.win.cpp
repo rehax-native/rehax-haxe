@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "./NativeVectorContainer.h"
 
 void NativeVectorContainer::createFragment()

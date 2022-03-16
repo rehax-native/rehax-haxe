@@ -19,6 +19,7 @@ extern class NativeTextInput extends NativeView {
 
   function setText(text:cpp.ConstCharStar):Void;
   function getText():cpp.ConstCharStar;
+  function setPlaceholder(text:cpp.ConstCharStar):Void;
   function setTextColor(color:NativeColor):Void;
 }
 
@@ -44,6 +45,14 @@ class TextInput extends View {
   public function get_text():String {
     var textView:Pointer<NativeTextInput> = native.reinterpret();
     return textView.ptr.getText();
+  }
+
+  public var placeholder(null, set):String;
+
+  public function set_placeholder(text:String):String {
+    var textView:Pointer<NativeTextInput> = native.reinterpret();
+    textView.ptr.setPlaceholder(cpp.ConstCharStar.fromString(text));
+    return text;
   }
 
   public override function setElementStyle(style:Style) {

@@ -79,11 +79,15 @@ Rehax is in an early stage of development.
 
 ### Components
 
-|                                | Web  | Mac | Win | iOS | Android |
-|--------------------------------|------|-----|-----|-----|---------|
-| Button                         | done |     |     |     |         |
-| Text                           |      |     |     |     |         |
-| TextInput                      |      |     |     |     |         |
+|                                | Web  | Mac | Win  | iOS | Android |
+|--------------------------------|------|-----|------|-----|---------|
+| Button                         |      |     |      |     |         |
+| Button text                    | done |     | done |     |         |
+| Button on click                | done |     | done |     |         |
+| Text                           |      |     |      |     |         |
+| Text text                      | done |     | done |     |         |
+| TextInput                      |      |     |      |     |         |
+| TextInput placeholder          |      |     | done |     |         |
 
 ### Vector Graphics
 

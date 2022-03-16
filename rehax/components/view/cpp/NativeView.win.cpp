@@ -1,4 +1,6 @@
+#include "pch.h"
 #include "NativeView.h"
+#include "NativeView.win.h"
 
 NativePosition NativePosition::create(float x, float y)
 {
@@ -35,10 +37,19 @@ NativeColor NativeColor::create(float r, float g, float b, float a)
 }
 
 void NativeView::createFragment()
-{}
+{
+	Controls::StackPanel grid;
+	auto wrapper = new NativeViewWrapper { grid };
+	nativeView = (void*) wrapper;
+}
 
 void NativeView::addView(NativeView *child)
-{}
+{
+	NativeViewWrapper* wrapper = (NativeViewWrapper*)nativeView;
+	NativeViewWrapper* childWrapper = (NativeViewWrapper*)child->nativeView;
+	Controls::StackPanel root = wrapper->element.try_as<Controls::StackPanel>();
+	root.Children().Append(childWrapper->element);
+}
 
 void NativeView::removeView(NativeView *child)
 {}
