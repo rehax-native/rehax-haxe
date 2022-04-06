@@ -6,8 +6,6 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.TypeTools;
 
-using rehax.components.fragment.Fragment;
-using rehax.components.view.View;
 using rehax.builder.Tokenizer;
 using rehax.builder.Parser;
 using rehax.builder.PartsGenerator;

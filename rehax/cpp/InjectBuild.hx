@@ -27,8 +27,8 @@ class InjectBuild {
 		var runtimeCompilerFlags = [];
 		if (location != null && location.length > 0) {
 			compilerFlags.push('<compilerflag value="-I$location" />');
-			compilerFlags.push('<compilerflag value="/MDd" />');
-			runtimeCompilerFlags.push('<compilerflag value="/MDd" />');
+			compilerFlags.push('<compilerflag value="/MDd" if="windows" />');
+			runtimeCompilerFlags.push('<compilerflag value="/MDd" if="windows" />');
 		} else {
 			trace("REHAX_INCLUDE not defined. This is necessary in order to compile rehax for cpp");
 		}

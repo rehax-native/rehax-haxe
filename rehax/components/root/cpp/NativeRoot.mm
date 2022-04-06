@@ -45,11 +45,11 @@ void NativeRoot::createFragment()
 {
 }
 
-// void NativeRoot::addView(NativeView * child)
-// {
-//   NativeView::addView(child);
-//   NSView * view = (__bridge NSView *) nativeView;
-//   NSView * childView = (__bridge NSView *) child->nativeView;
-//   [childView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-//   [childView setFrame:[view bounds]];
-// }
+void NativeRoot::addView(NativeView * child)
+{
+  NativeView::addView(child);
+  NSView * view = (__bridge NSView *) nativeView;
+  NSView * childView = (__bridge NSView *) child->nativeView;
+  [childView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+  [childView setFrame:[view bounds]];
+}

@@ -5,8 +5,8 @@ import Type as RunTimeType;
 using rehax.components.Components;
 using rehax.Rehax;
 using rehax.Style;
-using dev.LayoutTest;
-using dev.VectorTest;
+// using dev.LayoutTest;
+// using dev.VectorTest;
 
 class App extends Component {
   static function main() {
@@ -21,7 +21,7 @@ class App extends Component {
   // var body = <Text text={"Hey there"} />;
   var body = <View>
     Email
-    <TextInput text={email} placeholder={"Email"} />
+    <TextInput value={email} placeholder={"Email"} />
 
     <Button text={"Login"} onClick={() -> trace("OK")} />
   </View>;

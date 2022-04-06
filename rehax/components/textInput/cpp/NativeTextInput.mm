@@ -35,6 +35,12 @@ const char * NativeTextInput::getText()
   return [view stringValue].UTF8String;
 }
 
+void NativeTextInput::setPlaceholder(const char *text)
+{
+  NSTextField * view = (__bridge NSTextField *) nativeView;
+  view.placeholderString = [NSString stringWithUTF8String: text];
+}
+
 void NativeTextInput::setTextColor(NativeColor color)
 {
   NSTextField * view = (__bridge NSTextField *) nativeView;

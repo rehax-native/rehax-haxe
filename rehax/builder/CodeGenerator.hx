@@ -6,7 +6,6 @@ import haxe.macro.Context;
 import haxe.macro.Expr;
 import haxe.macro.TypeTools;
 
-using rehax.components.fragment.Fragment;
 using rehax.builder.PartsGenerator;
 
 typedef GenerateResult = {

@@ -24,6 +24,11 @@
 		9264A83D27D0DD5500CEA175 /* NativeButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A83B27D0DD5400CEA175 /* NativeButton.mm */; };
 		9264A83F27D0DE6100CEA175 /* liboutput-debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A83E27D0DE6100CEA175 /* liboutput-debug.a */; };
 		9264A84027D0E08800CEA175 /* libRehaxMacBackend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */; };
+		927D358327FDA30300FD2E86 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9264A7C627D0C85A00CEA175 /* AppDelegate.mm */; };
+		927D358427FDA30300FD2E86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9264A7C427D0C85A00CEA175 /* main.m */; };
+		927D358627FDA30300FD2E86 /* liboutput-debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A83E27D0DE6100CEA175 /* liboutput-debug.a */; };
+		927D358727FDA30300FD2E86 /* libRehaxMacBackend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */; };
+		927D358927FDA30300FD2E86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
 		92A5CD4727D043990048519F /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4627D043990048519F /* Tests_iOS.swift */; };
 		92A5CD4927D043990048519F /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4827D043990048519F /* Tests_iOSLaunchTests.swift */; };
 		92A5CD5327D043990048519F /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD5227D043990048519F /* Tests_macOS.swift */; };
@@ -41,6 +46,20 @@
 			remoteInfo = RehaxMacBackend;
 		};
 		9264A84127D0E08800CEA175 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92A5CD2927D043970048519F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9264A7F927D0D95800CEA175;
+			remoteInfo = RehaxMacBackend;
+		};
+		927D357E27FDA30300FD2E86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 92A5CD2927D043970048519F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9264A7F927D0D95800CEA175;
+			remoteInfo = RehaxMacBackend;
+		};
+		927D358027FDA30300FD2E86 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 92A5CD2927D043970048519F /* Project object */;
 			proxyType = 1;
@@ -83,6 +102,7 @@
 		9264A83A27D0DD5400CEA175 /* NativeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeButton.h; path = ../../rehax/components/button/cpp/NativeButton.h; sourceTree = "<group>"; };
 		9264A83B27D0DD5400CEA175 /* NativeButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeButton.mm; path = ../../rehax/components/button/cpp/NativeButton.mm; sourceTree = "<group>"; };
 		9264A83E27D0DE6100CEA175 /* liboutput-debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboutput-debug.a"; path = "lib/liboutput-debug.a"; sourceTree = "<group>"; };
+		927D358D27FDA30300FD2E86 /* RehaxDev Fluxe (macOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RehaxDev Fluxe (macOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A5CD3027D043990048519F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92A5CD3527D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A5CD3B27D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +120,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		927D358527FDA30300FD2E86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				927D358627FDA30300FD2E86 /* liboutput-debug.a in Frameworks */,
+				927D358727FDA30300FD2E86 /* libRehaxMacBackend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +223,7 @@
 				92A5CD4227D043990048519F /* Tests iOS.xctest */,
 				92A5CD4E27D043990048519F /* Tests macOS.xctest */,
 				9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */,
+				927D358D27FDA30300FD2E86 /* RehaxDev Fluxe (macOS).app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,6 +293,26 @@
 			productName = RehaxMacBackend;
 			productReference = 9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		927D357C27FDA30300FD2E86 /* RehaxDev Fluxe (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 927D358A27FDA30300FD2E86 /* Build configuration list for PBXNativeTarget "RehaxDev Fluxe (macOS)" */;
+			buildPhases = (
+				927D358127FDA30300FD2E86 /* Build Rehax */,
+				927D358227FDA30300FD2E86 /* Sources */,
+				927D358527FDA30300FD2E86 /* Frameworks */,
+				927D358827FDA30300FD2E86 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				927D357D27FDA30300FD2E86 /* PBXTargetDependency */,
+				927D357F27FDA30300FD2E86 /* PBXTargetDependency */,
+			);
+			name = "RehaxDev Fluxe (macOS)";
+			productName = "RehaxDev (macOS)";
+			productReference = 927D358D27FDA30300FD2E86 /* RehaxDev Fluxe (macOS).app */;
+			productType = "com.apple.product-type.application";
 		};
 		92A5CD3427D043990048519F /* RehaxDev (iOS) */ = {
 			isa = PBXNativeTarget;
@@ -385,11 +435,20 @@
 				92A5CD4127D043990048519F /* Tests iOS */,
 				92A5CD4D27D043990048519F /* Tests macOS */,
 				9264A7F927D0D95800CEA175 /* RehaxMacBackend */,
+				927D357C27FDA30300FD2E86 /* RehaxDev Fluxe (macOS) */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		927D358827FDA30300FD2E86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				927D358927FDA30300FD2E86 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		92A5CD3327D043990048519F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -423,6 +482,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		927D358127FDA30300FD2E86 /* Build Rehax */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rehax";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ../.. && haxe -lib hxcpp --library fluxe -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE -D fluxe\n";
+		};
 		92A5CD6A27D044B20048519F /* Build Rehax */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -455,6 +533,15 @@
 				9264A83227D0DD3C00CEA175 /* NativeText.mm in Sources */,
 				9264A82F27D0DD3400CEA175 /* NativeTextInput.mm in Sources */,
 				9264A82B27D0DD2900CEA175 /* NativeVectorContainer.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		927D358227FDA30300FD2E86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				927D358327FDA30300FD2E86 /* AppDelegate.mm in Sources */,
+				927D358427FDA30300FD2E86 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +592,16 @@
 			target = 9264A7F927D0D95800CEA175 /* RehaxMacBackend */;
 			targetProxy = 9264A84127D0E08800CEA175 /* PBXContainerItemProxy */;
 		};
+		927D357D27FDA30300FD2E86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9264A7F927D0D95800CEA175 /* RehaxMacBackend */;
+			targetProxy = 927D357E27FDA30300FD2E86 /* PBXContainerItemProxy */;
+		};
+		927D357F27FDA30300FD2E86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9264A7F927D0D95800CEA175 /* RehaxMacBackend */;
+			targetProxy = 927D358027FDA30300FD2E86 /* PBXContainerItemProxy */;
+		};
 		92A5CD4427D043990048519F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 92A5CD3427D043990048519F /* RehaxDev (iOS) */;
@@ -539,6 +636,87 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		927D358B27FDA30300FD2E86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/lib/haxe/lib/hxcpp/4,2,1/include",
+					$SRCROOT/lib/include,
+					$SRCROOT/../..,
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.4;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-L$(SRCROOT)/lib",
+					"-loutput-debug",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		927D358C27FDA30300FD2E86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/usr/local/lib/haxe/lib/hxcpp/4,2,1/include",
+					$SRCROOT/lib/include,
+					$SRCROOT/../..,
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.4;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-L$(SRCROOT)/lib",
+					"-loutput-debug",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -738,7 +916,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.4;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-L$(SRCROOT)/lib",
@@ -779,7 +957,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.4;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-L$(SRCROOT)/lib",
@@ -872,6 +1050,15 @@
 			buildConfigurations = (
 				9264A7FC27D0D95800CEA175 /* Debug */,
 				9264A7FD27D0D95800CEA175 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		927D358A27FDA30300FD2E86 /* Build configuration list for PBXNativeTarget "RehaxDev Fluxe (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				927D358B27FDA30300FD2E86 /* Debug */,
+				927D358C27FDA30300FD2E86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
