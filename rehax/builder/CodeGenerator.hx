@@ -139,10 +139,10 @@ class CodeGenerator {
           if (part.content != null) {
             var content = part.content;
             if (part.typeName == 'Variable') {
-              createExprs.push({expr: Context.parse('$varName.text = \'$${$content}\';', Context.currentPos()), tags: ['PropAssignment']});
-              updateExprs.push({expr: Context.parse('$varAccessor.text = \'$${$content}\';', Context.currentPos()), tags: ['PropAssignment']});
+              createExprs.push({expr: Context.parse('$varName.text = \'$${${StringTools.trim(content)}}\';', Context.currentPos()), tags: ['PropAssignment']});
+              updateExprs.push({expr: Context.parse('$varAccessor.text = \'$${${StringTools.trim(content)}}\';', Context.currentPos()), tags: ['PropAssignment']});
             } else if (part.typeName == 'Text') {
-              createExprs.push({expr: Context.parse('$varName.text = \'$content\';', Context.currentPos()), tags: ['PropAssignment']});
+              createExprs.push({expr: Context.parse('$varName.text = \'${StringTools.trim(content)}\';', Context.currentPos()), tags: ['PropAssignment']});
             }
           }
           for (attr => value in part.attributes) {

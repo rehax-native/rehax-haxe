@@ -34,15 +34,15 @@ class TextInput extends View {
     text.ptr.createFragment();
   }
 
-  public var text(get, set):String;
+  public var value(get, set):String;
 
-  public function set_text(text:String):String {
+  public function set_value(value:String):String {
     var textView:Pointer<NativeTextInput> = native.reinterpret();
-    textView.ptr.setText(cpp.ConstCharStar.fromString(text));
-    return text;
+    textView.ptr.setText(cpp.ConstCharStar.fromString(value));
+    return value;
   }
 
-  public function get_text():String {
+  public function get_value():String {
     var textView:Pointer<NativeTextInput> = native.reinterpret();
     return textView.ptr.getText();
   }

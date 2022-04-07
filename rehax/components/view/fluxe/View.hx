@@ -37,7 +37,7 @@ class View {
   public function destroy() {}
 
   public function addChild(child:View) {
-    child.set_size(child.size);
+    // child.set_size(child.size);
   }
 
   public function componentDidMount() {}

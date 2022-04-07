@@ -17,14 +17,24 @@ class App extends Component {
     super();
   }
 
-  var email = "";
-  // var body = <Text text={"Hey there"} />;
-  var body = <View>
-    Email
-    <TextInput value={email} placeholder={"Email"} />
+  // var email = "";
+  // // var body = <Text text={"Hey there"} />;
+  // var body = <View>
+  //   Email
+  //   <TextInput value={email} placeholder={"Email"} />
 
-    <Button text={"Login"} onClick={() -> trace("OK")} />
+  //   <Button text={"Login"} onClick={() -> trace("OK")} />
+  // </View>;
+
+  var body = <View>
+    Hello World
+    <Button text={"Click Me"} onClick={() -> trace("OK")} />
+    <TextInput value={""} placeholder={"Email"} />
   </View>;
+
+
+
+
     // <Button text={"General Kenobi"} />;
 
   // var body = <View size={{ width: Fill, height: Fill }}>

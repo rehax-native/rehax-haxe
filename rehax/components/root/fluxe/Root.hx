@@ -4,6 +4,14 @@ using rehax.components.view.View;
 
 #if fluxe
 
+using fluxe.views.View;
+using fluxe.views.Button;
+using fluxe.views.Text;
+using fluxe.views.TextInput;
+using fluxe.views.Externs;
+using fluxe.views.Engine;
+using fluxe.layout.StackLayout;
+
 // using Root.ElementStyleExtender;
 
 // class ElementStyleExtender {
@@ -29,26 +37,17 @@ using rehax.components.view.View;
 //   }
 // }
 
-class Root extends View {
+class Root extends rehax.components.view.View {
   public function new() {
     super();
   }
 
   public function initialize(onReady:Void->Void) {
-    // document.addEventListener("DOMContentLoaded", function(event) {
-    //   element = document.querySelector("#root-container");
-    //   while (element.firstChild != null) {
-    //     element.removeChild(element.firstChild);
-    //   }
-    //   onReady();
-    // });
+      var container = new View();
+      view = container;
+      onReady();
+      EngineUtility.startWithView(container);
   }
-
-  // public override function addChild(child:View) {
-  //   if (Std.is(child.element, js.html.DOMElement)) {
-  //     cast(child.element, js.html.DOMElement).style.flex = '1 1 auto';
-  //   }
-  // }
 
   // public override function set_style(style:rehax.Style):rehax.Style {
   //   var el = document.querySelector("body");

@@ -499,7 +499,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../.. && haxe -lib hxcpp --library fluxe -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE -D fluxe\n";
+			shellScript = "cd ../.. && haxe -lib hxcpp --library fluxe -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE -D fluxe -D SKIA_INCLUDE=\"/Users/denis/Projects/rehax/fluxe:/Users/denis/Projects/rehax/fluxe/third_party/skia:/Users/denis/Projects/rehax/fluxe/third_party/skia/include/core\" -D HXCPP_NO_CPP11 -D HXCPP_GCC\n";
 		};
 		92A5CD6A27D044B20048519F /* Build Rehax */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -518,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../.. && haxe -lib hxcpp -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE \n";
+			shellScript = "cd ../.. && haxe -lib hxcpp -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -664,12 +664,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/deps",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.4;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-L$(SRCROOT)/lib",
 					"-loutput-debug",
+					"-lfluxe",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -705,12 +707,14 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)/deps",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.4;
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"-L$(SRCROOT)/lib",
 					"-loutput-debug",
+					"-lfluxe",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rehax-native.RehaxDev";
 				PRODUCT_NAME = "$(TARGET_NAME)";

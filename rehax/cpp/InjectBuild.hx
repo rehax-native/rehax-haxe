@@ -22,13 +22,26 @@ class InjectBuild {
 		// }
 		// sourcePath = Path.normalize(sourcePath);
 
+		var compilerFlags = [
+			'<compilerflag value="-std=c++20" />',
+			'<compilerflag value="-stdlib=libc++" />',
+			'<compilerflag value="-mmacosx-version-min=10.9" />',
+		];
+		var runtimeFlags = [
+			'<compilerflag value="-std=c++20" />',
+			'<compilerflag value="-stdlib=libc++" />',
+			'<compilerflag value="-mmacosx-version-min=10.9" />',
+		];
+		var libFlags = [
+			'<compilerflag value="-std=c++14" />',
+			'<compilerflag value="-stdlib=libc++" />',
+			'<compilerflag value="-mmacosx-version-min=10.9" />',
+		];
 		var location = Context.definedValue("REHAX_INCLUDE");
-		var compilerFlags = ['<compilerflag value="-std=c++20" />'];
-		var runtimeCompilerFlags = [];
 		if (location != null && location.length > 0) {
 			compilerFlags.push('<compilerflag value="-I$location" />');
 			compilerFlags.push('<compilerflag value="/MDd" if="windows" />');
-			runtimeCompilerFlags.push('<compilerflag value="/MDd" if="windows" />');
+			runtimeFlags.push('<compilerflag value="/MDd" if="windows" />');
 		} else {
 			trace("REHAX_INCLUDE not defined. This is necessary in order to compile rehax for cpp");
 		}
@@ -50,8 +63,9 @@ class InjectBuild {
 		<set name="HXCPP_GCC" value="1" if="macos" />
 		<set name="HXCPP_M64" value="1" if="macos" />
 		<files id="haxe">${compilerFlags.join("\n")}</files>
-		<files id="runtime">${runtimeCompilerFlags.join("\n")}</files>
-		<files id="__lib__">${runtimeCompilerFlags.join("\n")}</files>
+		<files id="runtime">${runtimeFlags.join("\n")}</files>
+		<files id="__lib__">${libFlags.join("\n")}</files>
+		<files id="__externs__">${libFlags.join("\n")}</files>
 		';
 		// <target id="haxe" tool="linker" toolid="exe">${link.join("\n")}</target>
 
