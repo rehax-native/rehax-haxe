@@ -1,14 +1,15 @@
 package rehax.components;
 
+typedef View = rehax.components.view.View.View;
 typedef Button = rehax.components.button.Button.Button;
 typedef Fragment = rehax.components.fragment.Fragment.Fragment;
 typedef Root = rehax.components.root.Root.Root;
 typedef Text = rehax.components.text.Text.Text;
 typedef TextInput = rehax.components.textInput.TextInput.TextInput;
-typedef Position = rehax.components.view.Layout.Position;
-typedef SizeDimension = rehax.components.view.Layout.SizeDimension;
-typedef Size = rehax.components.view.Layout.Size;
-typedef Frame = rehax.components.view.Layout.Frame;
-typedef View = rehax.components.view.View.View;
-typedef AlignmentMainAxis = rehax.components.view.Layout.AlignmentMainAxis;
-typedef AlignmentCrossAxis = rehax.components.view.Layout.AlignmentCrossAxis;
+
+typedef Position = rehax.components.layout.Layout.Position;
+typedef SizeDimension = rehax.components.layout.Layout.SizeDimension;
+typedef Size = rehax.components.layout.Layout.Size;
+typedef Frame = rehax.components.layout.Layout.Frame;
+typedef AlignmentMainAxis = rehax.components.layout.Layout.AlignmentMainAxis;
+typedef AlignmentCrossAxis = rehax.components.layout.Layout.AlignmentCrossAxis;

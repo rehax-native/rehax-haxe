@@ -1,7 +1,7 @@
 package rehax.components.view.fluxe;
 
 #if fluxe
-using rehax.components.view.Layout;
+using rehax.components.layout.Layout;
 
 
 class View {
@@ -49,63 +49,71 @@ class View {
     // }
   }
 
-  public var layoutDirection(default, set):LayoutDirection;
+  public var layout(default, set):ILayout;
 
-  public function set_layoutDirection(layoutDirection:LayoutDirection):LayoutDirection {
-    this.layoutDirection = layoutDirection;
-    // var el = cast(element, js.html.DOMElement);
-    // switch (layoutDirection) {
-    //   case Vertical:
-    //     el.style.flexDirection = 'column';
-    //   case Horizontal:
-    //     el.style.flexDirection = 'row';
-    //   case VerticalReverse:
-    //     el.style.flexDirection = 'column-reverse';
-    //   case HorizontalReverse:
-    //     el.style.flexDirection = 'row-reverse';
-    // }
-    return layoutDirection;
+  public function set_layout(layout:ILayout) {
+    this.layout = layout;
+    this.view.layout = layout.fluxeLayout;
+    return layout;
   }
 
-  public var alignmentMainAxis(default, set):AlignmentMainAxis;
+  // public var layoutDirection(default, set):LayoutDirection;
 
-  public function set_alignmentMainAxis(alignmentMainAxis:AlignmentMainAxis):AlignmentMainAxis {
-    this.alignmentMainAxis = alignmentMainAxis;
-    // var el = cast(element, js.html.DOMElement);
-    // switch (alignmentMainAxis) {
-    //   case Start:
-    //     el.style.justifyContent = 'flex-start';
-    //   case End:
-    //     el.style.justifyContent = 'flex-end';
-    //   case Center:
-    //     el.style.justifyContent = 'center';
-    //   case SpaceBetween:
-    //     el.style.justifyContent = 'space-between';
-    //   case SpaceAround:
-    //     el.style.justifyContent = 'space-around';
-    //   case SpaceEvenly:
-    //     el.style.justifyContent = 'space-evenly';
-    // }
-    return alignmentMainAxis;
-  }
+  // public function set_layoutDirection(layoutDirection:LayoutDirection):LayoutDirection {
+  //   this.layoutDirection = layoutDirection;
+  //   // var el = cast(element, js.html.DOMElement);
+  //   // switch (layoutDirection) {
+  //   //   case Vertical:
+  //   //     el.style.flexDirection = 'column';
+  //   //   case Horizontal:
+  //   //     el.style.flexDirection = 'row';
+  //   //   case VerticalReverse:
+  //   //     el.style.flexDirection = 'column-reverse';
+  //   //   case HorizontalReverse:
+  //   //     el.style.flexDirection = 'row-reverse';
+  //   // }
+  //   return layoutDirection;
+  // }
 
-  public var alignmentCrossAxis(default, set):AlignmentCrossAxis;
+  // public var alignmentMainAxis(default, set):AlignmentMainAxis;
 
-  public function set_alignmentCrossAxis(alignmentCrossAxis:AlignmentCrossAxis):AlignmentCrossAxis {
-    this.alignmentCrossAxis = alignmentCrossAxis;
-    // var el = cast(element, js.html.DOMElement);
-    // switch (alignmentCrossAxis) {
-    //   case Start:
-    //     el.style.alignItems = 'flex-start';
-    //   case End:
-    //     el.style.alignItems = 'flex-end';
-    //   case Center:
-    //     el.style.alignItems = 'center';
-    //   case Stretch:
-    //     el.style.alignItems = 'stretch';
-    // }
-    return alignmentCrossAxis;
-  }
+  // public function set_alignmentMainAxis(alignmentMainAxis:AlignmentMainAxis):AlignmentMainAxis {
+  //   this.alignmentMainAxis = alignmentMainAxis;
+  //   // var el = cast(element, js.html.DOMElement);
+  //   // switch (alignmentMainAxis) {
+  //   //   case Start:
+  //   //     el.style.justifyContent = 'flex-start';
+  //   //   case End:
+  //   //     el.style.justifyContent = 'flex-end';
+  //   //   case Center:
+  //   //     el.style.justifyContent = 'center';
+  //   //   case SpaceBetween:
+  //   //     el.style.justifyContent = 'space-between';
+  //   //   case SpaceAround:
+  //   //     el.style.justifyContent = 'space-around';
+  //   //   case SpaceEvenly:
+  //   //     el.style.justifyContent = 'space-evenly';
+  //   // }
+  //   return alignmentMainAxis;
+  // }
+
+  // public var alignmentCrossAxis(default, set):AlignmentCrossAxis;
+
+  // public function set_alignmentCrossAxis(alignmentCrossAxis:AlignmentCrossAxis):AlignmentCrossAxis {
+  //   this.alignmentCrossAxis = alignmentCrossAxis;
+  //   // var el = cast(element, js.html.DOMElement);
+  //   // switch (alignmentCrossAxis) {
+  //   //   case Start:
+  //   //     el.style.alignItems = 'flex-start';
+  //   //   case End:
+  //   //     el.style.alignItems = 'flex-end';
+  //   //   case Center:
+  //   //     el.style.alignItems = 'center';
+  //   //   case Stretch:
+  //   //     el.style.alignItems = 'stretch';
+  //   // }
+  //   return alignmentCrossAxis;
+  // }
 
   public var style(default, set):rehax.Style;
 

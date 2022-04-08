@@ -1,4 +1,4 @@
-package rehax.components.view;
+package rehax.components.layout;
 
 enum SizeDimension {
   /** Natural, meaning the same size as its' content **/
@@ -62,3 +62,13 @@ enum AlignmentCrossAxis {
   Center;
   Stretch;
 }
+
+#if js
+// typedef View = rehax.components.view.web.View.View;
+#elseif fluxe
+interface ILayout {
+  public var fluxeLayout:fluxe.layout.ILayout;
+}
+#elseif cpp
+// typedef View = rehax.components.view.cpp.View.View;
+#end
