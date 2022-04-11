@@ -1,8 +1,6 @@
 package rehax.components.button.cpp;
 
-using rehax.components.view.Layout;
 using rehax.components.view.cpp.View;
-using rehax.components.view.Layout;
 
 #if cpp
 import cpp.Pointer;

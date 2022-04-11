@@ -42,14 +42,13 @@ struct NativeColor
 class NativeView
 {
 public:
-  // YGNodeRef node;
-
   RHX_EXPORT virtual void createFragment();
   RHX_EXPORT virtual void addView(NativeView *child);
   RHX_EXPORT virtual void removeView(NativeView *child);
   RHX_EXPORT virtual void removeFromParent();
   RHX_EXPORT virtual void teardown();
 
+  // Layouting
   RHX_EXPORT void setWidthFill();
   RHX_EXPORT void setHeightFill();
   RHX_EXPORT virtual void setWidthNatural();
@@ -66,11 +65,14 @@ public:
   RHX_EXPORT void setVerticalPositionFixed(float x);
   RHX_EXPORT void setHorizontalPositionFixed(float y);
 
+  // Styling
   RHX_EXPORT void setBackgroundColor(NativeColor color);
   RHX_EXPORT void setTextColor(NativeColor color);
   RHX_EXPORT void setOpacity(float opacity);
 
-  // void layout();
-
   void *nativeView = nullptr;
+};
+
+class INativeLayout {
+  virtual void layoutContainer(NativeView* container) = 0;
 };

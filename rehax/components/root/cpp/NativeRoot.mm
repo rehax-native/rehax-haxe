@@ -52,4 +52,14 @@ void NativeRoot::addView(NativeView * child)
   NSView * childView = (__bridge NSView *) child->nativeView;
   [childView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
   [childView setFrame:[view bounds]];
+
+  NSLayoutConstraint * constraint;
+  constraint = [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0];
+  [view addConstraint:constraint];
+  constraint = [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0];
+  [view addConstraint:constraint];
+  constraint = [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0.0];
+  [view addConstraint:constraint];
+  constraint = [NSLayoutConstraint constraintWithItem:childView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0.0];
+  [view addConstraint:constraint];
 }

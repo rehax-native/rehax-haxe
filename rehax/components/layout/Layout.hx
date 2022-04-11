@@ -70,5 +70,8 @@ interface ILayout {
   public var fluxeLayout:fluxe.layout.ILayout;
 }
 #elseif cpp
+interface ILayout {
+  public function layout(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
+}
 // typedef View = rehax.components.view.cpp.View.View;
 #end

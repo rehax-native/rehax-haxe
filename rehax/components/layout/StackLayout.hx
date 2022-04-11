@@ -1,7 +1,8 @@
 package rehax.components.layout;
 
 typedef StackLayoutOptions = {
-	?direction:LayoutDirection
+	?direction:rehax.components.layout.Layout.LayoutDirection,
+	?spacing:Float
 }
 
 #if js
@@ -9,5 +10,5 @@ typedef StackLayoutOptions = {
 #elseif fluxe
 typedef StackLayout = rehax.components.layout.fluxe.StackLayout.StackLayout;
 #elseif cpp
-// typedef View = rehax.components.view.cpp.View.View;
+typedef StackLayout = rehax.components.layout.cpp.StackLayout.StackLayout;
 #end

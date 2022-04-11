@@ -1,6 +1,5 @@
 package rehax.components.text.cpp;
 
-using rehax.components.view.Layout;
 using rehax.components.view.cpp.View;
 
 #if cpp

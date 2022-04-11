@@ -2,7 +2,7 @@ package rehax.components.view.cpp;
 
 #if cpp
 using rehax.components.root.cpp.Root;
-using rehax.components.view.Layout;
+using rehax.components.layout.Layout;
 
 import cpp.Pointer;
 import cpp.RawPointer;
@@ -103,6 +103,13 @@ class View {
 
   public function addChild(child:View, atIndex:Int) {
     children.insert(atIndex, child);
+
+    if (layout == null) {
+      this.layout = rehax.components.layout.StackLayout.Create({ spacing: 10.0 });
+    } else {
+      // TODO it is inefficient to calc the layout for all children every time one is added
+      layout.layout(this.native);
+    }
   }
 
   public function mount(parent:View, atIndex:Null<Int> = null) {
@@ -125,66 +132,20 @@ class View {
     parent.children.remove(this);
   }
 
+  public var layout(default, set):ILayout;
+
+  public function set_layout(layout:ILayout) {
+    this.layout = layout;
+    layout.layout(this.native);
+    return layout;
+  }
+
   public var style(default, set):rehax.Style;
 
   public function set_style(style:rehax.Style):rehax.Style {
     this.style = style;
     setElementStyle(style);
     return style;
-  }
-
-  public var layoutDirection(default, set):LayoutDirection = Vertical;
-
-  public function set_layoutDirection(layoutDirection:LayoutDirection):LayoutDirection {
-    this.layoutDirection = layoutDirection;
-    // var el = cast(element, js.html.DOMElement);
-    // switch (layoutDirection) {
-    // 	case Vertical:
-    // 		el.style.flexDirection = 'column';
-    // 	case Horizontal:
-    // 		el.style.flexDirection = 'row';
-    // }
-    return layoutDirection;
-  }
-
-  public var alignmentMainAxis(default, set):AlignmentMainAxis;
-
-  public function set_alignmentMainAxis(alignmentMainAxis:AlignmentMainAxis):AlignmentMainAxis {
-    this.alignmentMainAxis = alignmentMainAxis;
-    // var el = cast(element, js.html.DOMElement);
-    // switch (alignmentMainAxis) {
-    // 	case Start:
-    // 		el.style.justifyContent = 'flex-start';
-    // 	case End:
-    // 		el.style.justifyContent = 'flex-end';
-    // 	case Center:
-    // 		el.style.justifyContent = 'center';
-    // 	case SpaceBetween:
-    // 		el.style.justifyContent = 'space-between';
-    // 	case SpaceAround:
-    // 		el.style.justifyContent = 'space-around';
-    // 	case SpaceEvenly:
-    // 		el.style.justifyContent = 'space-evenly';
-    // }
-    return alignmentMainAxis;
-  }
-
-  public var alignmentCrossAxis(default, set):AlignmentCrossAxis;
-
-  public function set_alignmentCrossAxis(alignmentCrossAxis:AlignmentCrossAxis):AlignmentCrossAxis {
-    this.alignmentCrossAxis = alignmentCrossAxis;
-    // var el = cast(element, js.html.DOMElement);
-    // switch (alignmentCrossAxis) {
-    // 	case Start:
-    // 		el.style.alignItems = 'flex-start';
-    // 	case End:
-    // 		el.style.alignItems = 'flex-end';
-    // 	case Center:
-    // 		el.style.alignItems = 'center';
-    // 	case Stretch:
-    // 		el.style.alignItems = 'stretch';
-    // }
-    return alignmentCrossAxis;
   }
 
   @:isVar
@@ -195,59 +156,59 @@ class View {
 
   public function set_size(size:Size):Size {
     this.size = size;
-    if (!isMounted) {
-      return size;
-    }
-    switch (size.width) {
-      case Natural:
-        native.ptr.setWidthNatural();
-      case Fixed(size):
-        native.ptr.setWidthFixed(size);
-      case Fill:
-        native.ptr.setWidthFill();
-      case Flex(flex):
-        var totalFlex = 0.0;
-        if (parent != null) {
-          for (child in parent.children) {
-            switch (child.size.width) {
-              case Flex(flex):
-                totalFlex += flex;
-              default:
-            }
-          }
-        }
-        if (totalFlex == 0.0) {
-          totalFlex = 1.0;
-        }
-        native.ptr.setWidthFlex(flex, totalFlex);
-      case Percentage(percent):
-        native.ptr.setWidthPercentage(percent);
-    }
-    switch (size.height) {
-      case Natural:
-        native.ptr.setHeightNatural();
-      case Fixed(size):
-        native.ptr.setHeightFixed(size);
-      case Fill:
-        native.ptr.setHeightFill();
-      case Flex(flex):
-        var totalFlex = 0.0;
-        if (parent != null) {
-          for (child in parent.children) {
-            switch (child.size.height) {
-              case Flex(flex):
-                totalFlex += flex;
-              default:
-            }
-          }
-        }
-        if (totalFlex == 0.0) {
-          totalFlex = 1.0;
-        }
-        native.ptr.setHeightFlex(flex, totalFlex);
-      case Percentage(percent):
-        native.ptr.setHeightPercentage(percent);
-    }
+    // if (!isMounted) {
+    //   return size;
+    // }
+    // switch (size.width) {
+    //   case Natural:
+    //     native.ptr.setWidthNatural();
+    //   case Fixed(size):
+    //     native.ptr.setWidthFixed(size);
+    //   case Fill:
+    //     native.ptr.setWidthFill();
+    //   case Flex(flex):
+    //     var totalFlex = 0.0;
+    //     if (parent != null) {
+    //       for (child in parent.children) {
+    //         switch (child.size.width) {
+    //           case Flex(flex):
+    //             totalFlex += flex;
+    //           default:
+    //         }
+    //       }
+    //     }
+    //     if (totalFlex == 0.0) {
+    //       totalFlex = 1.0;
+    //     }
+    //     native.ptr.setWidthFlex(flex, totalFlex);
+    //   case Percentage(percent):
+    //     native.ptr.setWidthPercentage(percent);
+    // }
+    // switch (size.height) {
+    //   case Natural:
+    //     native.ptr.setHeightNatural();
+    //   case Fixed(size):
+    //     native.ptr.setHeightFixed(size);
+    //   case Fill:
+    //     native.ptr.setHeightFill();
+    //   case Flex(flex):
+    //     var totalFlex = 0.0;
+    //     if (parent != null) {
+    //       for (child in parent.children) {
+    //         switch (child.size.height) {
+    //           case Flex(flex):
+    //             totalFlex += flex;
+    //           default:
+    //         }
+    //       }
+    //     }
+    //     if (totalFlex == 0.0) {
+    //       totalFlex = 1.0;
+    //     }
+    //     native.ptr.setHeightFlex(flex, totalFlex);
+    //   case Percentage(percent):
+    //     native.ptr.setHeightPercentage(percent);
+    // }
     return size;
   }
 
@@ -258,43 +219,43 @@ class View {
 
   public function set_position(position:Position):Position {
     this.position = position;
-    if (!isMounted) {
-      return position;
-    }
-    switch (position.left) {
-      case Natural:
-        var previousView = null;
-        if (parent != null && parent.layoutDirection == Horizontal) {
-          var nextIndex = parent.children.indexOf(this) - 1;
-          while (previousView == null && nextIndex >= 0) {
-            if (parent.children[nextIndex].position.left == Natural) {
-              previousView = parent.children[nextIndex];
-              break;
-            }
-            nextIndex--;
-          }
-        }
-        native.ptr.setHorizontalPositionNatural(previousView != null ? previousView.native.raw : null);
-      case Fixed(size):
-        native.ptr.setHorizontalPositionFixed(size);
-    }
-    switch (position.top) {
-      case Natural:
-        var previousView = null;
-        if (parent != null && parent.layoutDirection == Vertical) {
-          var nextIndex = parent.children.indexOf(this) - 1;
-          while (previousView == null && nextIndex >= 0) {
-            if (parent.children[nextIndex].position.top == Natural) {
-              previousView = parent.children[nextIndex];
-              break;
-            }
-            nextIndex--;
-          }
-        }
-        native.ptr.setVerticalPositionNatural(previousView != null ? previousView.native.raw : null);
-      case Fixed(size):
-        native.ptr.setVerticalPositionFixed(size);
-    }
+    // if (!isMounted) {
+    //   return position;
+    // }
+    // switch (position.left) {
+    //   case Natural:
+    //     var previousView = null;
+    //     if (parent != null && parent.layoutDirection == Horizontal) {
+    //       var nextIndex = parent.children.indexOf(this) - 1;
+    //       while (previousView == null && nextIndex >= 0) {
+    //         if (parent.children[nextIndex].position.left == Natural) {
+    //           previousView = parent.children[nextIndex];
+    //           break;
+    //         }
+    //         nextIndex--;
+    //       }
+    //     }
+    //     native.ptr.setHorizontalPositionNatural(previousView != null ? previousView.native.raw : null);
+    //   case Fixed(size):
+    //     native.ptr.setHorizontalPositionFixed(size);
+    // }
+    // switch (position.top) {
+    //   case Natural:
+    //     var previousView = null;
+    //     if (parent != null && parent.layoutDirection == Vertical) {
+    //       var nextIndex = parent.children.indexOf(this) - 1;
+    //       while (previousView == null && nextIndex >= 0) {
+    //         if (parent.children[nextIndex].position.top == Natural) {
+    //           previousView = parent.children[nextIndex];
+    //           break;
+    //         }
+    //         nextIndex--;
+    //       }
+    //     }
+    //     native.ptr.setVerticalPositionNatural(previousView != null ? previousView.native.raw : null);
+    //   case Fixed(size):
+    //     native.ptr.setVerticalPositionFixed(size);
+    // }
     return position;
   }
 
