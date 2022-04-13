@@ -1,0 +1,13 @@
+{
+  "name": "rehax",
+  "url" : "https://github.com/rehax-native/rehax-cli/",
+  "license": "MIT",
+  "tags": ["cross", "ui"],
+  "description": "Build cross platform UIs",
+  "version": "0.0.1",
+  "classPath": ".",
+  "releasenote": "Initial release",
+  "contributors": ["Denis"],
+  "dependencies": {
+  }
+}

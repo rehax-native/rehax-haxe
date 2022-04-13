@@ -13,3 +13,6 @@ typedef Size = rehax.components.layout.Layout.Size;
 typedef Frame = rehax.components.layout.Layout.Frame;
 typedef AlignmentMainAxis = rehax.components.layout.Layout.AlignmentMainAxis;
 typedef AlignmentCrossAxis = rehax.components.layout.Layout.AlignmentCrossAxis;
+
+typedef StackLayout = rehax.components.layout.StackLayout.StackLayout;
+typedef FlexLayout = rehax.components.layout.FlexLayout.FlexLayout;

@@ -105,7 +105,7 @@ class View {
     children.insert(atIndex, child);
 
     if (layout == null) {
-      this.layout = rehax.components.layout.StackLayout.Create({ spacing: 10.0 });
+      this.layout = rehax.components.layout.StackLayout.Create({});
     } else {
       // TODO it is inefficient to calc the layout for all children every time one is added
       layout.layout(this.native);

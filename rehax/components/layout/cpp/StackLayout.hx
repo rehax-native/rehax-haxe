@@ -7,7 +7,7 @@ package rehax.components.layout.cpp;
 @:native("NativeStackLayout")
 @:structAccess
 extern class NativeStackLayout {
-  @:native("NativeStackLayout") public function new(isHorizontal:Bool, spacing:Float) {}
+  @:native("NativeStackLayout") public function new(isHorizontal:Bool, spacing:Float);
   public extern function layoutContainer(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
 }
 

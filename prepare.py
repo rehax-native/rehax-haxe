@@ -8,7 +8,7 @@ if len(sys.argv) < 2:
   print('Possible backends: fluxe, native, web')
   sys.exit(1)
 
-
+is_mac = sys.platform == 'darwin'
 backend = sys.argv[1]
 
 # is_win = sys.platform
@@ -16,7 +16,7 @@ backend = sys.argv[1]
 
 if backend == 'fluxe':
   fluxe_lib_url = 'https://github.com/rehax-native/fluxe/releases/download/v0.0.1/fluxe-static.zip'
-  deps_dir = os.path.join(os.path.dirname(__file__), 'apple', 'deps')
+  deps_dir = os.path.join(os.path.dirname(__file__), 'dev', 'apple', 'deps')
   zip_path = os.path.join(deps_dir, 'fluxe-static.zip')
 
   import pathlib
@@ -28,3 +28,7 @@ if backend == 'fluxe':
   import zipfile
   with zipfile.ZipFile(zip_path, 'r') as zip_ref:
       zip_ref.extractall(deps_dir)
+
+if is_mac:
+  os.system('premake5 xcode4')
+os.system('premake5 gmake2')

@@ -5,6 +5,7 @@ import Type as RunTimeType;
 using rehax.components.Components;
 using rehax.Rehax;
 using rehax.Style;
+using dev.FlexLayoutTest;
 // using dev.LayoutTest;
 // using dev.VectorTest;
 
@@ -26,13 +27,13 @@ class App extends Component {
   //   <Button text={"Login"} onClick={() -> trace("OK")} />
   // </View>;
 
-  var body = <View>
-    Hello World
-    <Button text={"Click Me"} onClick={() -> trace("OK")} />
-    <TextInput value={""} placeholder={"Email"} />
-  </View>;
+  // var body = <View>
+  //   Hello World
+  //   <Button text={"Click Me"} onClick={() -> trace("OK")} />
+  //   <TextInput value={""} placeholder={"Email"} />
+  // </View>;
 
-
+  var body = <FlexLayoutTest1 />;
 
 
     // <Button text={"General Kenobi"} />;
