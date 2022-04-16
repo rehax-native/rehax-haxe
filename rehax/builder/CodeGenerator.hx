@@ -318,6 +318,7 @@ class CodeGenerator {
       }
 
       if (isTopLevel) {
+        mountExprs.push({expr: Context.parse('this.componentDidMount();', Context.currentPos()), tags: ['Mount']});
         unmountExprs.push({expr: Context.parse('this.parent = null;', Context.currentPos()), tags: ['Unmount']});
       }
     }

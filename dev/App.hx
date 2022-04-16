@@ -6,6 +6,7 @@ using rehax.components.Components;
 using rehax.Rehax;
 using rehax.Style;
 using dev.FlexLayoutTest;
+using dev.SomeAppTest;
 // using dev.LayoutTest;
 // using dev.VectorTest;
 
@@ -33,7 +34,8 @@ class App extends Component {
   //   <TextInput value={""} placeholder={"Email"} />
   // </View>;
 
-  var body = <FlexLayoutTest1 />;
+  // var body = <FlexLayoutTest1 />;
+  var body = <SomeAppTest />;
 
 
     // <Button text={"General Kenobi"} />;

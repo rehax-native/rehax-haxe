@@ -27,6 +27,7 @@ class View {
     //   // parent.element.insertBefore(element, parent.element.childNodes[atIndex]);
     // }
     parent.addChild(this);
+    this.componentDidMount();
   }
 
   public function unmount() {

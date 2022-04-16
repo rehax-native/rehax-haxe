@@ -14,6 +14,7 @@ class StackLayout implements ILayout {
   public static function Create(options:StackLayoutOptions) {
     var layout = new StackLayout();
 		layout.stackLayout.layoutDirection = options.direction == Horizontal ? Horizontal : Vertical;
+		layout.stackLayout.spacing = options.spacing;
     return layout;
   }
 }
