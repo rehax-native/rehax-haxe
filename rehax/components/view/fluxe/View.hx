@@ -44,10 +44,10 @@ class View {
   public function componentDidMount() {}
 
   public function removeFromParent() {
-    // TODO
-    // if (element != null && element.parentNode != null) {
-    //   element.parentNode.removeChild(element);
-    // }
+    if (this.parent != null) {
+      this.parent.view.removeSubView(this.view);
+      this.parent != null;
+    }
   }
 
   public var layout(default, set):ILayout;
