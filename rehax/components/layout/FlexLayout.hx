@@ -5,7 +5,15 @@ typedef FlexItem = {
   ?flexGrow:Float,
 }
 
+enum FlexDirection {
+  Column;
+  Row;
+  ColumnReverse;
+  RowReverse;
+}
+
 typedef FlexLayoutOptions = {
+  ?direction: FlexDirection,
 	?items:Array<FlexItem>,
 }
 

@@ -34,8 +34,12 @@ class Tester extends Component {
 }
 
 class SomeAppTest extends Component {
-  var body = <View layout={StackLayout.Create({
-      direction: Horizontal
+  var body = <View layout={FlexLayout.Create({
+      direction: Row,
+      items: [
+        { flexGrow: 1.0 },
+        { flexGrow: 3.0 },
+      ]
   })}>
     <View>
       <Browser />
@@ -44,10 +48,6 @@ class SomeAppTest extends Component {
       <Header />
       <Tester />
     </View>
-
-    <Button text={"Test"} onClick={() -> {
-      // trace(this._body.v0);
-    }} />
   </View>;
 
   public override function componentDidMount() {

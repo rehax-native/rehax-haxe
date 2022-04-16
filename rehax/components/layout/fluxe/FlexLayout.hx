@@ -14,8 +14,21 @@ class FlexLayout implements ILayout {
 
   public static function Create(options:FlexLayoutOptions) {
     var layout = new FlexLayout();
-    layout.flexLayout.itemInfos = options.items;
-    // TODO set direction
+    if (options.direction != null) {
+      switch (options.direction) {
+        case Column:
+          layout.flexLayout.direction = Column;
+        case Row:
+          layout.flexLayout.direction = Row;
+        case ColumnReverse:
+          layout.flexLayout.direction = ColumnReverse;
+        case RowReverse:
+          layout.flexLayout.direction = RowReverse;
+      }
+    }
+    if (options.items != null) {
+      layout.flexLayout.itemInfos = options.items;
+    }
     return layout;
   }
 }
