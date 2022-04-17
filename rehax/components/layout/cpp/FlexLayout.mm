@@ -23,6 +23,16 @@ NativeFlexLayout::NativeFlexLayout(bool isHorizontal, bool isReverse)
 :isHorizontal(isHorizontal), isReverse(isReverse)
 {}
 
+void NativeFlexLayout::clearItems()
+{
+  items.clear();
+}
+
+void NativeFlexLayout::addItem(NativeFlexItem item)
+{
+  items.push_back(item);
+}
+
 void NativeFlexLayout::layoutContainer(NativeView* container)
 {
   NSView * view = (__bridge NSView *) container->nativeView;
@@ -35,8 +45,11 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
 
   auto crossPropMin = isHorizontal ? NSLayoutAttributeTop : NSLayoutAttributeLeft;
   auto crossPropSize = isHorizontal ? NSLayoutAttributeHeight : NSLayoutAttributeWidth;
+  auto sizeProp = isHorizontal ? NSLayoutAttributeWidth : NSLayoutAttributeHeight;
   
   NSLayoutConstraint * constraint;
+
+  float totalFlex = 0.0;
 
   if (view.subviews.count > 0) {
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:minProp relatedBy:NSLayoutRelationEqual toItem:view.subviews[0] attribute:minProp multiplier:1.0 constant:-spacing];
@@ -51,6 +64,10 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
     constraint = [NSLayoutConstraint constraintWithItem:view.subviews[0] attribute:crossPropSize relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:crossPropSize multiplier:1.0 constant:-2.0 * spacing];
     constraint.identifier = @"rhx_layout";
     [view addConstraint:constraint];
+
+    if (items.size() > 0 && items[0].hasFlexGrow) {
+      totalFlex += items[0].flexGrow;
+    }
   }
 
   for (int i = 1; i < view.subviews.count; i++) {
@@ -69,6 +86,10 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
     constraint = [NSLayoutConstraint constraintWithItem:subView attribute:crossPropSize relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:crossPropSize multiplier:1.0 constant:-2.0 * spacing];
     constraint.identifier = @"rhx_layout";
     [view addConstraint:constraint];
+
+    if (items.size() > i && items[i].hasFlexGrow) {
+      totalFlex += items[i].flexGrow;
+    }
   }
 
   if (prevView != NULL)
@@ -85,4 +106,17 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
     constraint.identifier = @"rhx_layout";
     [view addConstraint:constraint];
   }
+
+  if (totalFlex > 0.0) {
+    for (int i = 0; i < view.subviews.count; i++) {
+      auto item = items[i];
+      if (item.hasFlexGrow) {
+        auto subView = view.subviews[i];
+        auto flexConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:sizeProp relatedBy:NSLayoutRelationEqual toItem:view attribute:sizeProp multiplier:item.flexGrow / totalFlex constant:0.0];
+        flexConstraint.identifier = @"rhx_layout";
+        [view addConstraint:flexConstraint];
+      }
+    }
+  }
+  NSLog(@"Total flex: %f", totalFlex);
 }

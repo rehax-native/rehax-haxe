@@ -123,7 +123,11 @@ class View {
     isMounted = true;
     set_size(size);
     set_position(position);
+
+    componentDidMount();
   }
+
+  public function componentDidMount() {}
 
   public function unmount() {
     parent.native.ptr.removeFromParent();

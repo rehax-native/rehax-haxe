@@ -70,4 +70,10 @@ void NativeStackLayout::layoutContainer(NativeView* container)
     constraint.identifier = @"rhx_layout";
     [view addConstraint:constraint];
   }
+  
+  if (prevView) {
+    constraint = [NSLayoutConstraint constraintWithItem:prevView attribute:maxProp relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:maxProp multiplier:1.0 constant:-spacing];
+    constraint.identifier = @"rhx_layout";
+    [view addConstraint:constraint];
+  }
 }
