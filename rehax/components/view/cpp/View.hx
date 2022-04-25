@@ -73,8 +73,6 @@ extern class NativeView {
   function setHeightFixed(height:Float):Void;
   function setWidthPercentage(percent:Float):Void;
   function setHeightPercentage(percent:Float):Void;
-  function setWidthFlex(flex:Float, totalFlex:Float):Void;
-  function setHeightFlex(flex:Float, totalFlex:Float):Void;
 
   function setVerticalPositionNatural(previousView:cpp.RawPointer<NativeView>):Void;
   function setHorizontalPositionNatural(previousView:cpp.RawPointer<NativeView>):Void;
@@ -160,59 +158,29 @@ class View {
 
   public function set_size(size:Size):Size {
     this.size = size;
-    // if (!isMounted) {
-    //   return size;
-    // }
-    // switch (size.width) {
-    //   case Natural:
-    //     native.ptr.setWidthNatural();
-    //   case Fixed(size):
-    //     native.ptr.setWidthFixed(size);
-    //   case Fill:
-    //     native.ptr.setWidthFill();
-    //   case Flex(flex):
-    //     var totalFlex = 0.0;
-    //     if (parent != null) {
-    //       for (child in parent.children) {
-    //         switch (child.size.width) {
-    //           case Flex(flex):
-    //             totalFlex += flex;
-    //           default:
-    //         }
-    //       }
-    //     }
-    //     if (totalFlex == 0.0) {
-    //       totalFlex = 1.0;
-    //     }
-    //     native.ptr.setWidthFlex(flex, totalFlex);
-    //   case Percentage(percent):
-    //     native.ptr.setWidthPercentage(percent);
-    // }
-    // switch (size.height) {
-    //   case Natural:
-    //     native.ptr.setHeightNatural();
-    //   case Fixed(size):
-    //     native.ptr.setHeightFixed(size);
-    //   case Fill:
-    //     native.ptr.setHeightFill();
-    //   case Flex(flex):
-    //     var totalFlex = 0.0;
-    //     if (parent != null) {
-    //       for (child in parent.children) {
-    //         switch (child.size.height) {
-    //           case Flex(flex):
-    //             totalFlex += flex;
-    //           default:
-    //         }
-    //       }
-    //     }
-    //     if (totalFlex == 0.0) {
-    //       totalFlex = 1.0;
-    //     }
-    //     native.ptr.setHeightFlex(flex, totalFlex);
-    //   case Percentage(percent):
-    //     native.ptr.setHeightPercentage(percent);
-    // }
+    if (!isMounted) {
+      return size;
+    }
+    switch (size.width) {
+      case Natural:
+        native.ptr.setWidthNatural();
+      case Fixed(size):
+        native.ptr.setWidthFixed(size);
+      case Fill:
+        native.ptr.setWidthFill();
+      case Percentage(percent):
+        native.ptr.setWidthPercentage(percent);
+    }
+    switch (size.height) {
+      case Natural:
+        native.ptr.setHeightNatural();
+      case Fixed(size):
+        native.ptr.setHeightFixed(size);
+      case Fill:
+        native.ptr.setHeightFill();
+      case Percentage(percent):
+        native.ptr.setHeightPercentage(percent);
+    }
     return size;
   }
 
@@ -223,43 +191,43 @@ class View {
 
   public function set_position(position:Position):Position {
     this.position = position;
-    // if (!isMounted) {
-    //   return position;
-    // }
-    // switch (position.left) {
-    //   case Natural:
-    //     var previousView = null;
-    //     if (parent != null && parent.layoutDirection == Horizontal) {
-    //       var nextIndex = parent.children.indexOf(this) - 1;
-    //       while (previousView == null && nextIndex >= 0) {
-    //         if (parent.children[nextIndex].position.left == Natural) {
-    //           previousView = parent.children[nextIndex];
-    //           break;
-    //         }
-    //         nextIndex--;
-    //       }
-    //     }
-    //     native.ptr.setHorizontalPositionNatural(previousView != null ? previousView.native.raw : null);
-    //   case Fixed(size):
-    //     native.ptr.setHorizontalPositionFixed(size);
-    // }
-    // switch (position.top) {
-    //   case Natural:
-    //     var previousView = null;
-    //     if (parent != null && parent.layoutDirection == Vertical) {
-    //       var nextIndex = parent.children.indexOf(this) - 1;
-    //       while (previousView == null && nextIndex >= 0) {
-    //         if (parent.children[nextIndex].position.top == Natural) {
-    //           previousView = parent.children[nextIndex];
-    //           break;
-    //         }
-    //         nextIndex--;
-    //       }
-    //     }
-    //     native.ptr.setVerticalPositionNatural(previousView != null ? previousView.native.raw : null);
-    //   case Fixed(size):
-    //     native.ptr.setVerticalPositionFixed(size);
-    // }
+    if (!isMounted) {
+      return position;
+    }
+    switch (position.left) {
+      case Natural:
+      //   var previousView = null;
+      //   if (parent != null && parent.layoutDirection == Horizontal) {
+      //     var nextIndex = parent.children.indexOf(this) - 1;
+      //     while (previousView == null && nextIndex >= 0) {
+      //       if (parent.children[nextIndex].position.left == Natural) {
+      //         previousView = parent.children[nextIndex];
+      //         break;
+      //       }
+      //       nextIndex--;
+      //     }
+      //   }
+      //   native.ptr.setHorizontalPositionNatural(previousView != null ? previousView.native.raw : null);
+      case Fixed(size):
+        native.ptr.setHorizontalPositionFixed(size);
+    }
+    switch (position.top) {
+      case Natural:
+      //   var previousView = null;
+      //   if (parent != null && parent.layoutDirection == Vertical) {
+      //     var nextIndex = parent.children.indexOf(this) - 1;
+      //     while (previousView == null && nextIndex >= 0) {
+      //       if (parent.children[nextIndex].position.top == Natural) {
+      //         previousView = parent.children[nextIndex];
+      //         break;
+      //       }
+      //       nextIndex--;
+      //     }
+      //   }
+      //   native.ptr.setVerticalPositionNatural(previousView != null ? previousView.native.raw : null);
+      case Fixed(size):
+        native.ptr.setVerticalPositionFixed(size);
+    }
     return position;
   }
 
@@ -288,14 +256,6 @@ class View {
         // el.style.color = 'rgba(${color.red}, ${color.green}, ${color.blue}, ${color.alpha})';
         case opacity(amount):
         // el.style.opacity = Std.string(amount);
-        case horizontalAlignment(alignment):
-        // el.style.textAlign
-        // el.style.justifyContent
-        // el.style.alignItems
-        case verticalAlignment(alignment):
-          // el.style.textAlign
-          // el.style.justifyContent
-          // el.style.alignItems
       }
     }
   }

@@ -10,9 +10,6 @@ enum SizeDimension {
   /** Fill the parent **/
   Fill;
 
-  /** Flex box grow value **/
-  Flex(flex:Float);
-
   /** Percentage of parent **/
   Percentage(percent:Float);
 }
@@ -38,29 +35,6 @@ typedef Position = {
 typedef Frame = {
   var position:Position;
   var size:Size;
-}
-
-enum LayoutDirection {
-  Vertical;
-  Horizontal;
-  VerticalReverse;
-  HorizontalReverse;
-}
-
-enum AlignmentMainAxis {
-  Start;
-  End;
-  Center;
-  SpaceBetween;
-  SpaceAround;
-  SpaceEvenly;
-}
-
-enum AlignmentCrossAxis {
-  Start;
-  End;
-  Center;
-  Stretch;
 }
 
 #if js

@@ -60,24 +60,10 @@ class Color {
   }
 }
 
-enum VerticalAlignment {
-  Top;
-  Center;
-  Bottom;
-}
-
-enum HorizontalAlignment {
-  Leading;
-  Center;
-  Trailing;
-}
-
 enum StyleProperty {
   backgroundColor(color:Color);
   textColor(color:Color);
   opacity(opacity:Float);
-  verticalAlignment(alignment:VerticalAlignment);
-  horizontalAlignment(alignment:HorizontalAlignment);
 }
 
 enum MediaQueryOrientation {

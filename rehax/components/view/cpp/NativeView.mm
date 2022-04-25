@@ -210,16 +210,6 @@ void NativeView::setHeightPercentage(float percentage)
   [[view superview] addConstraint:constraint];
 }
 
-void NativeView::setWidthFlex(float flex, float totalFlex)
-{
-  setWidthPercentage(flex / totalFlex * 100);
-}
-
-void NativeView::setHeightFlex(float flex, float totalFlex)
-{
-  setHeightPercentage(flex / totalFlex * 100);
-}
-
 void NativeView::setVerticalPositionNatural(NativeView * previousView)
 {
   NSView * view = (__bridge NSView *) nativeView;

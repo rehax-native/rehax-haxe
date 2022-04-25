@@ -57,8 +57,6 @@ public:
   RHX_EXPORT void setHeightFixed(float height);
   RHX_EXPORT void setWidthPercentage(float percent);
   RHX_EXPORT void setHeightPercentage(float percent);
-  RHX_EXPORT void setWidthFlex(float flex, float totalFlex);
-  RHX_EXPORT void setHeightFlex(float flex, float totalFlex);
 
   RHX_EXPORT virtual void setVerticalPositionNatural(NativeView *previousView);
   RHX_EXPORT virtual void setHorizontalPositionNatural(NativeView *previousView);

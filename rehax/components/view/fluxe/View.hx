@@ -11,6 +11,8 @@ class View {
 
   private var hoverStyle:Style;
 
+  public var children:Array<View> = [];
+
   public function new() {}
 
   public function createFragment() {
@@ -38,6 +40,7 @@ class View {
   public function destroy() {}
 
   public function addChild(child:View) {
+    children.push(child);
     // child.set_size(child.size);
   }
 
@@ -57,64 +60,6 @@ class View {
     this.view.layout = layout.fluxeLayout;
     return layout;
   }
-
-  // public var layoutDirection(default, set):LayoutDirection;
-
-  // public function set_layoutDirection(layoutDirection:LayoutDirection):LayoutDirection {
-  //   this.layoutDirection = layoutDirection;
-  //   // var el = cast(element, js.html.DOMElement);
-  //   // switch (layoutDirection) {
-  //   //   case Vertical:
-  //   //     el.style.flexDirection = 'column';
-  //   //   case Horizontal:
-  //   //     el.style.flexDirection = 'row';
-  //   //   case VerticalReverse:
-  //   //     el.style.flexDirection = 'column-reverse';
-  //   //   case HorizontalReverse:
-  //   //     el.style.flexDirection = 'row-reverse';
-  //   // }
-  //   return layoutDirection;
-  // }
-
-  // public var alignmentMainAxis(default, set):AlignmentMainAxis;
-
-  // public function set_alignmentMainAxis(alignmentMainAxis:AlignmentMainAxis):AlignmentMainAxis {
-  //   this.alignmentMainAxis = alignmentMainAxis;
-  //   // var el = cast(element, js.html.DOMElement);
-  //   // switch (alignmentMainAxis) {
-  //   //   case Start:
-  //   //     el.style.justifyContent = 'flex-start';
-  //   //   case End:
-  //   //     el.style.justifyContent = 'flex-end';
-  //   //   case Center:
-  //   //     el.style.justifyContent = 'center';
-  //   //   case SpaceBetween:
-  //   //     el.style.justifyContent = 'space-between';
-  //   //   case SpaceAround:
-  //   //     el.style.justifyContent = 'space-around';
-  //   //   case SpaceEvenly:
-  //   //     el.style.justifyContent = 'space-evenly';
-  //   // }
-  //   return alignmentMainAxis;
-  // }
-
-  // public var alignmentCrossAxis(default, set):AlignmentCrossAxis;
-
-  // public function set_alignmentCrossAxis(alignmentCrossAxis:AlignmentCrossAxis):AlignmentCrossAxis {
-  //   this.alignmentCrossAxis = alignmentCrossAxis;
-  //   // var el = cast(element, js.html.DOMElement);
-  //   // switch (alignmentCrossAxis) {
-  //   //   case Start:
-  //   //     el.style.alignItems = 'flex-start';
-  //   //   case End:
-  //   //     el.style.alignItems = 'flex-end';
-  //   //   case Center:
-  //   //     el.style.alignItems = 'center';
-  //   //   case Stretch:
-  //   //     el.style.alignItems = 'stretch';
-  //   // }
-  //   return alignmentCrossAxis;
-  // }
 
   public var style(default, set):rehax.Style;
 
@@ -137,41 +82,33 @@ class View {
     // el.style.flexGrow = '';
     // switch (size.width) {
     //   case Natural:
-    //     el.style.width = '';
-    //   case Fixed(px):
-    //     el.style.width = px + 'px';
-    //   case Fill:
-    //     el.style.width = '100%';
-    //   case Percentage(pc):
-    //     el.style.width = pc + '%';
-    //   case Flex(prop):
-    //     // flex only makes sense in the flex direction. In the cross direction it's the same as 100%
-    //     var parentFlexDir = el.parentElement != null ? el.parentElement.style.flexDirection : 'column';
-    //     if (parentFlexDir == 'column') {
-    //       el.style.width = '100%';
-    //     } else {
-    //       el.style.width = '';
-    //       el.style.flexGrow = prop + '';
+    //     if (this.view.layoutConstraints != null) {
+    //       this.view.layoutConstraints.width = null;
     //     }
+    //   case Fixed(px):
+    //     if (this.view.layoutConstraints == null) {
+    //       this.view.layoutConstraints = {};
+    //     }
+    //     this.view.layoutConstraints.width = px;
+    //   case Fill:
+    // //     el.style.width = '100%';
+    //   case Percentage(pc):
+    // //     el.style.width = pc + '%';
     // }
     // switch (size.height) {
     //   case Natural:
-    //     el.style.height = '';
-    //   case Fixed(px):
-    //     el.style.height = px + 'px';
-    //   case Fill:
-    //     el.style.height = '100%';
-    //   case Percentage(pc):
-    //     el.style.height = pc + '%';
-    //   case Flex(prop):
-    //     // flex only makes sense in the flex direction. In the cross direction it's the same as 100%
-    //     var parentFlexDir = el.parentElement != null ? el.parentElement.style.flexDirection : 'column';
-    //     if (parentFlexDir == 'row') {
-    //       el.style.height = '100%';
-    //     } else {
-    //       el.style.height = '';
-    //       el.style.flexGrow = prop + '';
+    //     if (this.view.layoutConstraints != null) {
+    //       this.view.layoutConstraints.height = null;
     //     }
+    //   case Fixed(px):
+    //     if (this.view.layoutConstraints == null) {
+    //       this.view.layoutConstraints = {};
+    //     }
+    //     this.view.layoutConstraints.height = px;
+    //   case Fill:
+    // //     el.style.height = '100%';
+    //   case Percentage(pc):
+    // //     el.style.height = pc + '%';
     // }
     return size;
   }

@@ -1,8 +1,13 @@
 package rehax.components.layout;
 
+enum StackLayoutDirection {
+  Vertical;
+  Horizontal;
+}
+
 typedef StackLayoutOptions = {
-	?direction:rehax.components.layout.Layout.LayoutDirection,
-	?spacing:Float
+  ?direction:StackLayoutDirection,
+  ?spacing:Float
 }
 
 #if js
