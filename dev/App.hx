@@ -8,7 +8,7 @@ using rehax.Style;
 using dev.FlexLayoutTest;
 using dev.SomeAppTest;
 // using dev.LayoutTest;
-// using dev.VectorTest;
+using dev.VectorTest;
 
 class App extends Component {
   static function main() {
@@ -35,7 +35,9 @@ class App extends Component {
   // </View>;
 
   // var body = <FlexLayoutTest1 />;
-  var body = <SomeAppTest />;
+  // var body = <SomeAppTest />;
+  var body = <HeartShapeColorful />;
+  // var body = <Knob />;
 
 
     // <Button text={"General Kenobi"} />;

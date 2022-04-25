@@ -48,6 +48,18 @@ void NativeVectorElement::setHorizontalPositionNatural(NativeView *previousView)
 void NativeVectorElement::setLineWidth(float width)
 {
   CALayer * layer = (__bridge CALayer *) nativeView;
+  static int once = 0;
+  if (once == 5) {
+//    CIFilter * filter = [CIGau]
+//    filter.radius = 10;
+    
+    CIFilter * _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+     [_blurFilter setDefaults];
+     [_blurFilter setValue:[NSNumber numberWithFloat:5.0] forKey:@"inputRadius"];
+    
+    layer.filters = [NSArray arrayWithObject:_blurFilter];
+  }
+  once++;
   CAShapeLayer * shapeLayer = getShapeAtIndex(layer, 1);
   shapeLayer.lineWidth = width;
 }

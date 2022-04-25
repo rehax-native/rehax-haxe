@@ -1,7 +1,6 @@
 package rehax.components.vector.cpp;
 
 #if cpp
-using rehax.components.view.Layout;
 using rehax.components.view.cpp.View;
 using rehax.components.vector.cpp.Common;
 
