@@ -24,10 +24,19 @@ extern class NativeRoot extends NativeView {
 class Root extends View {
   var root:Pointer<NativeRoot>;
 
-  public function new() {
+  public static function CreateWithExistingPlatformView(platformView:Pointer<NativeRoot>):Root {
+    var root = new Root(true);
+    root.root = platformView;
+    root.native = root.root.reinterpret();
+    return root;
+  }
+
+  public function new(?skipCreate:Bool) {
     super();
-    this.root = NativeRoot.createInstance();
-    native = this.root.reinterpret();
+    if (skipCreate != true) {
+      this.root = NativeRoot.createInstance();
+      native = this.root.reinterpret();
+    }
   }
 
   public function initialize(onReady:Void->Void) {

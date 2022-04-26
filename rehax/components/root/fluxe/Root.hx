@@ -38,6 +38,13 @@ using fluxe.layout.StackLayout;
 // }
 
 class Root extends rehax.components.view.View {
+
+  public static function CreateWithExistingPlatformView(platformView:View):Root {
+    var root = new Root();
+    root.view = platformView;
+    return root;
+  }
+
   public function new() {
     super();
   }
