@@ -28,7 +28,7 @@ class InjectBuild {
 			'<compilerflag value="-mmacosx-version-min=10.9" />',
 		];
 		var runtimeFlags = [
-			'<compilerflag value="-std=c++20" />',
+			'<compilerflag value="-std=c++14" />',
 			'<compilerflag value="-stdlib=libc++" />',
 			'<compilerflag value="-mmacosx-version-min=10.9" />',
 		];
