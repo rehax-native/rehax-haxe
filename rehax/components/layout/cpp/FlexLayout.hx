@@ -2,7 +2,7 @@ package rehax.components.layout.cpp;
 
 #if cpp
 
-@:include("rehax/components/layout/cpp/FlexLayout.h")
+@:include("rehax/components/layout/cpp/NativeFlexLayout.h")
 @:unreflective
 @:native("NativeFlexItem")
 @:structAccess
@@ -12,7 +12,7 @@ extern class NativeFlexItem {
   public var hasFlexGrow:Bool;
 }
 
-@:include("rehax/components/layout/cpp/FlexLayout.h")
+@:include("rehax/components/layout/cpp/NativeFlexLayout.h")
 @:unreflective
 @:native("NativeFlexLayout")
 @:structAccess

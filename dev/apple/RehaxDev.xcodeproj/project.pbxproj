@@ -29,8 +29,8 @@
 		927D358627FDA30300FD2E86 /* liboutput-debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A83E27D0DE6100CEA175 /* liboutput-debug.a */; };
 		927D358727FDA30300FD2E86 /* libRehaxMacBackend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9264A7FA27D0D95800CEA175 /* libRehaxMacBackend.a */; };
 		927D358927FDA30300FD2E86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
-		927E9DD02806310E007BBA3A /* FlexLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 927E9DCF2806310E007BBA3A /* FlexLayout.mm */; };
-		927E9DD22806318F007BBA3A /* StackLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 927E9DD12806318F007BBA3A /* StackLayout.mm */; };
+		92992DFB281819E000B5127E /* NativeFlexLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92992DF9281819E000B5127E /* NativeFlexLayout.mm */; };
+		92992DFC281819E000B5127E /* NativeStackLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92992DFA281819E000B5127E /* NativeStackLayout.mm */; };
 		92A5CD4727D043990048519F /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4627D043990048519F /* Tests_iOS.swift */; };
 		92A5CD4927D043990048519F /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4827D043990048519F /* Tests_iOSLaunchTests.swift */; };
 		92A5CD5327D043990048519F /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD5227D043990048519F /* Tests_macOS.swift */; };
@@ -105,8 +105,8 @@
 		9264A83B27D0DD5400CEA175 /* NativeButton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeButton.mm; path = ../../rehax/components/button/cpp/NativeButton.mm; sourceTree = "<group>"; };
 		9264A83E27D0DE6100CEA175 /* liboutput-debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "liboutput-debug.a"; path = "lib/liboutput-debug.a"; sourceTree = "<group>"; };
 		927D358D27FDA30300FD2E86 /* RehaxDev Fluxe (macOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RehaxDev Fluxe (macOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		927E9DCF2806310E007BBA3A /* FlexLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = FlexLayout.mm; path = ../../rehax/components/layout/cpp/FlexLayout.mm; sourceTree = "<group>"; };
-		927E9DD12806318F007BBA3A /* StackLayout.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = StackLayout.mm; path = ../../rehax/components/layout/cpp/StackLayout.mm; sourceTree = "<group>"; };
+		92992DF9281819E000B5127E /* NativeFlexLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeFlexLayout.mm; path = ../../rehax/components/layout/cpp/NativeFlexLayout.mm; sourceTree = "<group>"; };
+		92992DFA281819E000B5127E /* NativeStackLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeStackLayout.mm; path = ../../rehax/components/layout/cpp/NativeStackLayout.mm; sourceTree = "<group>"; };
 		92A5CD3027D043990048519F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92A5CD3527D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A5CD3B27D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +181,8 @@
 		9264A81B27D0DC7600CEA175 /* MacBackend */ = {
 			isa = PBXGroup;
 			children = (
+				92992DF9281819E000B5127E /* NativeFlexLayout.mm */,
+				92992DFA281819E000B5127E /* NativeStackLayout.mm */,
 				9264A82427D0DD0700CEA175 /* NativeView.h */,
 				9264A82627D0DD1400CEA175 /* NativeView.mm */,
 				9264A82827D0DD2900CEA175 /* NativeVectorContainer.h */,
@@ -201,8 +203,6 @@
 		92A5CD2827D043970048519F = {
 			isa = PBXGroup;
 			children = (
-				927E9DD12806318F007BBA3A /* StackLayout.mm */,
-				927E9DCF2806310E007BBA3A /* FlexLayout.mm */,
 				9264A81B27D0DC7600CEA175 /* MacBackend */,
 				92A5CD2D27D043970048519F /* Shared */,
 				92A5CD3C27D043990048519F /* macOS */,
@@ -533,14 +533,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				927E9DD22806318F007BBA3A /* StackLayout.mm in Sources */,
-				927E9DD02806310E007BBA3A /* FlexLayout.mm in Sources */,
 				9264A82727D0DD1400CEA175 /* NativeView.mm in Sources */,
 				9264A83727D0DD4500CEA175 /* NativeRoot.mm in Sources */,
 				9264A83D27D0DD5500CEA175 /* NativeButton.mm in Sources */,
 				9264A83227D0DD3C00CEA175 /* NativeText.mm in Sources */,
 				9264A82F27D0DD3400CEA175 /* NativeTextInput.mm in Sources */,
 				9264A82B27D0DD2900CEA175 /* NativeVectorContainer.mm in Sources */,
+				92992DFB281819E000B5127E /* NativeFlexLayout.mm in Sources */,
+				92992DFC281819E000B5127E /* NativeStackLayout.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

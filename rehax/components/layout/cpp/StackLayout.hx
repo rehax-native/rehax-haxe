@@ -2,7 +2,7 @@ package rehax.components.layout.cpp;
 
 #if cpp
 
-@:include("rehax/components/layout/cpp/StackLayout.h")
+@:include("rehax/components/layout/cpp/NativeStackLayout.h")
 @:unreflective
 @:native("NativeStackLayout")
 @:structAccess
