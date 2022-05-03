@@ -68,6 +68,8 @@ public:
   RHX_EXPORT void setTextColor(NativeColor color);
   RHX_EXPORT void setOpacity(float opacity);
 
+  RHX_EXPORT void setNativeViewRaw(void * nativeView);
+
   void *nativeView = nullptr;
 };
 

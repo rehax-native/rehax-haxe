@@ -23,16 +23,11 @@ void NativeRoot::initialize(std::function<void(void)> onReady) {
                         backing:NSBackingStoreBuffered
                         defer:NO];
 
-    NSView * view = [NativeRootView new];
-    // [view setFrame:NSMakeRect(0, 0, 600, 600)];
-    [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-    view.translatesAutoresizingMaskIntoConstraints = YES;
-
+    createFragment();
+    NSView * view = (__bridge NSView *) nativeView;
     [window setContentView:view];
 
     [window makeKeyAndOrderFront:NSApp];
-    // nativeBackend = (void *) CFBridgingRetain(window);
-    nativeView = (void *) CFBridgingRetain(view);
 
     onReady();
 
@@ -43,6 +38,11 @@ void NativeRoot::initialize(std::function<void(void)> onReady) {
 
 void NativeRoot::createFragment()
 {
+  NSView * view = [NativeRootView new];
+  // [view setFrame:NSMakeRect(0, 0, 600, 600)];
+  [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+  view.translatesAutoresizingMaskIntoConstraints = YES;
+  nativeView = (void *) CFBridgingRetain(view);
 }
 
 void NativeRoot::addView(NativeView * child)

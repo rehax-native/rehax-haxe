@@ -82,6 +82,8 @@ extern class NativeView {
   function setBackgroundColor(color:NativeColor):Void;
   function setTextColor(color:NativeColor):Void;
   function setOpacity(opacity:Float):Void;
+
+  function setNativeViewRaw(view:cpp.RawPointer<Void>):Void;
 }
 
 class View {

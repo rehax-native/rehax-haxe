@@ -80,6 +80,11 @@ void NativeView::teardown()
 //   nativeView = nullptr;
 // }
 
+void NativeView::setNativeViewRaw(void * view)
+{
+  nativeView = view;
+}
+
 void NativeView::addView(NativeView * child)
 {
   NSView * view = (__bridge NSView *) nativeView;
