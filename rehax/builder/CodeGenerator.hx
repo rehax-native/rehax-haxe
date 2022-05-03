@@ -304,17 +304,18 @@ class CodeGenerator {
         }
       }
 
-      createExprs.push({
-        expr: Context.parse('var result = {' + names.map(name -> name[0] + ':' + name[1]).join(',') + '};', Context.currentPos()),
-        tags: ['VarAssignment', 'Result']
-      });
+      var bodyResult = '{' + names.map(name -> name[0] + ':' + name[1]).join(',') + '}';
+      // createExprs.push({
+      //   expr: Context.parse('var result = ' + bodyResult + ';', Context.currentPos()),
+      //   tags: ['VarAssignment', 'Result']
+      // });
       if (isTopLevel) {
-        createExprs.push({expr: Context.parse('_body = result;', Context.currentPos()), tags: ['VarAssignment', 'Body']});
+        createExprs.push({expr: Context.parse('_body = $bodyResult;', Context.currentPos()), tags: ['VarAssignment', 'Body']});
       } else if (parentPart != null && parentPart.isArray) {
-        createExprs.push({expr: Context.parse('${parentVarName}.push(result);', Context.currentPos()), tags: ['VarAssignment']});
+        createExprs.push({expr: Context.parse('${parentVarName}.push($bodyResult);', Context.currentPos()), tags: ['VarAssignment']});
         unmountExprs.push({expr: Context.parse('${parentVarAccessor}.splice(__rehax_${depth - 1}, 1);', Context.currentPos()), tags: ['ForUnmount']});
       } else {
-        createExprs.push({expr: Context.parse('${parentVarName} = result;', Context.currentPos()), tags: ['VarAssignment']});
+        createExprs.push({expr: Context.parse('${parentVarName} = $bodyResult;', Context.currentPos()), tags: ['VarAssignment']});
       }
 
       if (isTopLevel) {
