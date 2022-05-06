@@ -48,6 +48,22 @@ void NativeTextInput::setTextColor(NativeColor color)
   [view setTextColor:c];
 }
 
+void NativeTextInput::setTextAlignment(int alignment)
+{
+  NSTextField * view = (__bridge NSTextField *) nativeView;
+  switch (alignment) {
+    case 0:
+      [view setAlignment:NSTextAlignmentLeft];
+      break;
+    case 1:
+      [view setAlignment:NSTextAlignmentCenter];
+      break;
+    case 2:
+      [view setAlignment:NSTextAlignmentRight];
+      break;
+  }
+}
+
 void NativeTextInput::addView(NativeView * child)
 {
   NativeView::addView(child);

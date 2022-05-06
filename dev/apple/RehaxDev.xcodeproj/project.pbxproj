@@ -31,6 +31,8 @@
 		927D358927FDA30300FD2E86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
 		92992DFB281819E000B5127E /* NativeFlexLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92992DF9281819E000B5127E /* NativeFlexLayout.mm */; };
 		92992DFC281819E000B5127E /* NativeStackLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92992DFA281819E000B5127E /* NativeStackLayout.mm */; };
+		929E0A6A2824827D00FE781A /* NativeGesture.mm in Sources */ = {isa = PBXBuildFile; fileRef = 929E0A682824827D00FE781A /* NativeGesture.mm */; };
+		929E0A6B2824827D00FE781A /* NativeGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = 929E0A692824827D00FE781A /* NativeGesture.h */; };
 		92A5CD4727D043990048519F /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4627D043990048519F /* Tests_iOS.swift */; };
 		92A5CD4927D043990048519F /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD4827D043990048519F /* Tests_iOSLaunchTests.swift */; };
 		92A5CD5327D043990048519F /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD5227D043990048519F /* Tests_macOS.swift */; };
@@ -107,6 +109,8 @@
 		927D358D27FDA30300FD2E86 /* RehaxDev Fluxe (macOS).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RehaxDev Fluxe (macOS).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92992DF9281819E000B5127E /* NativeFlexLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeFlexLayout.mm; path = ../../rehax/components/layout/cpp/NativeFlexLayout.mm; sourceTree = "<group>"; };
 		92992DFA281819E000B5127E /* NativeStackLayout.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeStackLayout.mm; path = ../../rehax/components/layout/cpp/NativeStackLayout.mm; sourceTree = "<group>"; };
+		929E0A682824827D00FE781A /* NativeGesture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeGesture.mm; path = ../../rehax/components/view/cpp/NativeGesture.mm; sourceTree = "<group>"; };
+		929E0A692824827D00FE781A /* NativeGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeGesture.h; path = ../../rehax/components/view/cpp/NativeGesture.h; sourceTree = "<group>"; };
 		92A5CD3027D043990048519F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		92A5CD3527D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A5CD3B27D043990048519F /* RehaxDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RehaxDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +185,8 @@
 		9264A81B27D0DC7600CEA175 /* MacBackend */ = {
 			isa = PBXGroup;
 			children = (
+				929E0A692824827D00FE781A /* NativeGesture.h */,
+				929E0A682824827D00FE781A /* NativeGesture.mm */,
 				92992DF9281819E000B5127E /* NativeFlexLayout.mm */,
 				92992DFA281819E000B5127E /* NativeStackLayout.mm */,
 				9264A82427D0DD0700CEA175 /* NativeView.h */,
@@ -273,6 +279,7 @@
 				9264A83C27D0DD5400CEA175 /* NativeButton.h in Headers */,
 				9264A82A27D0DD2900CEA175 /* NativeVectorContainer.h in Headers */,
 				9264A82E27D0DD3400CEA175 /* NativeTextInput.h in Headers */,
+				929E0A6B2824827D00FE781A /* NativeGesture.h in Headers */,
 				9264A83627D0DD4500CEA175 /* NativeRoot.h in Headers */,
 				9264A83327D0DD3C00CEA175 /* NativeText.h in Headers */,
 				9264A82527D0DD0700CEA175 /* NativeView.h in Headers */,
@@ -539,6 +546,7 @@
 				9264A83227D0DD3C00CEA175 /* NativeText.mm in Sources */,
 				9264A82F27D0DD3400CEA175 /* NativeTextInput.mm in Sources */,
 				9264A82B27D0DD2900CEA175 /* NativeVectorContainer.mm in Sources */,
+				929E0A6A2824827D00FE781A /* NativeGesture.mm in Sources */,
 				92992DFB281819E000B5127E /* NativeFlexLayout.mm in Sources */,
 				92992DFC281819E000B5127E /* NativeStackLayout.mm in Sources */,
 			);

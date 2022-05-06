@@ -1,6 +1,7 @@
 #include "NativeView.h"
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#include "NativeGesture.h"
 
 @interface FlippedView : NSView
 - (BOOL)isFlipped;
@@ -376,4 +377,12 @@ void NativeView::setOpacity(float opacity)
 {
   NSView * view = (__bridge NSView *) nativeView;
   [view setAlphaValue:opacity];
+}
+
+void NativeView::addGesture(NativeGesture nativeGesture)
+{
+  NSView * view = (__bridge NSView *) nativeView;
+  NSGestureRecognizer * rec = (__bridge NSGestureRecognizer *) nativeGesture.native;
+
+  [view addGestureRecognizer:rec];
 }

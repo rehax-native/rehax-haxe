@@ -20,6 +20,13 @@ extern class NativeTextInput extends NativeView {
   function getText():cpp.ConstCharStar;
   function setPlaceholder(text:cpp.ConstCharStar):Void;
   function setTextColor(color:NativeColor):Void;
+  function setTextAlignment(alignment:Int):Void;
+}
+
+enum TextAlignment {
+  Left;
+  Center;
+  Right;
 }
 
 class TextInput extends View {
@@ -52,6 +59,21 @@ class TextInput extends View {
     var textView:Pointer<NativeTextInput> = native.reinterpret();
     textView.ptr.setPlaceholder(cpp.ConstCharStar.fromString(text));
     return text;
+  }
+
+  public var textAlignment(null, set):TextAlignment;
+
+  public function set_textAlignment(textAlignment:TextAlignment):TextAlignment {
+    var textView:Pointer<NativeTextInput> = native.reinterpret();
+    switch (textAlignment) {
+      case Left:
+        textView.ptr.setTextAlignment(0);
+      case Center:
+        textView.ptr.setTextAlignment(1);
+      case Right:
+        textView.ptr.setTextAlignment(2);
+    }
+    return textAlignment;
   }
 
   public override function setElementStyle(style:Style) {

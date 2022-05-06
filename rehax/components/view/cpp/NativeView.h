@@ -9,6 +9,8 @@
 #endif
 #endif
 
+class NativeGesture;
+
 struct NativePosition
 {
   float x;
@@ -69,6 +71,8 @@ public:
   RHX_EXPORT void setOpacity(float opacity);
 
   RHX_EXPORT void setNativeViewRaw(void * nativeView);
+
+  RHX_EXPORT void addGesture(NativeGesture nativeGesture);
 
   void *nativeView = nullptr;
 };

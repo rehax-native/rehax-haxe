@@ -14,3 +14,5 @@ typedef Frame = rehax.components.layout.Layout.Frame;
 
 typedef StackLayout = rehax.components.layout.StackLayout.StackLayout;
 typedef FlexLayout = rehax.components.layout.FlexLayout.FlexLayout;
+
+typedef Gesture = rehax.components.view.View.Gesture;

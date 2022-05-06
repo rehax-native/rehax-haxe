@@ -9,6 +9,7 @@ using dev.FlexLayoutTest;
 using dev.SomeAppTest;
 // using dev.LayoutTest;
 using dev.VectorTest;
+using dev.GestureTest;
 
 class App extends Component {
   static function main() {
@@ -36,7 +37,8 @@ class App extends Component {
 
   // var body = <FlexLayoutTest1 />;
   // var body = <SomeAppTest />;
-  var body = <HeartShapeColorful />;
+  // var body = <HeartShapeColorful />;
+  var body = <GestureTest />;
   // var body = <Knob />;
 
 

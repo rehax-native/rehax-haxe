@@ -152,5 +152,11 @@ class View {
       size: size,
     }
   }
+
+  public function addGesture(gesture:Gesture) {
+    if (view != null) {
+      view.mouseEventListeners.push(gesture.fluxeGesture);
+    }
+  }
 }
 #end

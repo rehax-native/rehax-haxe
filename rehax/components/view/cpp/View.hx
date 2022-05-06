@@ -3,6 +3,7 @@ package rehax.components.view.cpp;
 #if cpp
 using rehax.components.root.cpp.Root;
 using rehax.components.layout.Layout;
+using haxe.EnumTools.EnumValueTools;
 
 import cpp.Pointer;
 import cpp.RawPointer;
@@ -84,6 +85,8 @@ extern class NativeView {
   function setOpacity(opacity:Float):Void;
 
   function setNativeViewRaw(view:cpp.RawPointer<Void>):Void;
+
+  function addGesture(gesture:rehax.components.view.cpp.Gesture.NativeGesture):Void;
 }
 
 class View {
@@ -121,7 +124,10 @@ class View {
     // native.ptr.setPosition(pos);
     parent.addChild(this, atIndex == null ? parent.children.length : atIndex);
     isMounted = true;
-    set_size(size);
+
+    setNativeWidth();
+    setNativeHeight();
+
     set_position(position);
 
     componentDidMount();
@@ -159,10 +165,27 @@ class View {
   };
 
   public function set_size(size:Size):Size {
-    this.size = size;
     if (!isMounted) {
+      this.size = size;
       return size;
     }
+
+    var needsWidth = !this.size.width.equals(size.width);
+    var needsHeight = !this.size.height.equals(size.height);
+
+    this.size = size;
+
+    if (needsWidth) {
+      setNativeWidth();
+    }
+    if (needsHeight) {
+      setNativeHeight();
+    }
+
+    return size;
+  }
+
+  private function setNativeWidth() {
     switch (size.width) {
       case Natural:
         native.ptr.setWidthNatural();
@@ -173,6 +196,9 @@ class View {
       case Percentage(percent):
         native.ptr.setWidthPercentage(percent);
     }
+  }
+
+  private function setNativeHeight() {
     switch (size.height) {
       case Natural:
         native.ptr.setHeightNatural();
@@ -183,7 +209,6 @@ class View {
       case Percentage(percent):
         native.ptr.setHeightPercentage(percent);
     }
-    return size;
   }
 
   public var position(default, set):Position = {
@@ -260,6 +285,10 @@ class View {
         // el.style.opacity = Std.string(amount);
       }
     }
+  }
+
+  public function addGesture(gesture:Gesture) {
+    native.ptr.addGesture(gesture.native);
   }
 }
 #end

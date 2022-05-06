@@ -13,6 +13,7 @@ public:
 
   RHX_EXPORT void setPlaceholder(const char *text);
 
+  RHX_EXPORT void setTextAlignment(int alignment);
   RHX_EXPORT void setTextColor(NativeColor color);
   RHX_EXPORT void addView(NativeView *child) override;
 };
