@@ -17,8 +17,14 @@ extern class NativeFlexItem {
 @:native("NativeFlexLayout")
 @:structAccess
 extern class NativeFlexLayout {
-  @:native("NativeFlexLayout") public function new(isHorizontal:Bool, isReverse:Bool);
+  @:native("NativeFlexLayout") public function new();
   public extern function layoutContainer(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
+  public extern function setOptions(
+    isHorizontal:Bool,
+    isReverse:Bool,
+    justifyContent:Int,
+    alignItems:Int
+  ):Void;
 
   public extern function clearItems():Void;
   public extern function addItem(item:NativeFlexItem):Void;
@@ -30,16 +36,26 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
 		var layout = new FlexLayout(
       options.direction == Row || options.direction == RowReverse,
       options.direction == ColumnReverse || options.direction == RowReverse,
+      options.justifyContent != null ? options.justifyContent : FlexStart,
+      options.alignItems != null ? options.alignItems : FlexStart,
       options.items
     );
     return layout;
   }
 
   var items:Array<rehax.components.layout.FlexLayout.FlexItem> = [];
+  var isHorizontal:Bool;
+  var isReverse:Bool;
+  var justifyContent:Int;
+  var alignItems:Int;
 
-  public function new(isHorizontal:Bool, isReverse:Bool, items:Array<rehax.components.layout.FlexLayout.FlexItem>) {
-    this.nativeLayout = new NativeFlexLayout(isHorizontal, isReverse);
+  public function new(isHorizontal:Bool, isReverse:Bool, justifyContent:rehax.components.layout.FlexLayout.FlexJustifyContent, alignItems:rehax.components.layout.FlexLayout.FlexAlignItems, items:Array<rehax.components.layout.FlexLayout.FlexItem>) {
+    this.nativeLayout = new NativeFlexLayout();
     this.items = items;
+    this.isHorizontal = isHorizontal;
+    this.isReverse = isReverse;
+    this.justifyContent = justifyContent;
+    this.alignItems = alignItems;
   }
 
   private var nativeLayout:NativeFlexLayout;
@@ -54,6 +70,12 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
       }
       nativeLayout.addItem(n);
     }
+    nativeLayout.setOptions(
+      isHorizontal,
+      isReverse,
+      justifyContent,
+      alignItems
+    );
     nativeLayout.layoutContainer(container);
   }
 }

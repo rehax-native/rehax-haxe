@@ -12,7 +12,13 @@ class NativeFlexLayout : public INativeLayout
 {
 public:
   RHX_EXPORT NativeFlexLayout();
-  RHX_EXPORT NativeFlexLayout(bool isHorizontal, bool isReverse);
+
+  RHX_EXPORT void setOptions(
+    bool isHorizontal,
+    bool isReverse, 
+    int justifyContent,
+    int alignItems
+  );
   RHX_EXPORT void layoutContainer(NativeView* container);
 
   RHX_EXPORT void clearItems();
@@ -20,6 +26,9 @@ public:
 
 private:
   std::vector<NativeFlexItem> items;
-  bool isHorizontal = false;
-  bool isReverse = false;
+
+  bool isHorizontal;
+  bool isReverse;
+  int justifyContent;
+  int alignItems;
 };
