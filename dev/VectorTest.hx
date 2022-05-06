@@ -29,6 +29,7 @@ class HeartShape extends Component {
 }
 
 class HeartShapeColorful extends Component {
+  private var arcRadius = 20.0;
   var body = <View size={{ width: SizeDimension.Fixed(100), height: SizeDimension.Fixed(100) }}>
     <VectorContainer width={100} height={100}>
       <VectorLinearGradient id={"gradient1"} stops={[
@@ -61,8 +62,8 @@ class HeartShapeColorful extends Component {
       ]}/>
       <VectorPath operations={[
         MoveTo(10, 30),
-        Arc(20, 20, 0, 0, 1, 50, 30),
-        Arc(20, 20, 0, 0, 1, 90, 30),
+        Arc(arcRadius, arcRadius, 0, 0, 1, 50, 30),
+        Arc(arcRadius, arcRadius, 0, 0, 1, 90, 30),
         QuadraticBezier(90, 60, 50, 90),
         QuadraticBezier(10, 60, 10, 30),
         Close,
@@ -73,6 +74,7 @@ class HeartShapeColorful extends Component {
         FillWithDefinition('gradient2'),
       ]} />
     </VectorContainer>
+    <Button text={"Toggle"} onClick={() -> { arcRadius = arcRadius < 25 ? 30 : 20; updateViews(); }} />
   </View>
 }
 

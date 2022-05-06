@@ -48,18 +48,6 @@ void NativeVectorElement::setHorizontalPositionNatural(NativeView *previousView)
 void NativeVectorElement::setLineWidth(float width)
 {
   CALayer * layer = (__bridge CALayer *) nativeView;
-  static int once = 0;
-  if (once == 5) {
-//    CIFilter * filter = [CIGau]
-//    filter.radius = 10;
-    
-    CIFilter * _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-     [_blurFilter setDefaults];
-     [_blurFilter setValue:[NSNumber numberWithFloat:5.0] forKey:@"inputRadius"];
-    
-    layer.filters = [NSArray arrayWithObject:_blurFilter];
-  }
-  once++;
   CAShapeLayer * shapeLayer = getShapeAtIndex(layer, 1);
   shapeLayer.lineWidth = width;
 }
@@ -155,6 +143,24 @@ void NativeVectorElement::setStrokeGradient(NativeGradient gradient)
   strokeLayer.frame = layer.bounds;
 }
 
+void NativeVectorElement::setFilters(NativeFilters filters)
+{
+  CALayer * layer = (__bridge CALayer *) nativeView;
+//    CIFilter * filter = [CIGau]
+//    filter.radius = 10;
+  
+  NSMutableArray * array = [NSMutableArray new];
+  for (auto & filter : filters.defs) {
+    if (filter.type == 0) {
+      CIFilter * _blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+      [_blurFilter setDefaults];
+      [_blurFilter setValue:[NSNumber numberWithFloat:filter.blurRadius] forKey:@"inputRadius"];
+      [array addObject:_blurFilter];
+    }
+  }
+  
+  layer.filters = array;
+}
 
 void NativeVectorCircle::createFragment()
 {
@@ -207,25 +213,18 @@ void NativeVectorPath::createFragment()
   
   CAGradientLayer * fillGradientLayer = [CAGradientLayer layer];
   fillGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
+  CAGradientLayer * strokeGradientLayer = [CAGradientLayer layer];
+  strokeGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
   
-  CGPathRef path = CGPathCreateMutable();
   CAShapeLayer * fillLayer = [CAShapeLayer layer];
-  fillLayer.path = path;
   fillLayer.fillColor = [NSColor whiteColor].CGColor;
   fillLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-  
   fillGradientLayer.mask = fillLayer;
   
-  CAGradientLayer * strokeGradientLayer = [CAGradientLayer layer];
-  
-  path = CGPathCreateMutable();
   CAShapeLayer * strokeLayer = [CAShapeLayer layer];
-  strokeLayer.path = path;
   strokeLayer.fillColor = [NSColor clearColor].CGColor;
   strokeLayer.strokeColor = [NSColor whiteColor].CGColor;
   strokeLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-  
-  strokeGradientLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
   strokeGradientLayer.mask = strokeLayer;
   
   [layer addSublayer:fillGradientLayer];
@@ -236,6 +235,16 @@ void NativeVectorPath::createFragment()
 
 void NativeVectorPath::beginPath()
 {
+  CALayer * layer = (__bridge CALayer *) nativeView;
+  
+  CAShapeLayer * fillLayer = (CAShapeLayer *) layer.sublayers[0].mask;
+  CAShapeLayer * strokeLayer = (CAShapeLayer *) layer.sublayers[1].mask;
+  
+  CGPathRef path = CGPathCreateMutable();
+  fillLayer.path = path;
+  
+  path = CGPathCreateMutable();
+  strokeLayer.path = path;
 }
 
 void NativeVectorPath::pathHorizontalTo(float x)

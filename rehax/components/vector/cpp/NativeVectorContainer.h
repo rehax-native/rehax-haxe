@@ -18,6 +18,20 @@ struct NativeGradient {
   }
 };
 
+struct NativeFilterDef {
+  int type;
+  float blurRadius;
+};
+
+struct NativeFilters {
+  std::vector<NativeFilterDef> defs;
+
+  void addBlurFilter(float blurRadius)
+  {
+    defs.push_back({ 0, blurRadius });
+  }
+};
+
 class NativeVectorContainer : public NativeView
 {
 public:
@@ -38,6 +52,8 @@ public:
 
   RHX_EXPORT void setFillGradient(NativeGradient gradient);
   RHX_EXPORT void setStrokeGradient(NativeGradient gradient);
+  
+  RHX_EXPORT void setFilters(NativeFilters filters);
 
   RHX_EXPORT virtual void setWidthNatural() override;
   RHX_EXPORT virtual void setHeightNatural() override;
