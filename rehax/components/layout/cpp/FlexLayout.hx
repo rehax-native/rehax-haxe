@@ -10,6 +10,7 @@ extern class NativeFlexItem {
   @:native("NativeFlexItem") public function new();
   public var flexGrow:Float;
   public var hasFlexGrow:Bool;
+  public var alignSelf:Int;
 }
 
 @:include("rehax/components/layout/cpp/NativeFlexLayout.h")
@@ -62,13 +63,20 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
 
   public function layout(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>) {
     nativeLayout.clearItems();
-    for (item in items) {
-      var n = new NativeFlexItem();
-      n.hasFlexGrow = item.flexGrow != null;
-      if (n.hasFlexGrow) {
-        n.flexGrow = item.flexGrow;
+    if (items != null) {
+      for (item in items) {
+        var n = new NativeFlexItem();
+        n.hasFlexGrow = item.flexGrow != null;
+        if (n.hasFlexGrow) {
+          n.flexGrow = item.flexGrow;
+        }
+        if (item.alignSelf != null) {
+          n.alignSelf = item.alignSelf;
+        } else {
+          n.alignSelf = -1;
+        }
+        nativeLayout.addItem(n);
       }
-      nativeLayout.addItem(n);
     }
     nativeLayout.setOptions(
       isHorizontal,

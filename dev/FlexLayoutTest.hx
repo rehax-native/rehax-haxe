@@ -37,6 +37,7 @@ class FlexLayoutTest1 extends Component {
     </View>
     <Button text={"Button 4 | Align Start"} onClick={() -> { align = FlexStart; updateViews(); }} />
     <Button text={"Button 5 | Align End"} onClick={() -> { align = FlexEnd; updateViews(); }} />
+    <Button text={"Button 6 | Align Stretch"} onClick={() -> { align = Stretch; updateViews(); }} />
   </View>;
 }
 

@@ -1,10 +1,5 @@
 package rehax.components.layout;
 
-typedef FlexItem = {
-  ?order:Int,
-  ?flexGrow:Float,
-}
-
 enum FlexDirection {
   Column;
   Row;
@@ -51,7 +46,13 @@ enum abstract FlexAlignItems(Int) to Int {
   var FlexEnd; // cross-end margin edge of the items is placed on the cross-end line
   var Center; // items are centered in the cross-axis
   // var Baseline; // items are aligned such as their baselines align
-  // var Stretch; // stretch to fill the container (still respect min-width/max-width)
+  var Stretch; // stretch to fill the container (still respect min-width/max-width)
+}
+
+typedef FlexItem = {
+  ?order:Int,
+  ?flexGrow:Float,
+  ?alignSelf:FlexAlignItems,
 }
 
 typedef FlexLayoutOptions = {

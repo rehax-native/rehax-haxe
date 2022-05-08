@@ -6,6 +6,7 @@
 struct NativeFlexItem {
   float flexGrow;
   bool hasFlexGrow;
+  int alignSelf = -1;
 };
 
 class NativeFlexLayout : public INativeLayout
