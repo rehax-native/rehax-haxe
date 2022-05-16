@@ -57,13 +57,13 @@ void NativeStackLayout::layoutContainer(NativeView* container)
 
   if (view.subviews.count > 0) {
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:minProp relatedBy:NSLayoutRelationEqual toItem:view.subviews[0] attribute:minProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"Stack min";
+    constraint.identifier = @"Stack main pos min";
     [view addConstraint:constraint];
     [constraintsArray addObject:constraint];
     prevView = view.subviews[0];
     
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:crossPropMin relatedBy:NSLayoutRelationEqual toItem:view.subviews[0] attribute:crossPropMin multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"Stack cross pos";
+    constraint.identifier = @"Stack cross pos min";
     [view addConstraint:constraint];
     [constraintsArray addObject:constraint];
     
@@ -84,7 +84,7 @@ void NativeStackLayout::layoutContainer(NativeView* container)
     prevView = subView;
 
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:crossPropMin relatedBy:NSLayoutRelationEqual toItem:subView attribute:crossPropMin multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"Stack cross pos";
+    constraint.identifier = @"Stack cross pos min";
     [view addConstraint:constraint];
     [constraintsArray addObject:constraint];
     
