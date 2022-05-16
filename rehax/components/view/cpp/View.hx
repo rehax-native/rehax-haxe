@@ -136,10 +136,12 @@ class View {
   public function componentDidMount() {}
 
   public function unmount() {
-    parent.native.ptr.removeFromParent();
+    if (parent != null) {
+      parent.native.ptr.removeFromParent();
+      parent.children.remove(this);
+    }
     isMounted = false;
     this.parent = null;
-    parent.children.remove(this);
   }
 
   public var layout(default, set):ILayout;
