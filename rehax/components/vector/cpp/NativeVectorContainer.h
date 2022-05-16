@@ -21,6 +21,16 @@ struct NativeGradient {
 struct NativeFilterDef {
   int type;
   float blurRadius;
+
+  void setType(int type)
+  {
+    this->type = type;
+  }
+
+  void setBlurRadius(float blurRadius)
+  {
+    this->blurRadius = blurRadius;
+  }
 };
 
 struct NativeFilters {

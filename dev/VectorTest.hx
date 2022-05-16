@@ -72,6 +72,9 @@ class HeartShapeColorful extends Component {
         StrokeWidth(5),
         StrokeWithDefinition('gradient1'),
         FillWithDefinition('gradient2'),
+        Filters([
+          Blur(2),
+        ])
       ]} />
     </VectorContainer>
     <Button text={"Toggle"} onClick={() -> { arcRadius = arcRadius < 25 ? 30 : 20; updateViews(); }} />

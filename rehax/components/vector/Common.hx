@@ -22,6 +22,10 @@ typedef GradientDefintion = {
   }>;
 }
 
+enum VectorFilter {
+  Blur(radius:Float);
+}
+
 enum VectorStyleProperty {
   Fill(color:Color);
   Stroke(color:Color);
@@ -30,4 +34,5 @@ enum VectorStyleProperty {
   StrokeWidth(width:Float);
   StrokeLineCap(cap:StrokeLineCap);
   StrokeLineJoin(join:StrokeLineJoin);
+  Filters(filters:Array<VectorFilter>);
 }

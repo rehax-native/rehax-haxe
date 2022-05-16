@@ -96,6 +96,15 @@ class VectorElement extends View {
               break;
             }
           }
+        case Filters(filters):
+          var native = NativeFilters.create();
+          for (filter in filters) {
+            switch (filter) {
+              case Blur(radius):
+                native.addBlurFilter(radius);
+            }
+          }
+          el.ptr.setFilters(native);
       }
     }
 
@@ -106,6 +115,31 @@ class VectorElement extends View {
     super.mount(parent, atIndex);
     set_vectorStyle(vectorStyle);
   }
+}
+
+// @:unreflective
+// @:structAccess
+// @:include("rehax/components/vector/cpp/NativeVectorContainer.h")
+// @:native("NativeFilterDef")
+// extern class NativeFilterDef {
+// 	public static inline function create():NativeFilterDef {
+// 		return untyped __cpp__("{}");
+// 	}
+
+//   function setType(type:Int):Void;
+//   function setBlurRadius(blurRadius:Float):Void;
+// }
+
+@:unreflective
+@:structAccess
+@:include("rehax/components/vector/cpp/NativeVectorContainer.h")
+@:native("NativeFilters")
+extern class NativeFilters {
+	public static inline function create():NativeFilters {
+		return untyped __cpp__("{}");
+	}
+
+  function addBlurFilter(blurRadius:Float):Void;
 }
 
 @:unreflective
@@ -149,6 +183,7 @@ extern class NativeVectorElement extends NativeView {
   function setStrokeColor(color:NativeColor):Void;
   function setFillGradient(gradient:NativeGradient):Void;
   function setStrokeGradient(gradient:NativeGradient):Void;
+  function setFilters(filters:NativeFilters):Void;
 
   function setWidthNatural():Void;
   function setHeightNatural():Void;
