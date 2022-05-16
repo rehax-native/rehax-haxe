@@ -137,7 +137,7 @@ class View {
 
   public function unmount() {
     if (parent != null) {
-      parent.native.ptr.removeFromParent();
+      native.ptr.removeFromParent();
       parent.children.remove(this);
     }
     isMounted = false;
