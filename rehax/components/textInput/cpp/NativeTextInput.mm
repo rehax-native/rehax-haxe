@@ -2,8 +2,34 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
+@interface FunctionalNSTextField : NSTextField <NSTextFieldDelegate>
+{
+  @public
+  std::function<void(const char*)> callback;
+}
+
+- (void)setCallback:(std::function<void(const char*)>)callback;
+- (void)controlTextDidChange:(id)notification;
+
+@end
+
+@implementation FunctionalNSTextField
+
+- (void)setCallback:(std::function<void(const char*)>)cb
+{
+  self.delegate = self;
+  callback = cb;
+}
+
+- (void)controlTextDidChange:(id)notification
+{
+  callback([self stringValue].UTF8String);
+}
+
+@end
+
 void NativeTextInput::createFragment() {
-  NSTextField * view = [NSTextField new];
+  NSTextField * view = [FunctionalNSTextField new];
   [view setFrame:NSMakeRect(0, 0, 200, 200)];
   [view setStringValue:@""];
   view.editable = YES;
@@ -69,4 +95,10 @@ void NativeTextInput::addView(NativeView * child)
   NativeView::addView(child);
   NSTextField * view = (__bridge NSTextField *) nativeView;
   [view sizeToFit];
+}
+
+void NativeTextInput::setOnValueChange(std::function<void(const char *)> onValueChange)
+{
+  FunctionalNSTextField * view = (__bridge FunctionalNSTextField *) nativeView;
+  [view setCallback:onValueChange];
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../view/cpp/NativeView.h"
+#include <functional>
 
 class NativeTextInput : public NativeView
 {
@@ -10,6 +11,8 @@ public:
 
   RHX_EXPORT void setText(const char *text);
   RHX_EXPORT const char *getText();
+
+  RHX_EXPORT void setOnValueChange(std::function<void(const char *)> onValueChange);
 
   RHX_EXPORT void setPlaceholder(const char *text);
 
