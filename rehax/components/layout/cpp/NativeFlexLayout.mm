@@ -3,20 +3,33 @@
 #import <Cocoa/Cocoa.h>
 
 
-void NativeFlexLayoutRemoveAllConstraintsWidthId(NSView * view, NSString * identifier)
+void NativeFlexLayout::cleanUp(NativeView* container)
 {
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
-  NSArray *filteredArray = [[view constraints] filteredArrayUsingPredicate:predicate];
-
-  for (id constraint in filteredArray)
+  if (nativeInfo != nullptr)
   {
-//    NSLog(@"Remove constraint %@", constraint);
-    [view removeConstraint:constraint];
+    NSArray<NSLayoutConstraint*> * constraints = (NSArray<NSLayoutConstraint*> *) CFBridgingRelease(nativeInfo);
+
+//    NSLog(@"Removing %lu constraints", constraints.count);
+    for (NSLayoutConstraint* constraint in constraints)
+    {
+      NSView * first = constraint.firstItem;
+      NSView * second = constraint.secondItem;
+      [first removeConstraint:constraint];
+      [second removeConstraint:constraint];
+      constraint.active = NO;
+    }
+
+    nativeInfo = NULL;
   }
 }
 
 NativeFlexLayout::NativeFlexLayout()
 {}
+
+NativeFlexLayout::~NativeFlexLayout()
+{
+  cleanUp(nullptr);
+}
 
 void NativeFlexLayout::clearItems()
 {
@@ -85,15 +98,19 @@ std::tuple<NSLayoutAttribute, NSLayoutAttribute, bool, NSLayoutAttribute> flexLa
 void NativeFlexLayout::layoutContainer(NativeView* container)
 {
   NSView * view = (__bridge NSView *) container->nativeView;
+  
+  cleanUp(nullptr);
+  
+  NSMutableArray * constraintsArray = [NSMutableArray array];
+  nativeInfo = (void*) CFBridgingRetain(constraintsArray);
+  
   NSView * prevView = NULL;
-  NativeFlexLayoutRemoveAllConstraintsWidthId(view, @"rhx_layout");
   float spacing = 0.0;
   
   auto crossProps = flexLayoutAttributeForAlign(!isHorizontal, alignItems);
 
   auto minProp = isHorizontal ? NSLayoutAttributeLeft : NSLayoutAttributeTop;
   auto maxProp = isHorizontal ? NSLayoutAttributeRight : NSLayoutAttributeBottom;
-
   auto sizeProp = isHorizontal ? NSLayoutAttributeWidth : NSLayoutAttributeHeight;
   
   NSLayoutConstraint * constraint;
@@ -110,17 +127,20 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
     }
 
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:std::get<1>(itemProps) relatedBy:NSLayoutRelationEqual toItem:view.subviews[0] attribute:std::get<1>(itemProps) multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex cross axis min";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:view.subviews[0] attribute:std::get<0>(itemProps) relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:std::get<0>(itemProps) multiplier:1.0 constant:-2.0 * spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex cross size max";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
 
     if (std::get<2>(itemProps)) {
       constraint = [NSLayoutConstraint constraintWithItem:view.subviews[0] attribute:std::get<3>(itemProps) relatedBy:NSLayoutRelationEqual toItem:view attribute:std::get<3>(itemProps) multiplier:1.0 constant:-2.0 * spacing];
-      constraint.identifier = @"rhx_layout";
+      constraint.identifier = @"Flex cross axis max";
       [view addConstraint:constraint];
+      [constraintsArray addObject:constraint];
     }
 
     prevView = view.subviews[0];
@@ -140,23 +160,27 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
     }
 
     constraint = [NSLayoutConstraint constraintWithItem:prevView attribute:maxProp relatedBy:NSLayoutRelationEqual toItem:subView attribute:minProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex main between children";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
 
     prevView = subView;
 
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:std::get<1>(itemProps) relatedBy:NSLayoutRelationEqual toItem:subView attribute:std::get<1>(itemProps) multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex cross axis min";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:subView attribute:std::get<0>(itemProps) relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:std::get<0>(itemProps) multiplier:1.0 constant:-2.0 * spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex cross size max";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
 
     if (std::get<2>(itemProps)) {
       constraint = [NSLayoutConstraint constraintWithItem:subView attribute:std::get<3>(itemProps) relatedBy:NSLayoutRelationEqual toItem:view attribute:std::get<3>(itemProps) multiplier:1.0 constant:-2.0 * spacing];
-      constraint.identifier = @"rhx_layout";
+      constraint.identifier = @"Flex cross axis max";
       [view addConstraint:constraint];
+      [constraintsArray addObject:constraint];
     }
 
     if (items.size() > i && items[i].hasFlexGrow) {
@@ -166,9 +190,10 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
       auto subView = view.subviews[i];
       if (prevFlexView) {
         float multiplier = item.flexGrow / prevFlex;
-        auto flexConstraint = [NSLayoutConstraint constraintWithItem:subView attribute:sizeProp relatedBy:NSLayoutRelationEqual toItem:prevFlexView attribute:sizeProp multiplier:multiplier constant:0.0];
-        flexConstraint.identifier = @"rhx_layout";
-        [view addConstraint:flexConstraint];
+        auto constraint = [NSLayoutConstraint constraintWithItem:subView attribute:sizeProp relatedBy:NSLayoutRelationEqual toItem:prevFlexView attribute:sizeProp multiplier:multiplier constant:0.0];
+        constraint.identifier = @"Flex grow";
+        [view addConstraint:constraint];
+        [constraintsArray addObject:constraint];
       }
       prevFlexView = subView;
       prevFlex = item.flexGrow;
@@ -182,15 +207,17 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
   if ((justifyContent == FlexStart || totalFlex > 0.0) && view.subviews.count > 0) {
     auto subView = view.subviews[0];
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:minProp relatedBy:NSLayoutRelationEqual toItem:subView attribute:minProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex main axis justify start";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
   }
 
   if ((justifyContent == FlexEnd || totalFlex > 0.0) && view.subviews.count > 0) {
     auto subView = view.subviews[view.subviews.count - 1];
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:maxProp relatedBy:NSLayoutRelationEqual toItem:subView attribute:maxProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex main axis justify end";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
   }
 
   if (justifyContent == Center && totalFlex == 0.0 && view.subviews.count > 0) {
@@ -210,7 +237,10 @@ void NativeFlexLayout::layoutContainer(NativeView* container)
     auto centerProp = isHorizontal ? NSLayoutAttributeCenterX : NSLayoutAttributeCenterY;
 
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:centerProp relatedBy:NSLayoutRelationEqual toItem:subView attribute:centerProp multiplier:1.0 constant:0];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Flex main axis justify center";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
   }
+  
+//  NSLog(@"Added %lu constraints", constraintsArray.count);
 }

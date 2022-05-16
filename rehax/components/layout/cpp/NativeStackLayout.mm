@@ -3,18 +3,6 @@
 #import <Cocoa/Cocoa.h>
 
 
-void NativeStackLayoutRemoveAllConstraintsWidthId(NSView * view, NSString * identifier)
-{
-  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
-  NSArray *filteredArray = [[view constraints] filteredArrayUsingPredicate:predicate];
-
-  for (id constraint in filteredArray)
-  {
-//    NSLog(@"Remove constraint %@", constraint);
-    [view removeConstraint:constraint];
-  }
-}
-
 NativeStackLayout::NativeStackLayout()
 :isHorizontal(false), spacing(0.0)
 {}
@@ -23,11 +11,40 @@ NativeStackLayout::NativeStackLayout(bool isHorizontal, float spacing)
 :isHorizontal(isHorizontal), spacing(spacing)
 {}
 
+NativeStackLayout::~NativeStackLayout()
+{
+  cleanUp(nullptr);
+}
+
+void NativeStackLayout::cleanUp(NativeView* container)
+{
+  if (nativeInfo != nullptr)
+  {
+    NSArray<NSLayoutConstraint*> * constraints = (NSArray<NSLayoutConstraint*> *) CFBridgingRelease(nativeInfo);
+
+//    NSLog(@"Removing %lu constraints", constraints.count);
+    for (NSLayoutConstraint* constraint in constraints)
+    {
+      NSView * first = constraint.firstItem;
+      NSView * second = constraint.secondItem;
+      [first removeConstraint:constraint];
+      [second removeConstraint:constraint];
+      constraint.active = NO;
+    }
+
+    nativeInfo = NULL;
+  }
+}
+
 void NativeStackLayout::layoutContainer(NativeView* container)
 {
   NSView * view = (__bridge NSView *) container->nativeView;
   NSView * prevView = NULL;
-  NativeStackLayoutRemoveAllConstraintsWidthId(view, @"rhx_layout");
+  
+  cleanUp(container);
+  
+  NSMutableArray * constraintsArray = [NSMutableArray array];
+  nativeInfo = (void*) CFBridgingRetain(constraintsArray);
 
   auto minProp = isHorizontal ? NSLayoutAttributeLeft : NSLayoutAttributeTop;
   auto maxProp = isHorizontal ? NSLayoutAttributeRight : NSLayoutAttributeBottom;
@@ -40,40 +57,47 @@ void NativeStackLayout::layoutContainer(NativeView* container)
 
   if (view.subviews.count > 0) {
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:minProp relatedBy:NSLayoutRelationEqual toItem:view.subviews[0] attribute:minProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack min";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
     prevView = view.subviews[0];
     
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:crossPropMin relatedBy:NSLayoutRelationEqual toItem:view.subviews[0] attribute:crossPropMin multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack cross pos";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:view.subviews[0] attribute:crossPropSize relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:crossPropSize multiplier:1.0 constant:-2.0 * spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack cross max size";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
   }
 
   for (int i = 1; i < view.subviews.count; i++) {
     NSView * subView = view.subviews[i];
 
     constraint = [NSLayoutConstraint constraintWithItem:prevView attribute:maxProp relatedBy:NSLayoutRelationEqual toItem:subView attribute:minProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack between children";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
 
     prevView = subView;
 
     constraint = [NSLayoutConstraint constraintWithItem:view attribute:crossPropMin relatedBy:NSLayoutRelationEqual toItem:subView attribute:crossPropMin multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack cross pos";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:subView attribute:crossPropSize relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:crossPropSize multiplier:1.0 constant:-2.0 * spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack cross max size";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
   }
   
   if (prevView) {
     constraint = [NSLayoutConstraint constraintWithItem:prevView attribute:maxProp relatedBy:NSLayoutRelationLessThanOrEqual toItem:view attribute:maxProp multiplier:1.0 constant:-spacing];
-    constraint.identifier = @"rhx_layout";
+    constraint.identifier = @"Stack max";
     [view addConstraint:constraint];
+    [constraintsArray addObject:constraint];
   }
 }

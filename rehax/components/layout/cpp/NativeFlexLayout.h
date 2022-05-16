@@ -13,6 +13,7 @@ class NativeFlexLayout : public INativeLayout
 {
 public:
   RHX_EXPORT NativeFlexLayout();
+  RHX_EXPORT ~NativeFlexLayout();
 
   RHX_EXPORT void setOptions(
     bool isHorizontal,
@@ -21,6 +22,7 @@ public:
     int alignItems
   );
   RHX_EXPORT void layoutContainer(NativeView* container);
+  RHX_EXPORT void cleanUp(NativeView* container);
 
   RHX_EXPORT void clearItems();
   RHX_EXPORT void addItem(NativeFlexItem item);
@@ -32,4 +34,6 @@ private:
   bool isReverse;
   int justifyContent;
   int alignItems;
+
+  void * nativeInfo = nullptr;
 };

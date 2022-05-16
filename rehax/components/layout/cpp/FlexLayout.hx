@@ -16,10 +16,10 @@ extern class NativeFlexItem {
 @:include("rehax/components/layout/cpp/NativeFlexLayout.h")
 @:unreflective
 @:native("NativeFlexLayout")
-@:structAccess
 extern class NativeFlexLayout {
-  @:native("NativeFlexLayout") public function new();
+  @:native("new NativeFlexLayout") public static function Create():cpp.Pointer<NativeFlexLayout>;
   public extern function layoutContainer(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
+  public extern function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
   public extern function setOptions(
     isHorizontal:Bool,
     isReverse:Bool,
@@ -51,7 +51,7 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
   var alignItems:Int;
 
   public function new(isHorizontal:Bool, isReverse:Bool, justifyContent:rehax.components.layout.FlexLayout.FlexJustifyContent, alignItems:rehax.components.layout.FlexLayout.FlexAlignItems, items:Array<rehax.components.layout.FlexLayout.FlexItem>) {
-    this.nativeLayout = new NativeFlexLayout();
+    this.nativeLayout = NativeFlexLayout.Create();
     this.items = items;
     this.isHorizontal = isHorizontal;
     this.isReverse = isReverse;
@@ -59,10 +59,10 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
     this.alignItems = alignItems;
   }
 
-  private var nativeLayout:NativeFlexLayout;
+  private var nativeLayout:cpp.Pointer<NativeFlexLayout>;
 
   public function layout(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>) {
-    nativeLayout.clearItems();
+    nativeLayout.ptr.clearItems();
     if (items != null) {
       for (item in items) {
         var n = new NativeFlexItem();
@@ -75,16 +75,20 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
         } else {
           n.alignSelf = -1;
         }
-        nativeLayout.addItem(n);
+        nativeLayout.ptr.addItem(n);
       }
     }
-    nativeLayout.setOptions(
+    nativeLayout.ptr.setOptions(
       isHorizontal,
       isReverse,
       justifyContent,
       alignItems
     );
-    nativeLayout.layoutContainer(container);
+    nativeLayout.ptr.layoutContainer(container);
+  }
+
+  public function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void {
+    nativeLayout.ptr.cleanUp(container);
   }
 }
 

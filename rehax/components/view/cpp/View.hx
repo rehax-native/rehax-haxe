@@ -145,6 +145,9 @@ class View {
   public var layout(default, set):ILayout;
 
   public function set_layout(layout:ILayout) {
+    if (this.layout != null) {
+      this.layout.cleanUp(this.native);
+    }
     this.layout = layout;
     layout.layout(this.native);
     return layout;

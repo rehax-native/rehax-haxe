@@ -5,10 +5,10 @@ package rehax.components.layout.cpp;
 @:include("rehax/components/layout/cpp/NativeStackLayout.h")
 @:unreflective
 @:native("NativeStackLayout")
-@:structAccess
 extern class NativeStackLayout {
-  @:native("NativeStackLayout") public function new(isHorizontal:Bool, spacing:Float);
+  @:native("new NativeStackLayout") public static function Create(isHorizontal:Bool, spacing:Float):cpp.Pointer<NativeStackLayout>;
   public extern function layoutContainer(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
+  public extern function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
 }
 
 class StackLayout implements rehax.components.layout.Layout.ILayout {
@@ -19,13 +19,17 @@ class StackLayout implements rehax.components.layout.Layout.ILayout {
   }
 
   public function new(isHorizontal:Bool, spacing:Float) {
-    this.nativeLayout = new NativeStackLayout(isHorizontal, spacing);
+    this.nativeLayout = NativeStackLayout.Create(isHorizontal, spacing);
   }
 
-  private var nativeLayout:NativeStackLayout;
+  private var nativeLayout:cpp.Pointer<NativeStackLayout>;
 
   public function layout(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>) {
-    nativeLayout.layoutContainer(container);
+    nativeLayout.ptr.layoutContainer(container);
+  }
+
+  public function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>) {
+    nativeLayout.ptr.cleanUp(container);
   }
 }
 
