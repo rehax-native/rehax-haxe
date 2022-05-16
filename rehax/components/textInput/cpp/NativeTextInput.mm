@@ -5,17 +5,17 @@
 @interface FunctionalNSTextField : NSTextField <NSTextFieldDelegate>
 {
   @public
-  std::function<void(const char*)> callback;
+  std::function<void(void)> callback;
 }
 
-- (void)setCallback:(std::function<void(const char*)>)callback;
+- (void)setCallback:(std::function<void(void)>)callback;
 - (void)controlTextDidChange:(id)notification;
 
 @end
 
 @implementation FunctionalNSTextField
 
-- (void)setCallback:(std::function<void(const char*)>)cb
+- (void)setCallback:(std::function<void(void)>)cb
 {
   self.delegate = self;
   callback = cb;
@@ -23,7 +23,7 @@
 
 - (void)controlTextDidChange:(id)notification
 {
-  callback([self stringValue].UTF8String);
+  callback();
 }
 
 @end
@@ -97,7 +97,7 @@ void NativeTextInput::addView(NativeView * child)
   [view sizeToFit];
 }
 
-void NativeTextInput::setOnValueChange(std::function<void(const char *)> onValueChange)
+void NativeTextInput::setOnValueChange(std::function<void(void)> onValueChange)
 {
   FunctionalNSTextField * view = (__bridge FunctionalNSTextField *) nativeView;
   [view setCallback:onValueChange];

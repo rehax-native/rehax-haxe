@@ -21,7 +21,7 @@ extern class NativeTextInput extends NativeView {
   function setPlaceholder(text:cpp.ConstCharStar):Void;
   function setTextColor(color:NativeColor):Void;
   function setTextAlignment(alignment:Int):Void;
-  function setOnValueChange(onValueChange:(value:String) -> Void):Void;
+  function setOnValueChange(onValueChange:() -> Void):Void;
 }
 
 enum TextAlignment {
@@ -58,7 +58,9 @@ class TextInput extends View {
 
   public function set_onValueChange(onValueChange:(value:String) -> Void):(value:String)->Void {
     var textView:Pointer<NativeTextInput> = native.reinterpret();
-    textView.ptr.setOnValueChange(onValueChange);
+    textView.ptr.setOnValueChange(() -> {
+      onValueChange(textView.ptr.getText());
+    });
     return onValueChange;
   }
 
