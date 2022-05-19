@@ -39,9 +39,10 @@ using fluxe.layout.StackLayout;
 
 class Root extends rehax.components.view.View {
 
-  public static function CreateWithExistingPlatformView(platformView:View):Root {
+  public static function CreateWithExistingPlatformView(platformView:cpp.RawPointer<Void>):Root {
     var root = new Root();
-    root.view = platformView;
+    root.platformView = platformView;
+    root.hasPlatformView = true;
     return root;
   }
 
@@ -49,11 +50,18 @@ class Root extends rehax.components.view.View {
     super();
   }
 
+  private var hasPlatformView:Bool = false;
+  private var platformView:cpp.RawPointer<Void>;
+
   public function initialize(onReady:Void->Void) {
       var container = new View();
       view = container;
       onReady();
-      EngineUtility.startWithView(container);
+      if (hasPlatformView) {
+        EngineUtility.startWithViewAndPlatformWindow(container, platformView);
+      } else {
+        EngineUtility.startWithView(container);
+      }
   }
 
   // public override function set_style(style:rehax.Style):rehax.Style {
