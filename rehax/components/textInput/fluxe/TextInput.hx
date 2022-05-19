@@ -29,6 +29,17 @@ class TextInput extends View {
     return textInput.value;
   }
 
+  public var onValueChange(get, set):(value:String)->Void;
+
+  public function get_onValueChange():(value:String)->Void {
+    return textInput.value;
+  }
+
+  public function set_onValueChange(onValueChange:(value:String) -> Void):(value:String)->Void {
+    textInput.value = onValueChange;
+    return onValueChange;
+  }
+
   public var placeholder(get, set):String;
 
   public function set_placeholder(placeholder:String):String {
