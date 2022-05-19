@@ -48,19 +48,19 @@ class Root extends rehax.components.view.View {
 
   public function new() {
     super();
+    var container = new View();
+    view = container;
   }
 
   private var hasPlatformView:Bool = false;
   private var platformView:cpp.RawPointer<Void>;
 
   public function initialize(onReady:Void->Void) {
-      var container = new View();
-      view = container;
       onReady();
       if (hasPlatformView) {
-        EngineUtility.startWithViewAndPlatformWindow(container, platformView);
+        EngineUtility.startWithViewAndPlatformWindow(view, platformView);
       } else {
-        EngineUtility.startWithView(container);
+        EngineUtility.startWithView(view);
       }
   }
 
