@@ -32,11 +32,11 @@ class TextInput extends View {
   public var onValueChange(get, set):(value:String)->Void;
 
   public function get_onValueChange():(value:String)->Void {
-    return textInput.value;
+    return textInput.onValueChange;
   }
 
   public function set_onValueChange(onValueChange:(value:String) -> Void):(value:String)->Void {
-    textInput.value = onValueChange;
+    textInput.onValueChange = onValueChange;
     return onValueChange;
   }
 
