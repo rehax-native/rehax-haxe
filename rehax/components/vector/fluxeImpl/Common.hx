@@ -155,6 +155,16 @@ class VectorElement extends View {
               break;
             }
           }
+        case Filters(filters):
+          var imageFilter = ImageFilter.Create();
+          for (filter in filters) {
+            switch (filter) {
+              case Blur(radius):
+                imageFilter = ImageFilters.Blur(radius, radius, imageFilter);
+            }
+          }
+          paintPair.stroke.setImageFilter(imageFilter);
+          paintPair.fill.setImageFilter(imageFilter);
       }
     }
     return paintPair;
