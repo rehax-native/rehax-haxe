@@ -43,6 +43,7 @@ class Root extends rehax.components.view.View {
     var root = new Root();
     root.platformView = platformView;
     root.hasPlatformView = true;
+    EngineUtility.startWithViewAndPlatformWindow(root.view, platformView);
     return root;
   }
 
