@@ -47,9 +47,9 @@ class VectorElement extends View {
           switch (cap) {
             case Butt:
               paintPair.stroke.setStrokeCap(kButt_Cap);
-            case Square:
-              paintPair.stroke.setStrokeCap(kRound_Cap);
             case Round:
+              paintPair.stroke.setStrokeCap(kRound_Cap);
+            case Square:
               paintPair.stroke.setStrokeCap(kSquare_Cap);
           }
         case StrokeLineJoin(join):
