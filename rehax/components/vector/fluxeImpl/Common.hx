@@ -44,23 +44,23 @@ class VectorElement extends View {
         case StrokeWidth(width):
           paintPair.stroke.setStrokeWidth(width);
         case StrokeLineCap(cap):
-    //       switch (cap) {
-    //         case Butt:
-    //           el.ptr.setLineCap(0);
-    //         case Square:
-    //           el.ptr.setLineCap(1);
-    //         case Round:
-    //           el.ptr.setLineCap(2);
-    //       }
+          switch (cap) {
+            case Butt:
+              PaintUtil.setStrokeCap(paintPair.stroke, Butt);
+            case Square:
+              PaintUtil.setStrokeCap(paintPair.stroke, Square);
+            case Round:
+              PaintUtil.setStrokeCap(paintPair.stroke, Round);
+          }
         case StrokeLineJoin(join):
-    //       switch (join) {
-    //         case Miter:
-    //           el.ptr.setLineJoin(0);
-    //         case Round:
-    //           el.ptr.setLineJoin(1);
-    //         case Bevel:
-    //           el.ptr.setLineJoin(2);
-    //       }
+          switch (join) {
+            case Miter:
+              PaintUtil.setStrokeJoin(paintPair.stroke, Miter);
+            case Round:
+              PaintUtil.setStrokeJoin(paintPair.stroke, Round);
+            case Bevel:
+              PaintUtil.setStrokeJoin(paintPair.stroke, Bevel);
+          }
         case FillWithDefinition(name):
           var container = cast(parent, VectorContainer);
           if (container == null) {
