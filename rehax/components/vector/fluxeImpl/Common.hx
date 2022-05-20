@@ -46,20 +46,20 @@ class VectorElement extends View {
         case StrokeLineCap(cap):
           switch (cap) {
             case Butt:
-              PaintUtil.setStrokeCap(paintPair.stroke, Butt);
+              paintPair.stroke.setStrokeCap(kButt_Cap);
             case Square:
-              PaintUtil.setStrokeCap(paintPair.stroke, Square);
+              paintPair.stroke.setStrokeCap(kRound_Cap);
             case Round:
-              PaintUtil.setStrokeCap(paintPair.stroke, Round);
+              paintPair.stroke.setStrokeCap(kSquare_Cap);
           }
         case StrokeLineJoin(join):
           switch (join) {
             case Miter:
-              PaintUtil.setStrokeJoin(paintPair.stroke, Miter);
+              paintPair.stroke.setStrokeJoin(kMiter_Join);
             case Round:
-              PaintUtil.setStrokeJoin(paintPair.stroke, Round);
+              paintPair.stroke.setStrokeJoin(kRound_Join);
             case Bevel:
-              PaintUtil.setStrokeJoin(paintPair.stroke, Bevel);
+              paintPair.stroke.setStrokeJoin(kBevel_Join);
           }
         case FillWithDefinition(name):
           var container = cast(parent, VectorContainer);
