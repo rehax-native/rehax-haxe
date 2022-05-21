@@ -9,3 +9,6 @@ xcuserdata/
 *.xccheckout
 
 /export_classes.info
+
+/build
+/out
