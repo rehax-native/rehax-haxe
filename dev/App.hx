@@ -37,8 +37,8 @@ class App extends Component {
 
   // var body = <FlexLayoutTest1 />;
   // var body = <SomeAppTest />;
-  var body = <HeartShapeColorful />;
-  // var body = <GestureTest />;
+  // var body = <HeartShapeColorful />;
+  var body = <GestureTest />;
   // var body = <Knob />;
 
 

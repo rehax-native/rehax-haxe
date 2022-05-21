@@ -8,15 +8,15 @@ class Color {
 
   public static function RGB(red:Float, green:Float, blue:Float):Color {
     var color = new Color();
-    color.red = red;
-    color.green = green;
-    color.blue = blue;
+    color.red = Math.max(0.0, Math.min(255.0, red));
+    color.green = Math.max(0.0, Math.min(255.0, green));
+    color.blue = Math.max(0.0, Math.min(255.0, blue));
     return color;
   }
 
   public static function RGBA(red:Float, green:Float, blue:Float, alpha:Float):Color {
     var color = RGB(red, green, blue);
-    color.alpha = alpha;
+    color.alpha = Math.max(0.0, Math.min(1.0, alpha));
     return color;
   }
 

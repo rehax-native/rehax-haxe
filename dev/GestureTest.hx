@@ -10,6 +10,7 @@ class CustomGesture extends Gesture {
     private var startY = 0.0;
     private var currentX = 0.0;
     private var currentY = 0.0;
+    private var isDown = false;
 
     public function new(onChange:(x:Float, y:Float) -> Void) {
         super(() -> { onChange(currentX - startX, currentY - startY); });
@@ -22,16 +23,20 @@ class CustomGesture extends Gesture {
         currentX = xInView;
         currentY = yInView;
         this.state = Began;
+        isDown = true;
     }
 
     public override function onMouseUp(xInView:Float, yInView:Float) {
         this.state = Ended;
+        isDown = false;
     }
 
     public override function onMouseMove(xInView:Float, yInView:Float) {
-        currentX = xInView;
-        currentY = yInView;
-        this.state = Changed;
+        if (isDown) {
+            currentX = xInView;
+            currentY = yInView;
+            this.state = Changed;
+        }
     }
 }
 
@@ -53,6 +58,7 @@ class GestureTest extends Component {
     public override function componentDidMount() {
         this._body.v_0.addGesture(new CustomGesture((x:Float, y:Float) -> {
             color = Color.RGBA(x, y, 0.0, 1.0);
+            trace(color.red);
             updateViews();
         }));
     }

@@ -64,6 +64,18 @@ class View {
   public var style(default, set):rehax.Style;
 
   public function set_style(style:rehax.Style):rehax.Style {
+    for (item in style) {
+      switch (item) {
+        case backgroundColor(color):
+          this.view.backgroundColor = fluxe.views.Externs.Color.RGBA(color.red / 255.0, color.green / 255.0, color.blue / 255.0, color.alpha);
+        case textColor(color):
+        // view.setBackgroundColor();
+        // el.style.color = 'rgba(${color.red}, ${color.green}, ${color.blue}, ${color.alpha})';
+        case opacity(amount):
+        // el.style.opacity = Std.string(amount);
+      }
+    }
+
     this.style = style;
     // var el = cast(element, js.html.Element);
     // el.setElementStyle(style);
@@ -78,38 +90,83 @@ class View {
 
   public function set_size(size:Size):Size {
     this.size = size;
-    // var el = cast(element, js.html.DOMElement);
-    // el.style.flexGrow = '';
-    // switch (size.width) {
-    //   case Natural:
-    //     if (this.view.layoutConstraints != null) {
-    //       this.view.layoutConstraints.width = null;
-    //     }
-    //   case Fixed(px):
-    //     if (this.view.layoutConstraints == null) {
-    //       this.view.layoutConstraints = {};
-    //     }
-    //     this.view.layoutConstraints.width = px;
-    //   case Fill:
-    // //     el.style.width = '100%';
-    //   case Percentage(pc):
-    // //     el.style.width = pc + '%';
-    // }
-    // switch (size.height) {
-    //   case Natural:
-    //     if (this.view.layoutConstraints != null) {
-    //       this.view.layoutConstraints.height = null;
-    //     }
-    //   case Fixed(px):
-    //     if (this.view.layoutConstraints == null) {
-    //       this.view.layoutConstraints = {};
-    //     }
-    //     this.view.layoutConstraints.height = px;
-    //   case Fill:
-    // //     el.style.height = '100%';
-    //   case Percentage(pc):
-    // //     el.style.height = pc + '%';
-    // }
+
+    switch (size.width) {
+      case Natural:
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.width = null;
+
+      case Fixed(size):
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.width = Fixed(size);
+
+      case Fill:
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.width = Fill;
+
+      case Percentage(percent):
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.width = Percentage(percent);
+    }
+
+    switch (size.height) {
+      case Natural:
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.height = null;
+
+      case Fixed(size):
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.height = Fixed(size);
+
+      case Fill:
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.height = Fill;
+
+      case Percentage(percent):
+        if (this.view.layoutSizeOverride == null) {
+          this.view.layoutSizeOverride = {
+            width: null,
+            height: null,
+          };
+        }
+        this.view.layoutSizeOverride.height = Percentage(percent);
+    }
+
     return size;
   }
 

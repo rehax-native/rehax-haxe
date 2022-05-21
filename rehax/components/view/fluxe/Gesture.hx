@@ -73,7 +73,7 @@ class Gesture {
                 this.state = Possible;
             },
             (x:Float, y:Float) -> {
-                this.onMouseUp(x, y);
+                this.onMouseMove(x, y);
                 switch(state) {
                     case Began:
                         this.action();
