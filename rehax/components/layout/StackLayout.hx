@@ -11,7 +11,7 @@ typedef StackLayoutOptions = {
 }
 
 #if js
-// typedef View = rehax.components.view.web.View.View;
+typedef StackLayout = rehax.components.layout.web.StackLayout.StackLayout;
 #elseif fluxe
 typedef StackLayout = rehax.components.layout.fluxe.StackLayout.StackLayout;
 #elseif cpp

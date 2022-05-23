@@ -63,7 +63,7 @@ typedef FlexLayoutOptions = {
 }
 
 #if js
-// typedef View = rehax.components.view.web.View.View;
+typedef FlexLayout = rehax.components.layout.web.FlexLayout.FlexLayout;
 #elseif fluxe
 typedef FlexLayout = rehax.components.layout.fluxe.FlexLayout.FlexLayout;
 #elseif cpp

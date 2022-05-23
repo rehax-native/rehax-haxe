@@ -44,6 +44,16 @@ class VectorElement extends View {
           el.setAttribute('fill', 'url(\'#$name\')');
         case StrokeWithDefinition(name):
           el.setAttribute('stroke', 'url(\'#$name\')');
+        case Filters(filters):
+          // var imageFilter = ImageFilter.Create();
+          // for (filter in filters) {
+          //   switch (filter) {
+          //     case Blur(radius):
+          //       imageFilter = ImageFilters.Blur(radius, radius, imageFilter);
+          //   }
+          // }
+          // paintPair.stroke.setImageFilter(imageFilter);
+          // paintPair.fill.setImageFilter(imageFilter);
       }
     }
     return styles;

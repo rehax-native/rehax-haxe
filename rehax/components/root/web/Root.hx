@@ -19,14 +19,6 @@ class ElementStyleExtender {
           el.style.color = 'rgba(${color.red}, ${color.green}, ${color.blue}, ${color.alpha})';
         case opacity(amount):
           el.style.opacity = Std.string(amount);
-        case horizontalAlignment(alignment):
-        // el.style.textAlign
-        // el.style.justifyContent
-        // el.style.alignItems
-        case verticalAlignment(alignment):
-          // el.style.textAlign
-          // el.style.justifyContent
-          // el.style.alignItems
       }
     }
   }

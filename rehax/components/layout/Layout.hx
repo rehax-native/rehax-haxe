@@ -38,7 +38,9 @@ typedef Frame = {
 }
 
 #if js
-// typedef View = rehax.components.view.web.View.View;
+interface ILayout {
+  public function applyLayout(container:js.html.Node):Void;
+}
 #elseif fluxe
 interface ILayout {
   public var fluxeLayout:fluxe.layout.ILayout;

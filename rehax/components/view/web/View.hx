@@ -2,7 +2,7 @@ package rehax.components.view.web;
 
 #if js
 using rehax.components.root.web.Root;
-using rehax.components.view.Layout;
+using rehax.components.layout.Layout;
 
 import js.Browser.document;
 import js.html.Element;
@@ -18,9 +18,9 @@ class View {
   public function createFragment() {
     var el = document.createElement('div');
     el.style.position = 'relative';
-    el.style.display = 'flex';
-    el.style.flexDirection = 'column';
-    el.style.alignItems = 'flex-start';
+    // el.style.display = 'flex';
+    // el.style.flexDirection = 'column';
+    // el.style.alignItems = 'flex-start';
     element = el;
   }
 
@@ -33,6 +33,7 @@ class View {
       parent.element.insertBefore(element, parent.element.childNodes[atIndex]);
     }
     parent.addChild(this);
+    this.componentDidMount();
   }
 
   public function unmount() {
@@ -43,7 +44,6 @@ class View {
   public function destroy() {}
 
   public function addChild(child:View) {
-    child.set_size(child.size);
   }
 
   public function componentDidMount() {}
@@ -54,62 +54,12 @@ class View {
     }
   }
 
-  public var layoutDirection(default, set):LayoutDirection;
+  public var layout(default, set):ILayout;
 
-  public function set_layoutDirection(layoutDirection:LayoutDirection):LayoutDirection {
-    this.layoutDirection = layoutDirection;
-    var el = cast(element, js.html.DOMElement);
-    switch (layoutDirection) {
-      case Vertical:
-        el.style.flexDirection = 'column';
-      case Horizontal:
-        el.style.flexDirection = 'row';
-      case VerticalReverse:
-        el.style.flexDirection = 'column-reverse';
-      case HorizontalReverse:
-        el.style.flexDirection = 'row-reverse';
-    }
-    return layoutDirection;
-  }
-
-  public var alignmentMainAxis(default, set):AlignmentMainAxis;
-
-  public function set_alignmentMainAxis(alignmentMainAxis:AlignmentMainAxis):AlignmentMainAxis {
-    this.alignmentMainAxis = alignmentMainAxis;
-    var el = cast(element, js.html.DOMElement);
-    switch (alignmentMainAxis) {
-      case Start:
-        el.style.justifyContent = 'flex-start';
-      case End:
-        el.style.justifyContent = 'flex-end';
-      case Center:
-        el.style.justifyContent = 'center';
-      case SpaceBetween:
-        el.style.justifyContent = 'space-between';
-      case SpaceAround:
-        el.style.justifyContent = 'space-around';
-      case SpaceEvenly:
-        el.style.justifyContent = 'space-evenly';
-    }
-    return alignmentMainAxis;
-  }
-
-  public var alignmentCrossAxis(default, set):AlignmentCrossAxis;
-
-  public function set_alignmentCrossAxis(alignmentCrossAxis:AlignmentCrossAxis):AlignmentCrossAxis {
-    this.alignmentCrossAxis = alignmentCrossAxis;
-    var el = cast(element, js.html.DOMElement);
-    switch (alignmentCrossAxis) {
-      case Start:
-        el.style.alignItems = 'flex-start';
-      case End:
-        el.style.alignItems = 'flex-end';
-      case Center:
-        el.style.alignItems = 'center';
-      case Stretch:
-        el.style.alignItems = 'stretch';
-    }
-    return alignmentCrossAxis;
+  public function set_layout(layout:ILayout) {
+    this.layout = layout;
+    layout.applyLayout(element);
+    return layout;
   }
 
   public var style(default, set):rehax.Style;
@@ -140,15 +90,6 @@ class View {
         el.style.width = '100%';
       case Percentage(pc):
         el.style.width = pc + '%';
-      case Flex(prop):
-        // flex only makes sense in the flex direction. In the cross direction it's the same as 100%
-        var parentFlexDir = el.parentElement != null ? el.parentElement.style.flexDirection : 'column';
-        if (parentFlexDir == 'column') {
-          el.style.width = '100%';
-        } else {
-          el.style.width = '';
-          el.style.flexGrow = prop + '';
-        }
     }
     switch (size.height) {
       case Natural:
@@ -159,15 +100,6 @@ class View {
         el.style.height = '100%';
       case Percentage(pc):
         el.style.height = pc + '%';
-      case Flex(prop):
-        // flex only makes sense in the flex direction. In the cross direction it's the same as 100%
-        var parentFlexDir = el.parentElement != null ? el.parentElement.style.flexDirection : 'column';
-        if (parentFlexDir == 'row') {
-          el.style.height = '100%';
-        } else {
-          el.style.height = '';
-          el.style.flexGrow = prop + '';
-        }
     }
     return size;
   }
@@ -211,6 +143,12 @@ class View {
       position: position,
       size: size,
     }
+  }
+
+  public function addGesture(gesture:Gesture) {
+    // if (view != null) {
+    //   view.mouseEventListeners.push(gesture.fluxeGesture);
+    // }
   }
 }
 #end

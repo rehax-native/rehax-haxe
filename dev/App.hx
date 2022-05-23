@@ -10,6 +10,7 @@ using dev.SomeAppTest;
 // using dev.LayoutTest;
 using dev.VectorTest;
 using dev.GestureTest;
+// using dev.CustomComponentTest;
 
 class App extends Component {
   static function main() {
@@ -36,10 +37,10 @@ class App extends Component {
   // </View>;
 
   // var body = <FlexLayoutTest1 />;
-  // var body = <SomeAppTest />;
+  var body = <SomeAppTest />;
   // var body = <HeartShapeColorful />;
-  var body = <GestureTest />;
-  // var body = <Knob />;
+  // var body = <GestureTest />;
+  // var body = <CustomComponentTest />;
 
 
     // <Button text={"General Kenobi"} />;
