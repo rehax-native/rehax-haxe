@@ -12,3 +12,5 @@ xcuserdata/
 
 /build
 /out
+
+/tests.js
