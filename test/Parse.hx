@@ -10,7 +10,6 @@ class Parse {
   public function new() {}
 
   // <View></View>
-
   @:variant([
     OPEN_ANGLE_BRACKET,
     WORD('View'),
@@ -20,11 +19,13 @@ class Parse {
     WORD('View'),
     CLOSE_ANGLE_BRACKET
   ], [OPEN_NODE('View'), CLOSE_NODE('View')])
+
   // <View attr={x}></View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), WORD('attr'), EQUALS, OPEN_VARIABLE, TEXT('x'), CLOSE_VARIABLE, CLOSE_ANGLE_BRACKET, OPEN_ANGLE_BRACKET,
     CLOSE_SLASH, WORD('View'), CLOSE_ANGLE_BRACKET
   ], [OPEN_NODE('View'), ATTR_VAR('attr', 'x'), CLOSE_NODE('View'),])
+
   // <View attr={x}><Child /></View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), WORD('attr'), EQUALS, OPEN_VARIABLE, TEXT('x'), CLOSE_VARIABLE, CLOSE_ANGLE_BRACKET, OPEN_ANGLE_BRACKET,
@@ -36,6 +37,7 @@ class Parse {
     CLOSE_NODE('Child'),
     CLOSE_NODE('View'),
   ])
+
   // <View attr={x}><Child attr1={g} attr2={h} /></View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), WORD('attr'), EQUALS, OPEN_VARIABLE, TEXT('x'), CLOSE_VARIABLE, CLOSE_ANGLE_BRACKET, OPEN_ANGLE_BRACKET,
@@ -50,6 +52,7 @@ class Parse {
     CLOSE_NODE('Child'),
     CLOSE_NODE('View'),
   ])
+
   // <View attr={x}><Child >Text A </Child>  Text B    </View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), WORD('attr'), EQUALS, OPEN_VARIABLE, TEXT('x'), CLOSE_VARIABLE, CLOSE_ANGLE_BRACKET, OPEN_ANGLE_BRACKET,
@@ -64,6 +67,7 @@ class Parse {
     TEXT('  Text B    '),
     CLOSE_NODE('View'),
   ])
+
   // <  View  attr =  {x} >< Child >Text A {var1  }</Child>  Text B {var bb = {} ?}   </View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), WORD('attr'), EQUALS, OPEN_VARIABLE, TEXT('x'), CLOSE_VARIABLE, CLOSE_ANGLE_BRACKET, OPEN_ANGLE_BRACKET,
@@ -74,6 +78,7 @@ class Parse {
     OPEN_NODE('View'), ATTR_VAR('attr', 'x'), OPEN_NODE('Child'), TEXT('Text A '), VARIABLE('var1  '), CLOSE_NODE('Child'), TEXT('  Text B '),
     VARIABLE('var bb = {} ?'), TEXT('   '), CLOSE_NODE('View'),
   ])
+
   // <View>{if prop.condition}<Child />{/if}</View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), CLOSE_ANGLE_BRACKET, OPEN_VARIABLE, OPEN_IF, TEXT('prop.condition'), CLOSE_VARIABLE, OPEN_ANGLE_BRACKET,
@@ -87,6 +92,7 @@ class Parse {
     CLOSE_IF,
     CLOSE_NODE('View'),
   ])
+
   // <View>{for item in items}<Child />{/for}</View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), CLOSE_ANGLE_BRACKET, OPEN_VARIABLE, OPEN_FOR, TEXT('item in items'), CLOSE_VARIABLE, OPEN_ANGLE_BRACKET,
@@ -100,6 +106,7 @@ class Parse {
     CLOSE_FOR,
     CLOSE_NODE('View'),
   ])
+
   // <View>{for item in items}{for i in 0...3}<Child />{/for}{/for}</View>
   @:variant([
     OPEN_ANGLE_BRACKET, WORD('View'), CLOSE_ANGLE_BRACKET, OPEN_VARIABLE, OPEN_FOR, TEXT('item in items'), CLOSE_VARIABLE, OPEN_VARIABLE, OPEN_FOR,
@@ -126,7 +133,6 @@ class Parse {
   }
 
   // <View></View>
-
   @:variant([OPEN_NODE('View'), CLOSE_NODE('View')], {
     type: Root,
     parent: null,
@@ -140,6 +146,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View attr={x}></View>
   @:variant([OPEN_NODE('View'), ATTR_VAR('attr', 'x'), CLOSE_NODE('View'),], {
     type: Root,
@@ -154,6 +161,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View attr={x}><Child /></View>
   @:variant([
     OPEN_NODE('View'),
@@ -181,6 +189,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View attr={x}><Child attr1={g} attr2={h} /></View>
   @:variant([
     OPEN_NODE('View'),
@@ -210,6 +219,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View attr={x}><Child >Text A </Child>  Text B    </View>
   @:variant([
     OPEN_NODE('View'),
@@ -252,6 +262,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <  View  attr =  {x} >< Child >Text A {var1  }</Child>  Text B {var bb = {} ?}   </View>
   @:variant([
     OPEN_NODE('View'), ATTR_VAR('attr', 'x'), OPEN_NODE('Child'), TEXT('Text A '), VARIABLE('var1  '), CLOSE_NODE('Child'), TEXT('  Text B '),
@@ -307,6 +318,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View>{#if prop.condition}<Child />{/if}</View>
   @:variant([
     OPEN_NODE('View'),
@@ -342,6 +354,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View>{for item in items}<Child />{/for}</View>
   @:variant([
     OPEN_NODE('View'),
@@ -377,6 +390,7 @@ class Parse {
     ],
     attributes: [],
   })
+
   // <View>{for item in items}{for i in 0...3}<Child />{/for}{/for}</View>
   @:variant([
     OPEN_NODE('View'),

@@ -6,6 +6,11 @@ import tink.testrunner.*;
 
 class Main {
   static function main() {
-    Runner.run(TestBatch.make([new Tokenize(), new Parse(), new Generate(),])).handle(Runner.exit);
+    Runner.run(TestBatch.make([
+      // new Tokenize(),
+      // new Parse(),
+      // new Generate(),
+      new Builder()
+    ])).handle(Runner.exit);
   }
 }

@@ -10,7 +10,7 @@ class CustomComponent extends Component {
   }
   var body = <View>
     My Custom Body
-    {children}
+    <Slot />
   </View>;
 }
 

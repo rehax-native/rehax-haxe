@@ -28,10 +28,11 @@ class Builder {
             var genPartsResult = partsGenerator.generateVariableDefinitions(parsed);
             var codeGenerator = new CodeGenerator();
             var code = codeGenerator.generateCode(genPartsResult);
+            var codeResult = codeGenerator.convertGeneratedCodeToResult(genPartsResult, code);
 
             fields.remove(f);
 
-            addGeneratedCodeToFields(fields, code, f.pos);
+            addGeneratedCodeToFields(fields, codeResult, f.pos);
 
           case _:
             trace('Not an inline template');

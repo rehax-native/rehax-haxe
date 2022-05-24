@@ -8,14 +8,122 @@ import haxe.macro.TypeTools;
 
 using rehax.builder.PartsGenerator;
 
+enum GeneratorExpression {
+  DeclareMountIndex;
+  PushMountIndex;
+  PopMountIndex;
+  IncrMountIndex;
+  Mount(varAccessor:String, mountPoint:String);
+  UnMount(varAccessor:String);
+  ComponentDidMountSelf;
+  AssignSelfParent;
+  SetSelfParentNull;
+  IncrIterator(varName:String);
+  ResultBodyPush(varName:String, body:String);
+
+  DeclareLocalVariable(varName:String, varAccessor:String);
+  CreateNewComponent(varName:String, typeName:String);
+  CreateComponentFragment(varName:String);
+  ResultBodyDeclaration(varName:String, body:String);
+  ResultBodyAssignment(body:String);
+  SetItemToNull(varName:String);
+  PopLast(varName:String);
+
+  AssignText(varName:String, content:String);
+  AssignVariableText(varName:String, content:String);
+  AssignAttribute(varAccessor:String, attributeName:String, attributeContent:String);
+  AssignVariable(varAccessor:String, varName:String);
+
+  Conditional(condition:String, ifExpressions:Array<GeneratorExpression>, elseExpressions:Array<GeneratorExpression>);
+  Loop(iterator:String, expressions:Array<GeneratorExpression>);
+  While(condition:String, expressions:Array<GeneratorExpression>);
+}
+
+#if macro
+
+/** Convert a GeneratorExpression into a haxe macro expression, used to actually create the code. **/
+function convertExpression(expr:GeneratorExpression) {
+  switch (expr) {
+    case DeclareMountIndex:
+      return Context.parse('var mountIndices:Array<Int> = [0];', Context.currentPos());
+    case IncrMountIndex:
+      return Context.parse('mountIndices[mountIndices.length - 1]++;', Context.currentPos());
+    case PushMountIndex:
+      return Context.parse('mountIndices.push(0);', Context.currentPos());
+    case PopMountIndex:
+      return Context.parse('mountIndices.pop();', Context.currentPos());
+    case AssignSelfParent:
+      return Context.parse('this.parent = parent;', Context.currentPos());
+    case SetSelfParentNull:
+      return Context.parse('this.parent = null;', Context.currentPos());
+    case Mount(varAccessor, mountPoint):
+      return Context.parse('$varAccessor.mount(${mountPoint}, mountIndices[mountIndices.length - 1]);', Context.currentPos());
+    case UnMount(varAccessor):
+      return Context.parse('$varAccessor.unmount();', Context.currentPos());
+    case ComponentDidMountSelf:
+      return Context.parse('this.componentDidMount();', Context.currentPos());
+    case SetItemToNull(varName):
+      return Context.parse('$varName = null', Context.currentPos());
+    case PopLast(varName):
+      // unmountExprs.push(Raw({expr: Context.parse('${parentVarAccessor}.splice(__rehax_${depth - 1}, 1);', Context.currentPos()), tags: ['ForUnmount']}));
+      return Context.parse('$varName.pop()', Context.currentPos());
+    case IncrIterator(varName):
+      return Context.parse('$varName++;', Context.currentPos());
+
+    case DeclareLocalVariable(varName, varAccessor):
+        return Context.parse('var $varName = $varAccessor;', Context.currentPos());
+    case CreateNewComponent(varName, typeName):
+      return Context.parse('var $varName = new $typeName();', Context.currentPos());
+    case CreateComponentFragment(varName):
+      return Context.parse('$varName.createFragment();', Context.currentPos());
+    case ResultBodyDeclaration(varName, body):
+      return Context.parse('$varName = ' + body + ';', Context.currentPos());
+    case ResultBodyAssignment(bodyResult):
+      return Context.parse('_body = $bodyResult;', Context.currentPos());
+    case AssignText(varName, content):
+      return Context.parse('$varName.text = \'${StringTools.trim(content)}\';', Context.currentPos());
+    case AssignVariableText(varName, content):
+      return Context.parse('$varName.text = \'$${${StringTools.trim(content)}}\';', Context.currentPos());
+    case AssignAttribute(varAccessor, attributeName, attributeContent):
+      return Context.parse('$varAccessor.$attributeName = $attributeContent;', Context.currentPos());
+    case AssignVariable(varAccessor, varName):
+      return Context.parse('$varAccessor = $varName;', Context.currentPos());
+    
+    case Conditional(condition, ifExpressions, elseExpressions):
+      return {
+        expr: EIf(Context.parse(condition, Context.currentPos()), macro $b{ifExpressions.map(expr -> convertExpression(expr))}, elseExpressions == null ? null : macro $b{elseExpressions.map(expr -> convertExpression(expr))}),
+        pos: Context.currentPos()
+      };
+    case Loop(iterator, expressions):
+      return{
+        expr: EFor(Context.parse(iterator, Context.currentPos()), macro $b{
+          expressions.map(expr -> convertExpression(expr))
+        }),
+        pos: Context.currentPos()
+      };
+    case While(condition, expressions):
+      return{
+        expr: EWhile(Context.parse(condition, Context.currentPos()), macro $b{
+          expressions.map(expr -> convertExpression(expr))
+        }, true),
+        pos: Context.currentPos()
+      };
+    case ResultBodyPush(varName, body):
+      return Context.parse('${varName}.push($body);', Context.currentPos());
+  }
+}
+#end
+
+typedef GeneratedCode = {
+  createExpressions: Array<GeneratorExpression>,
+  updateExpressions: Array<GeneratorExpression>,
+  mountExpressions: Array<GeneratorExpression>,
+  unmountExpressions: Array<GeneratorExpression>,
+}
+
 typedef GenerateResult = {
   var variables:Array<Field>;
   var functions:Array<Field>;
-}
-
-typedef TaggedExpr = {
-  var expr:Expr;
-  var tags:Array<String>;
 }
 
 class CodeGenerator {
@@ -30,7 +138,194 @@ class CodeGenerator {
     }
   }
 
-  public function generateCode(parts:Array<VariableDefinition>):GenerateResult {
+  public function generateCode(parts:Array<VariableDefinition>):GeneratedCode {
+
+		function compile(
+      createExprs:Array<GeneratorExpression>,
+      mountExprs:Array<GeneratorExpression>,
+      updateExprs:Array<GeneratorExpression>,
+			unmountExprs:Array<GeneratorExpression>,
+      parts:Array<VariableDefinition>,
+      parentPart:Null<VariableDefinition> = null,
+      parentVarName:String,
+			parentVarAccessor:String,
+      depth = 0
+    ) {
+
+      var isTopLevel = parentPart == null;
+      var names:Array<Array<String>> = [];
+
+      if (isTopLevel) {
+        mountExprs.push(AssignSelfParent);
+        mountExprs.push(DeclareMountIndex);
+        updateExprs.push(DeclareMountIndex);
+      }
+
+      for (part in parts) {
+        var name = part.variableName;
+
+        var varName = parentVarName + '_' + name;
+        var varAccessor = parentVarAccessor + '.' + name;
+        if (parentPart != null && parentPart.isArray) {
+          varName = parentVarName + '__rehax_${depth - 1}_' + name;
+          varAccessor = parentVarAccessor + '[__rehax_${depth - 1}].' + name;
+        }
+
+        names.push([name, varName]);
+
+        for (_ in 0...part.pushMountIndexCount) {
+          mountExprs.push(PushMountIndex);
+          updateExprs.push(PushMountIndex);
+        }
+
+        updateExprs.push(DeclareLocalVariable(varName, varAccessor));
+
+        if (part.typeName == 'Slot') {
+
+        } else if (part.typeName != null) {
+          var typeName = getTypeName(part.typeName);
+          createExprs.push(CreateNewComponent(varName, typeName));
+          createExprs.push(CreateComponentFragment(varName));
+
+          if (part.content != null) {
+            var content = part.content;
+            if (part.typeName == 'Variable') {
+              createExprs.push(AssignVariableText(varName, content));
+              updateExprs.push(AssignVariableText(varAccessor, content));
+            } else if (part.typeName == 'Text') {
+              createExprs.push(AssignText(varName, content));
+            }
+          }
+          for (attr => value in part.attributes) {
+            switch (value) {
+              case Variable(content):
+                createExprs.push(AssignAttribute(varName, attr, content));
+                updateExprs.push(AssignAttribute(varAccessor, attr, content));
+              case StringValue(content):
+                createExprs.push(AssignAttribute(varName, attr, content));
+            }
+          }
+
+          mountExprs.push(Mount(varAccessor, part.mountPoint));
+          unmountExprs.unshift(UnMount(varAccessor));
+
+          mountExprs.push(IncrMountIndex);
+          updateExprs.push(IncrMountIndex);
+        } else {
+          if (part.isArray) {
+            createExprs.push(DeclareLocalVariable('__rehax_$depth', '0'));
+            createExprs.push(DeclareLocalVariable(varName, '[]'));
+            mountExprs.push(DeclareLocalVariable('__rehax_$depth', '0'));
+            updateExprs.push(DeclareLocalVariable('__rehax_$depth', '0'));
+
+            var childCreateExpressions:Array<GeneratorExpression> = [];
+            var childMountExpressions:Array<GeneratorExpression> = [];
+            var childUpdateExpressions:Array<GeneratorExpression> = [];
+            var childUnmountExpressions:Array<GeneratorExpression> = [];
+
+            compile(
+              childCreateExpressions,
+              childMountExpressions,
+              childUpdateExpressions,
+              childUnmountExpressions,
+              part.children,
+              part,
+              varName,
+              varAccessor,
+              depth + 1
+            );
+
+            createExprs.push(Loop(part.content, childCreateExpressions.concat([IncrIterator('__rehax_$depth')])));
+            mountExprs.push(Loop('_ in $varAccessor', childMountExpressions.concat([IncrIterator('__rehax_$depth')])));
+            updateExprs.push(Loop(part.content, [
+              Conditional('__rehax_$depth >= $varAccessor.length', childCreateExpressions.concat(childMountExpressions), childUpdateExpressions),
+            ].concat([IncrIterator('__rehax_$depth')])));
+
+            updateExprs.push(While('$varAccessor.length > __rehax_$depth', childUnmountExpressions));
+						unmountExprs.unshift(While('$varAccessor.length > 0', [DeclareLocalVariable('__rehax_$depth', '$varAccessor.length - 1')].concat(childUnmountExpressions)));
+          } else {
+            var childCreateExpressions:Array<GeneratorExpression> = [];
+            var childMountExpressions:Array<GeneratorExpression> = [];
+            var childUnmountExpressions:Array<GeneratorExpression> = [];
+            var childUpdateExpressions:Array<GeneratorExpression> = [];
+
+            compile(
+              childCreateExpressions,
+              childMountExpressions,
+              childUpdateExpressions,
+              childUnmountExpressions,
+              part.children,
+              part,
+              varName,
+              varAccessor,
+              depth + 1
+            );
+
+            createExprs.push(DeclareLocalVariable(varName, 'null'));
+            createExprs.push(Conditional(part.content, childCreateExpressions, null));
+
+            updateExprs.push(
+              Conditional(part.content, [
+                Conditional('$varAccessor == null',
+                  childCreateExpressions
+                  .concat([AssignVariable(varAccessor, varName)])
+                  .concat(childMountExpressions)
+                  .concat(childUpdateExpressions),
+                  null
+                )
+              ], [
+                Conditional('$varAccessor != null', childUnmountExpressions.concat([
+                  SetItemToNull(varAccessor),
+                ]), null)
+              ])
+            );
+
+            mountExprs.push(Conditional('$varAccessor != null', childMountExpressions, null));
+            unmountExprs.unshift(SetItemToNull(varAccessor));
+            unmountExprs.unshift(Conditional('$varAccessor != null', childUnmountExpressions, null));
+          }
+        }
+
+        for (_ in 0...part.popMountIndexCount) {
+          mountExprs.push(PopMountIndex);
+          updateExprs.push(PopMountIndex);
+        }
+      }
+
+      var bodyResult = '{ ' + names.map(name -> name[0] + ': ' + name[1]).join(', ') + ' }';
+      if (isTopLevel) {
+        createExprs.push(ResultBodyAssignment(bodyResult));
+      } else if (parentPart != null && parentPart.isArray) {
+        createExprs.push(ResultBodyPush(parentVarName, bodyResult));
+        unmountExprs.push(PopLast(parentVarAccessor));
+      } else {
+        createExprs.push(ResultBodyDeclaration(parentVarName, bodyResult));
+      }
+
+      if (isTopLevel) {
+        mountExprs.push(ComponentDidMountSelf);
+        unmountExprs.push(SetSelfParentNull);
+      }
+    }
+
+    var createExprs = [];
+    var mountExprs = [];
+    var updateExprs = [];
+    var unmountExprs = [];
+
+    compile(createExprs, mountExprs, updateExprs, unmountExprs, parts, 'body', '_body');
+
+    return {
+      createExpressions: createExprs,
+      mountExpressions: mountExprs,
+      updateExpressions: updateExprs,
+      unmountExpressions: unmountExprs,
+    };
+  }
+
+
+#if macro
+  public function convertGeneratedCodeToResult(parts:Array<VariableDefinition>, code:GeneratedCode):GenerateResult {
     var result:GenerateResult = {
       variables: [],
       functions: [],
@@ -65,271 +360,40 @@ class CodeGenerator {
       meta: null,
     };
 
-    result.variables.push(_bodyDef);
+    function printBodyDef(def, parent = '') {
+    	switch (def.kind) {
+    		case FieldType.FVar(t, _):
+    			switch (t) {
+    				case TAnonymous(fields):
+    					for (f in fields) printBodyDef(f, parent + '.' + def.name);
+    				case TPath(t):
+    					switch (t.name) {
+    						case 'Array':
+    							switch(t.params[0]) {
+    								case TPType(t):
+    									switch (t) {
+    										case TAnonymous(fields):
+    											for (f in fields) printBodyDef(f, parent + '.' + def.name + '[_]');
+    										default:
+    									}
+    								default:
+    							}
+    							// trace(t.params[0]);
+    							// printBodyDef(t.params[0], parent + '.' + def.name);
+    						default:
+    							trace(parent + '.' + def.name, t);
+    					}
+    				default:
+    			}
 
-    // function printBodyDef(def, parent = '') {
-    // 	switch (def.kind) {
-    // 		case FieldType.FVar(t, _):
-    // 			switch (t) {
-    // 				case TAnonymous(fields):
-    // 					for (f in fields) printBodyDef(f, parent + '.' + def.name);
-    // 				case TPath(t):
-    // 					switch (t.name) {
-    // 						case 'Array':
-    // 							switch(t.params[0]) {
-    // 								case TPType(t):
-    // 									switch (t) {
-    // 										case TAnonymous(fields):
-    // 											for (f in fields) printBodyDef(f, parent + '.' + def.name + '[_]');
-    // 										default:
-    // 									}
-    // 								default:
-    // 							}
-    // 							// trace(t.params[0]);
-    // 							// printBodyDef(t.params[0], parent + '.' + def.name);
-    // 						default:
-    // 							trace(parent + '.' + def.name, t);
-    // 					}
-    // 				default:
-    // 			}
-
-    // 		default:
-    // 	}
-    // }
-
-    // printBodyDef(_bodyDef);
-
-    function compile(createExprs:Array<TaggedExpr>, mountExprs:Array<TaggedExpr>, updateExprs:Array<TaggedExpr>, unmountExprs:Array<TaggedExpr>,
-        parts:Array<VariableDefinition>, parentPart:Null<VariableDefinition> = null, parentVarName:String, parentVarAccessor:String, depth = 0) {
-      var isTopLevel = parentPart == null;
-      var names:Array<Array<String>> = [];
-
-      var incrMountIndex = {expr: Context.parse('mountIndices[mountIndices.length - 1]++;', Context.currentPos()), tags: ['MountIndex']};
-      var pushMountIndex = {expr: Context.parse('mountIndices.push(0);', Context.currentPos()), tags: ['MountIndex']};
-      var popMountIndex = {expr: Context.parse('mountIndices.pop();', Context.currentPos()), tags: ['MountIndex']};
-
-      if (isTopLevel) {
-        mountExprs.push({expr: Context.parse('this.parent = parent;', Context.currentPos()), tags: ['TopLevelVarDecl']});
-        mountExprs.push({expr: Context.parse('var mountIndices:Array<Int> = [0];', Context.currentPos()), tags: ['TopLevelVarDecl']});
-        updateExprs.push({expr: Context.parse('var mountIndices:Array<Int> = [0];', Context.currentPos()), tags: ['TopLevelVarDecl']});
-      }
-
-      for (part in parts) {
-        var name = part.variableName;
-
-        var varName = parentVarName + '_' + name;
-        var varAccessor = parentVarAccessor + '.' + name;
-        if (parentPart != null && parentPart.isArray) {
-          varName = parentVarName + '__rehax_${depth - 1}_' + name;
-          varAccessor = parentVarAccessor + '[__rehax_${depth - 1}].' + name;
-        }
-
-        names.push([name, varName]);
-
-        updateExprs.push({expr: Context.parse('var $varName = $varAccessor;', Context.currentPos()), tags: ['VarDecl']});
-        for (_ in 0...part.pushMountIndexCount) {
-          mountExprs.push(pushMountIndex);
-          updateExprs.push(pushMountIndex);
-        }
-
-        if (part.typeName != null) {
-          var typeName = getTypeName(part.typeName);
-          createExprs.push({expr: Context.parse('var $varName = new $typeName();', Context.currentPos()), tags: ['VarDecl']});
-          createExprs.push({expr: Context.parse('$varName.createFragment();', Context.currentPos()), tags: ['CreateFragment']});
-          if (part.content != null) {
-            var content = part.content;
-            if (part.typeName == 'Variable') {
-              createExprs.push({expr: Context.parse('$varName.text = \'$${${StringTools.trim(content)}}\';', Context.currentPos()), tags: ['PropAssignment']});
-              updateExprs.push({expr: Context.parse('$varAccessor.text = \'$${${StringTools.trim(content)}}\';', Context.currentPos()), tags: ['PropAssignment']});
-            } else if (part.typeName == 'Text') {
-              createExprs.push({expr: Context.parse('$varName.text = \'${StringTools.trim(content)}\';', Context.currentPos()), tags: ['PropAssignment']});
-            }
-          }
-          for (attr => value in part.attributes) {
-            switch (value) {
-              case Variable(content):
-                createExprs.push({expr: Context.parse('$varName.$attr = $content;', Context.currentPos()), tags: ['PropAssignment']});
-                updateExprs.push({expr: Context.parse('$varAccessor.$attr = $content;', Context.currentPos()), tags: ['PropAssignment']});
-              case StringValue(content):
-                var setExpr = {expr: Context.parse('$varName.$attr = $content;', Context.currentPos()), tags: ['PropAssignment']};
-                createExprs.push(setExpr);
-            }
-          }
-
-          mountExprs.push({
-            expr: Context.parse('$varAccessor.mount(${part.mountPoint}, mountIndices[mountIndices.length - 1]);', Context.currentPos()),
-            tags: ['Mount']
-          });
-          unmountExprs.push({expr: Context.parse('$varAccessor.unmount();', Context.currentPos()), tags: ['Unmount']});
-
-          mountExprs.push(incrMountIndex);
-          updateExprs.push(incrMountIndex);
-        } else {
-          if (part.isArray) {
-            createExprs.push({expr: Context.parse('var __rehax_$depth = 0;', Context.currentPos()), tags: ['VarDecl']});
-            mountExprs.push({expr: Context.parse('var __rehax_$depth = 0;', Context.currentPos()), tags: ['VarDecl']});
-            updateExprs.push({expr: Context.parse('var __rehax_$depth = 0;', Context.currentPos()), tags: ['VarDecl']});
-            createExprs.push({expr: Context.parse('var $varName = [];', Context.currentPos()), tags: ['VarDecl']});
-
-            var childCreateExpressions:Array<TaggedExpr> = [];
-            var childMountExpressions:Array<TaggedExpr> = [];
-            var childUpdateExpressions:Array<TaggedExpr> = [];
-            var childUnmountExpressions:Array<TaggedExpr> = [];
-
-            compile(childCreateExpressions, childMountExpressions, childUpdateExpressions, childUnmountExpressions, part.children, part, varName,
-              varAccessor, depth + 1);
-
-            createExprs.push({
-              expr: {
-                expr: EFor(Context.parse(part.content, Context.currentPos()), macro $b{
-                  childCreateExpressions.map(expr -> expr.expr).concat([Context.parse('__rehax_$depth++;', Context.currentPos())])
-                }),
-                pos: Context.currentPos()
-              },
-              tags: ['ForCreate']
-            });
-            mountExprs.push({
-              expr: {
-                expr: EFor(Context.parse('_ in $varAccessor', Context.currentPos()), macro $b{
-                  childMountExpressions.map(expr -> expr.expr).concat([Context.parse('__rehax_$depth++;', Context.currentPos())])
-                }),
-                pos: Context.currentPos()
-              },
-              tags: ['ForMount']
-            });
-            updateExprs.push({
-              expr: {
-                expr: EFor(Context.parse(part.content, Context.currentPos()), {
-                  expr: EBlock([
-                    {
-                      expr: EIf(Context.parse('__rehax_$depth >= $varAccessor.length', Context.currentPos()), macro $b{
-                        childCreateExpressions.map(expr -> expr.expr).concat(childMountExpressions.map(expr -> expr.expr))
-                      }, macro $b{childUpdateExpressions.map(expr -> expr.expr)}),
-                      pos: Context.currentPos()
-                    }
-                  ].concat([Context.parse('__rehax_$depth++;', Context.currentPos())])),
-                  pos: Context.currentPos()
-                }),
-                pos: Context.currentPos()
-              },
-              tags: ['ForCreate']
-            });
-            updateExprs.push({
-              expr: {
-                expr: EWhile(Context.parse('$varAccessor.length > __rehax_$depth', Context.currentPos()), {
-                  expr: EBlock(childUnmountExpressions.map(expr -> expr.expr)),
-                  pos: Context.currentPos()
-                }, true),
-                pos: Context.currentPos()
-              },
-              tags: ['ForUnmount']
-            });
-            unmountExprs.push({
-              expr: {
-                expr: EWhile(Context.parse('$varAccessor.length > 0', Context.currentPos()), macro $b{
-                  [
-                    Context.parse('var __rehax_$depth = $varAccessor.length - 1;', Context.currentPos()),
-                  ].concat(childUnmountExpressions.map(expr -> expr.expr))
-                }, true),
-                pos: Context.currentPos()
-              },
-              tags: ['ForUnmount']
-            });
-          } else {
-            createExprs.push({expr: Context.parse('var $varName = null;', Context.currentPos()), tags: ['VarDeclr']});
-
-            var childCreateExpressions:Array<TaggedExpr> = [];
-            var childMountExpressions:Array<TaggedExpr> = [];
-            var childUnmountExpressions:Array<TaggedExpr> = [];
-            var childUpdateExpressions:Array<TaggedExpr> = [];
-
-            compile(childCreateExpressions, childMountExpressions, childUpdateExpressions, childUnmountExpressions, part.children, part, varName,
-              varAccessor, depth + 1);
-
-            createExprs.push({
-              expr: {
-                expr: EIf(Context.parse(part.content, Context.currentPos()), macro $b{childCreateExpressions.map(expr -> expr.expr)}, null),
-                pos: Context.currentPos()
-              },
-              tags: ['IfCreate']
-            });
-            mountExprs.push({
-              expr: {
-                expr: EIf(Context.parse('$varAccessor != null', Context.currentPos()), macro $b{childMountExpressions.map(expr -> expr.expr)},
-                  null),
-                pos: Context.currentPos()
-              },
-              tags: ['IfMount']
-            });
-            updateExprs.push({expr: Context.parse('var cond = ${part.content};', Context.currentPos()), tags: ['IfUpdate']});
-            updateExprs.push({
-              expr: {
-                expr: EIf(Context.parse('cond', Context.currentPos()), macro $b{
-                  [
-                    {
-                      expr: EIf(Context.parse('$varAccessor == null', Context.currentPos()), macro $b{
-                        childCreateExpressions.map(expr -> expr.expr)
-                          .concat([Context.parse('$varAccessor = result;', Context.currentPos())])
-                          .concat(childMountExpressions.map(expr -> expr.expr))}, macro $b{
-                          childUpdateExpressions.map(expr -> expr.expr)
-                        }),
-                      pos: Context.currentPos()
-                    }
-                  ]
-                }, {
-                  expr: EIf(Context.parse('$varAccessor != null', Context.currentPos()), macro $b{
-                    childUnmountExpressions.map(expr -> expr.expr).concat([Context.parse('$varAccessor = null', Context.currentPos())])
-                  }, null),
-                  pos: Context.currentPos()
-                }),
-                pos: Context.currentPos()
-              },
-              tags: ['IfUpdate']
-            });
-            unmountExprs.push({
-              expr: {
-                expr: EIf(Context.parse('$varAccessor != null', Context.currentPos()),
-                  macro $b{childUnmountExpressions.map(expr -> expr.expr)}, null),
-                pos: Context.currentPos()
-              },
-              tags: ['IfUnmount']
-            });
-            unmountExprs.push({expr: Context.parse('$varAccessor = null', Context.currentPos()), tags: ['IfUnmount']});
-          }
-        }
-
-        for (_ in 0...part.popMountIndexCount) {
-          mountExprs.push(popMountIndex);
-          updateExprs.push(popMountIndex);
-        }
-      }
-
-      var bodyResult = '{' + names.map(name -> name[0] + ':' + name[1]).join(',') + '}';
-      createExprs.push({
-        expr: Context.parse('var result = ' + bodyResult + ';', Context.currentPos()),
-        tags: ['VarAssignment', 'Result']
-      });
-      if (isTopLevel) {
-        createExprs.push({expr: Context.parse('_body = $bodyResult;', Context.currentPos()), tags: ['VarAssignment', 'Body']});
-      } else if (parentPart != null && parentPart.isArray) {
-        createExprs.push({expr: Context.parse('${parentVarName}.push($bodyResult);', Context.currentPos()), tags: ['VarAssignment']});
-        unmountExprs.push({expr: Context.parse('${parentVarAccessor}.splice(__rehax_${depth - 1}, 1);', Context.currentPos()), tags: ['ForUnmount']});
-      } else {
-        createExprs.push({expr: Context.parse('${parentVarName} = $bodyResult;', Context.currentPos()), tags: ['VarAssignment']});
-      }
-
-      if (isTopLevel) {
-        mountExprs.push({expr: Context.parse('this.componentDidMount();', Context.currentPos()), tags: ['Mount']});
-        unmountExprs.push({expr: Context.parse('this.parent = null;', Context.currentPos()), tags: ['Unmount']});
-      }
+    		default:
+    	}
     }
 
-    var createExprs = [];
-    var mountExprs = [];
-    var updateExprs = [];
-    var unmountExprs = [];
+    // Uncomment to debug the variable definition
+    // printBodyDef(_bodyDef);
 
-    compile(createExprs, mountExprs, updateExprs, unmountExprs, parts, 'body', '_body');
+    result.variables.push(_bodyDef);
 
     result.functions.push({
       name: 'createFragment',
@@ -337,7 +401,7 @@ class CodeGenerator {
       kind: FFun({
         params: [],
         args: [],
-        expr: macro $b{createExprs.map(expr -> expr.expr)},
+        expr: macro $b{code.createExpressions.map(expr -> convertExpression(expr))},
         ret: macro:Void,
       }),
       pos: Context.currentPos(),
@@ -359,7 +423,7 @@ class CodeGenerator {
             type: macro:Null<Int>
           }
         ],
-        expr: macro $b{mountExprs.map(expr -> expr.expr)},
+        expr: macro $b{code.mountExpressions.map(expr -> convertExpression(expr))},
         ret: macro:Void,
       }),
       pos: Context.currentPos(),
@@ -370,7 +434,7 @@ class CodeGenerator {
       kind: FFun({
         params: [],
         args: [],
-        expr: macro $b{updateExprs.map(expr -> expr.expr)},
+        expr: macro $b{code.updateExpressions.map(expr -> convertExpression(expr))},
         ret: macro:Void,
       }),
       pos: Context.currentPos(),
@@ -381,7 +445,7 @@ class CodeGenerator {
       kind: FFun({
         params: [],
         args: [],
-        expr: macro $b{unmountExprs.map(expr -> expr.expr)},
+        expr: macro $b{code.unmountExpressions.map(expr -> convertExpression(expr))},
         ret: macro:Void,
       }),
       pos: Context.currentPos(),
@@ -389,4 +453,6 @@ class CodeGenerator {
 
     return result;
   }
+#end
+
 }

@@ -10,7 +10,6 @@ class Generate {
   public function new() {}
 
   // <View></View>
-
   @:variant({
     type: Root,
     parent: null,
@@ -36,6 +35,7 @@ class Generate {
       attributes: [],
     }
   ])
+
   // <View attr={x}></View>
   @:variant({
     type: Root,
@@ -62,6 +62,7 @@ class Generate {
       attributes: [],
     }
   ])
+
   // <View attr={x}><Child /></View>
   @:variant({
     type: Root,
@@ -106,6 +107,7 @@ class Generate {
       attributes: [],
     }
   ])
+
   // <View attr={x}><Child attr1={g} attr2={h} /></View>
   @:variant({
     type: Root,
@@ -150,6 +152,7 @@ class Generate {
       attributes: [],
     }
   ])
+
   // <View attr={x}><Child >Text A </Child>  Text B    </View>
   @:variant({
     type: Root,
@@ -229,6 +232,7 @@ class Generate {
       attributes: [],
     }
   ])
+
   // <  View  attr =  {x} >< Child >Text A {var1  }</Child>  Text B {var bb = {} ?}   </View>
   @:variant({
     type: Root,
@@ -348,6 +352,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View>{if prop.condition}<Child />{/if}</View>
   @:variant({
     type: Root,
@@ -411,6 +416,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View><Child /><Child />{if prop.condition}<Child />{/if}<Child /></View>
   @:variant({
     type: Root,
@@ -525,6 +531,7 @@ class Generate {
       attributes: [],
     }
   ])
+
   // <View>{if prop.condition}<Child>{if cond2}Inner{/if}</Child>{/if}</View>
   @:variant({
     type: Root,
@@ -625,6 +632,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View>{for item in items}<Child />{/for}</View>
   @:variant({
     type: Root,
@@ -688,6 +696,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View>{for item in items}{for i in 0...3}<Child />{/for}{/for}</View>
   @:variant({
     type: Root,
@@ -770,6 +779,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View>{for item in items}<Child>Hello</Child>{/for}</View>
   @:variant({
     type: Root,
@@ -851,6 +861,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View>{for item in items}{if items.length > 2}<Child /><Child>Hello</Child>{/if}{/for}</View>
   @:variant({
     type: Root,
@@ -978,6 +989,7 @@ class Generate {
       attributes: [],
     },
   ])
+
   // <View>t1<Child />t2{t3}{for item in items}<Child2 />{if items.length > 2}<Child3 /><Child4>Hello</Child4>{/if}{/for}</View>
   @:variant({
     type: Root,
