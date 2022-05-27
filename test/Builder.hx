@@ -109,7 +109,7 @@ class Builder {
         PushMountIndex,
         Mount('_body.v_1', '_body.v_0'),
         IncrMountIndex,
-        Conditional('_body.v_2 != null', [
+        Conditional('_body.v_2 != null && (iTellTheTruth)', [
           Mount('_body.v_2.v_0', '_body.v_0'),
           IncrMountIndex,
         ], null),
@@ -245,6 +245,78 @@ class Builder {
           UnMount('_body.v_2[__rehax_0].v_0'),
           PopLast('_body.v_2'),
         ]),
+        UnMount('_body.v_1'),
+        UnMount('_body.v_0'),
+        SetSelfParentNull,
+    ],
+  })
+
+  @:variant('<View>Some Text{if mountSlot}<Slot />{/if}</View>', {
+    createExpressions: [
+        CreateNewComponent('body_v_2_v_0', 'Fragment'),
+        CreateComponentFragment('body_v_2_v_0'),
+        AssignSlot('default', 'body_v_2_v_0'),
+
+        CreateNewComponent('body_v_0', 'View'),
+        CreateComponentFragment('body_v_0'),
+
+        CreateNewComponent('body_v_1', 'Text'),
+        CreateComponentFragment('body_v_1'),
+        AssignText('body_v_1', 'Some Text'),
+
+        DeclareLocalVariable('body_v_2', 'null'),
+        Conditional('mountSlot', [
+          DeclareLocalVariable('body_v_2_v_0', 'cast slots["default"]'),
+          ResultBodyDeclaration('body_v_2', '{ v_0: body_v_2_v_0 }'),
+        ], null),
+        ResultBodyAssignment('{ v_0: body_v_0, v_1: body_v_1, v_2: body_v_2 }'),
+    ],
+    mountExpressions: [
+        AssignSelfParent,
+        DeclareMountIndex,
+        Mount('_body.v_0', 'this.parent'),
+        IncrMountIndex,
+        PushMountIndex,
+        Mount('_body.v_1', '_body.v_0'),
+        IncrMountIndex,
+        Conditional('_body.v_2 != null && (mountSlot)', [
+          Mount('_body.v_2.v_0', '_body.v_0'),
+          IncrMountIndex
+        ], null),
+        PopMountIndex,
+        ComponentDidMountSelf,
+    ],
+    updateExpressions: [
+        DeclareMountIndex,
+        DeclareLocalVariable('body_v_0', '_body.v_0'),
+        IncrMountIndex,
+        PushMountIndex,
+        DeclareLocalVariable('body_v_1', '_body.v_1'),
+        IncrMountIndex,
+        DeclareLocalVariable('body_v_2', '_body.v_2'),
+        Conditional('mountSlot',[
+          Conditional('_body.v_2 == null', [
+            DeclareLocalVariable('body_v_2_v_0', 'cast slots["default"]'),
+            ResultBodyDeclaration('body_v_2', '{ v_0: body_v_2_v_0 }'),
+            AssignVariable('_body.v_2', 'body_v_2'),
+            Mount('_body.v_2.v_0', '_body.v_0'),
+            IncrMountIndex,
+            DeclareLocalVariable('body_v_2_v_0', '_body.v_2.v_0'),
+            IncrMountIndex,
+          ], null),
+        ], [
+          Conditional('_body.v_2 != null', [
+            UnMount('_body.v_2.v_0'),
+            SetItemToNull('_body.v_2'),
+          ], null),
+        ]),
+        PopMountIndex,
+    ],
+    unmountExpressions: [
+        Conditional('_body.v_2 != null', [
+          UnMount('_body.v_2.v_0')
+        ], null),
+        SetItemToNull('_body.v_2'),
         UnMount('_body.v_1'),
         UnMount('_body.v_0'),
         SetSelfParentNull,

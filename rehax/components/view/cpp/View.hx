@@ -91,6 +91,7 @@ extern class NativeView {
 
 class View {
   private var native:Null<cpp.Pointer<NativeView>>;
+  public var slots:Map<String, View> = [];
   private var isMounted = false;
   private var hoverStyle:Style;
 
@@ -116,13 +117,18 @@ class View {
   }
 
   public function mount(parent:View, atIndex:Null<Int> = null) {
-    this.parent = parent;
-    parent.native.ptr.addView(native.ptr);
-    // var nativeSize = NativeSize.create(_frame.size.width, _frame.size.height);
-    // native.ptr.setSize(nativeSize);
-    // var pos = NativePosition.create(_frame.position.x, _frame.position.y);
-    // native.ptr.setPosition(pos);
-    parent.addChild(this, atIndex == null ? parent.children.length : atIndex);
+
+    if (parent.slots.exists('default')) {
+      var slot = parent.slots['default'];
+      this.parent = slot;
+      slot.native.ptr.addView(native.ptr);
+      slot.addChild(this, atIndex == null ? parent.children.length : atIndex);
+    } else if (parent.native != null) {
+      this.parent = parent;
+      parent.native.ptr.addView(native.ptr);
+      parent.addChild(this, atIndex == null ? parent.children.length : atIndex);
+    }
+
     isMounted = true;
 
     setNativeWidth();
@@ -141,6 +147,7 @@ class View {
       parent.children.remove(this);
     }
     isMounted = false;
+    parent.set_layout(parent.layout);
     this.parent = null;
   }
 

@@ -9,6 +9,8 @@ class View {
 
   public var view:Null<fluxe.views.View>;
 
+  public var slots:Map<String, View> = [];
+
   private var hoverStyle:Style;
 
   public var children:Array<View> = [];
@@ -20,16 +22,33 @@ class View {
   }
 
   public function mount(parent:View, atIndex:Null<Int> = null) {
-    this.parent = parent;
-    parent.view.addSubView(view);
+    if (parent.slots.exists('default')) {
+      var slot = parent.slots['default'];
+      this.parent = slot;
+      slot.view.addSubView(view);
+      slot.addChild(this);
+      this.componentDidMount();
+    } else if (parent.view != null) {
+      this.parent = parent;
+      parent.view.addSubView(view);
+      parent.addChild(this);
+      this.componentDidMount();
+    }
     // TODO
     // if (atIndex == null) {
     //   parent.view.addSubView(view);
     // } else {
     //   // parent.element.insertBefore(element, parent.element.childNodes[atIndex]);
     // }
-    parent.addChild(this);
-    this.componentDidMount();
+  }
+
+  public function mountAtSlot(parent:View, slot:String) {
+    if (parent.slots.exists(slot)) {
+      var slot = parent.slots[slot];
+      this.parent = slot;
+      slot.addChild(this);
+      this.componentDidMount();
+    }
   }
 
   public function unmount() {

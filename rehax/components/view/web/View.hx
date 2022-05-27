@@ -11,6 +11,7 @@ class View {
   public var parent:Null<View>;
   public var element:Null<js.html.Node>;
 
+  public var slots:Map<String, View> = [];
   private var hoverStyle:Style;
 
   public function new() {}

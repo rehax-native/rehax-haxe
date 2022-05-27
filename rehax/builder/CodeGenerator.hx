@@ -33,6 +33,7 @@ enum GeneratorExpression {
   AssignVariableText(varName:String, content:String);
   AssignAttribute(varAccessor:String, attributeName:String, attributeContent:String);
   AssignVariable(varAccessor:String, varName:String);
+  AssignSlot(slotName:String, varAccessor:String);
 
   Conditional(condition:String, ifExpressions:Array<GeneratorExpression>, elseExpressions:Array<GeneratorExpression>);
   Loop(iterator:String, expressions:Array<GeneratorExpression>);
@@ -88,6 +89,8 @@ function convertExpression(expr:GeneratorExpression) {
       return Context.parse('$varAccessor.$attributeName = $attributeContent;', Context.currentPos());
     case AssignVariable(varAccessor, varName):
       return Context.parse('$varAccessor = $varName;', Context.currentPos());
+    case AssignSlot(slotName, varAccessor):
+      return Context.parse('slots["$slotName"] = $varAccessor;', Context.currentPos());
     
     case Conditional(condition, ifExpressions, elseExpressions):
       return {
@@ -133,12 +136,16 @@ class CodeGenerator {
     switch (typeName) {
       case 'Variable':
         return 'Text';
+      case 'Slot':
+        return 'Fragment';
       default:
         return typeName;
     }
   }
 
   public function generateCode(parts:Array<VariableDefinition>):GeneratedCode {
+
+    var slotExprs:Array<GeneratorExpression> = [];
 
 		function compile(
       createExprs:Array<GeneratorExpression>,
@@ -178,14 +185,23 @@ class CodeGenerator {
           updateExprs.push(PushMountIndex);
         }
 
+        var isSlot = part.typeName == 'Slot';
+
         updateExprs.push(DeclareLocalVariable(varName, varAccessor));
 
-        if (part.typeName == 'Slot') {
-
-        } else if (part.typeName != null) {
+        if (part.typeName != null) {
           var typeName = getTypeName(part.typeName);
-          createExprs.push(CreateNewComponent(varName, typeName));
-          createExprs.push(CreateComponentFragment(varName));
+
+          if (isSlot) {
+            slotExprs.push(CreateNewComponent(varName, typeName));
+            slotExprs.push(CreateComponentFragment(varName));
+            slotExprs.push(AssignSlot('default', varName));
+
+            createExprs.push(DeclareLocalVariable(varName, 'cast slots["default"]'));
+          } else {
+            createExprs.push(CreateNewComponent(varName, typeName));
+            createExprs.push(CreateComponentFragment(varName));
+          }
 
           if (part.content != null) {
             var content = part.content;
@@ -280,7 +296,7 @@ class CodeGenerator {
               ])
             );
 
-            mountExprs.push(Conditional('$varAccessor != null', childMountExpressions, null));
+            mountExprs.push(Conditional('$varAccessor != null && (${part.content})', childMountExpressions, null));
             unmountExprs.unshift(SetItemToNull(varAccessor));
             unmountExprs.unshift(Conditional('$varAccessor != null', childUnmountExpressions, null));
           }
@@ -315,6 +331,11 @@ class CodeGenerator {
 
     compile(createExprs, mountExprs, updateExprs, unmountExprs, parts, 'body', '_body');
 
+    slotExprs.reverse();
+    for (expr in slotExprs) {
+      createExprs.unshift(expr);
+    }
+
     return {
       createExpressions: createExprs,
       mountExpressions: mountExprs,
@@ -332,7 +353,8 @@ class CodeGenerator {
     };
 
     function compileVariableDef(parts:Array<VariableDefinition>):Array<Field> {
-      return parts.map(part -> {
+      return parts
+      .map(part -> {
         var kind = if (part.typeName != null) FieldType.FVar(TypeTools.toComplexType(Context.getType(getTypeName(part.typeName))),
           null) else if (part.isArray) FieldType.FVar(TPath({
           name: 'Array',
@@ -347,7 +369,7 @@ class CodeGenerator {
           pos: Context.currentPos(),
           doc: null,
           meta: null,
-        }
+        };
       });
     }
 

@@ -8,9 +8,17 @@ class CustomComponent extends Component {
   public function new() {
     super();
   }
+
+  var showSlot = true;
+
   var body = <View>
     My Custom Body
-    <Slot />
+    {showSlot}
+    {if showSlot}
+            Toggling
+        <Slot />
+    {/if}
+    <Button text={"Toggle slot"} onClick={() -> { showSlot = !showSlot; updateViews(); }} />
   </View>;
 }
 
@@ -19,7 +27,7 @@ class CustomComponentTest extends Component {
     super();
   }
 
-  var body = <View>
+  var body = <View layout={StackLayout.Create({ spacing: 10.0 })}>
     Outside the custom component
     <CustomComponent>
         Inside the custom component
@@ -27,4 +35,3 @@ class CustomComponentTest extends Component {
     </CustomComponent>
   </View>;
 }
-

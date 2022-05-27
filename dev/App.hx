@@ -37,10 +37,10 @@ class App extends Component {
   // </View>;
 
   // var body = <FlexLayoutTest1 />;
-  var body = <SomeAppTest />;
+  // var body = <SomeAppTest />;
   // var body = <HeartShapeColorful />;
   // var body = <GestureTest />;
-  // var body = <CustomComponentTest />;
+  var body = <CustomComponentTest />;
 
 
     // <Button text={"General Kenobi"} />;
