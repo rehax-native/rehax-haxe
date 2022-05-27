@@ -1,6 +1,7 @@
 #include "NativeText.h"
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#include <iostream>
 
 void NativeText::createFragment() {
   NSTextField * view = [NSTextField new];
@@ -38,8 +39,29 @@ const char * NativeText::getText()
 void NativeText::setTextColor(NativeColor color)
 {
   NSTextField * view = (__bridge NSTextField *) nativeView;
-  NSColor * c = [NSColor colorWithRed:color.r green:color.g blue:color.b alpha:color.a];
+  NSColor * c = [NSColor colorWithRed:color.r/255.0 green:color.g/255.0 blue:color.b/255.0 alpha:color.a];
   [view setTextColor:c];
+}
+
+
+void NativeText::setFontSize(float size)
+{
+  NSTextField * view = (__bridge NSTextField *) nativeView;
+  view.font = [NSFont fontWithName:view.font.fontName size:size];
+}
+
+void NativeText::setFontFamilies(std::vector<std::string> fontFamilies)
+{
+  NSTextField * view = (__bridge NSTextField *) nativeView;
+  for (int i = 0; i < fontFamilies.size(); i++)
+  {
+    NSString * str = [NSString stringWithCString:fontFamilies[0].c_str() encoding:NSUTF8StringEncoding];
+    NSFont * font = [NSFont fontWithName:str size:view.font.pointSize];
+    if (font != nullptr) {
+      view.font = font;
+      break;
+    }
+  }
 }
 
 void NativeText::addView(NativeView * child)

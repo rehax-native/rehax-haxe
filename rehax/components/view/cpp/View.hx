@@ -107,13 +107,7 @@ class View {
 
   public function addChild(child:View, atIndex:Int) {
     children.insert(atIndex, child);
-
-    if (layout == null) {
-      this.layout = rehax.components.layout.StackLayout.Create({});
-    } else {
-      // TODO it is inefficient to calc the layout for all children every time one is added
-      layout.layout(this.native);
-    }
+    relayout();
   }
 
   public function mount(parent:View, atIndex:Null<Int> = null) {
@@ -136,6 +130,8 @@ class View {
 
     set_position(position);
 
+    relayout();
+
     componentDidMount();
   }
 
@@ -145,10 +141,20 @@ class View {
     if (parent != null) {
       native.ptr.removeFromParent();
       parent.children.remove(this);
+      parent.relayout();
     }
     isMounted = false;
-    parent.set_layout(parent.layout);
     this.parent = null;
+  }
+
+  private function relayout() {
+    if (layout == null) {
+      this.layout = rehax.components.layout.StackLayout.Create({});
+    } else {
+      // TODO it is inefficient to calc the layout for all children every time one is added
+      layout.cleanUp(this.native);
+      layout.layout(this.native);
+    }
   }
 
   public var layout(default, set):ILayout;

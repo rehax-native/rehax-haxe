@@ -69,12 +69,5 @@ class TextInput extends View {
     return this.onSubmit;
   }
 
-  public var onChange(null, set):String->Void;
-
-  public function set_onChange(onChange:String->Void):String->Void {
-    // var el = cast(element, js.html.InputElement);
-    // el.oninput = function(event) onChange(el.value);
-    return onChange;
-  }
 }
 #end
