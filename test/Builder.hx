@@ -35,6 +35,31 @@ class Builder {
     ],
   })
 
+  @:variant('<View ref={(view:View) -> { trace("Got Ref"); }}></View>', {
+    createExpressions: [
+        CreateNewComponent('body_v_0', 'View'),
+        CreateComponentFragment('body_v_0'),
+        ResultBodyAssignment('{ v_0: body_v_0 }'),
+    ],
+    mountExpressions: [
+        AssignSelfParent,
+        DeclareMountIndex,
+        Mount('_body.v_0', 'this.parent'),
+        IncrMountIndex,
+        ComponentDidMountSelf,
+        CallRef('_body.v_0', '(view:View) -> { trace("Got Ref"); }'),
+    ],
+    updateExpressions: [
+        DeclareMountIndex,
+        DeclareLocalVariable('body_v_0', '_body.v_0'),
+        IncrMountIndex,
+    ],
+    unmountExpressions: [
+        UnMount('_body.v_0'),
+        SetSelfParentNull,
+    ],
+  })
+
   @:variant('<View attr={"henlo"}> My Text {"Yes"}</View>', {
     createExpressions: [
         CreateNewComponent('body_v_0', 'View'),

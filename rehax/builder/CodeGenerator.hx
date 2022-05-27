@@ -34,6 +34,7 @@ enum GeneratorExpression {
   AssignAttribute(varAccessor:String, attributeName:String, attributeContent:String);
   AssignVariable(varAccessor:String, varName:String);
   AssignSlot(slotName:String, varAccessor:String);
+  CallRef(varAccessor:String, callback:String);
 
   Conditional(condition:String, ifExpressions:Array<GeneratorExpression>, elseExpressions:Array<GeneratorExpression>);
   Loop(iterator:String, expressions:Array<GeneratorExpression>);
@@ -41,6 +42,16 @@ enum GeneratorExpression {
 }
 
 #if macro
+
+function checkVarAccessorPartForNull(varAccessor:String) {
+  var parts = varAccessor.split('.');
+  var current = parts[0];
+  var checker = '$current != null';
+  for (i in 1...parts.length) {
+    checker += ' && $current.' + parts[i] + ' != null';
+  }
+  return checker;
+}
 
 /** Convert a GeneratorExpression into a haxe macro expression, used to actually create the code. **/
 function convertExpression(expr:GeneratorExpression) {
@@ -91,6 +102,11 @@ function convertExpression(expr:GeneratorExpression) {
       return Context.parse('$varAccessor = $varName;', Context.currentPos());
     case AssignSlot(slotName, varAccessor):
       return Context.parse('slots["$slotName"] = $varAccessor;', Context.currentPos());
+    case CallRef(varAccessor, callback):
+      return macro $b{[
+        Context.parse('var ref = $callback;', Context.currentPos()),
+        Context.parse('ref(${checkVarAccessorPartForNull(varAccessor)} ? $varAccessor : null);', Context.currentPos()),
+      ]};
     
     case Conditional(condition, ifExpressions, elseExpressions):
       return {
@@ -146,6 +162,7 @@ class CodeGenerator {
   public function generateCode(parts:Array<VariableDefinition>):GeneratedCode {
 
     var slotExprs:Array<GeneratorExpression> = [];
+    var refExprs:Array<GeneratorExpression> = [];
 
 		function compile(
       createExprs:Array<GeneratorExpression>,
@@ -215,8 +232,12 @@ class CodeGenerator {
           for (attr => value in part.attributes) {
             switch (value) {
               case Variable(content):
-                createExprs.push(AssignAttribute(varName, attr, content));
-                updateExprs.push(AssignAttribute(varAccessor, attr, content));
+                if (attr == 'ref') {
+                  refExprs.push(CallRef(varAccessor, content));
+                } else {
+                  createExprs.push(AssignAttribute(varName, attr, content));
+                  updateExprs.push(AssignAttribute(varAccessor, attr, content));
+                }
               case StringValue(content):
                 createExprs.push(AssignAttribute(varName, attr, content));
             }
@@ -321,6 +342,10 @@ class CodeGenerator {
       if (isTopLevel) {
         mountExprs.push(ComponentDidMountSelf);
         unmountExprs.push(SetSelfParentNull);
+
+        for (expr in refExprs) {
+          mountExprs.push(expr);
+        }
       }
     }
 
