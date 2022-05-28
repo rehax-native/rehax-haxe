@@ -37,6 +37,14 @@ class TextInput extends View {
     return cast(element, js.html.InputElement).placeholder;
   }
 
+  public var onValueChange(default, set):(value:String)->Void;
+
+  public function set_onValueChange(onValueChange:(value:String) -> Void):(value:String)->Void {
+    this.onValueChange = onValueChange;
+    cast(element, js.html.InputElement).onchange = (event) -> onValueChange(event.target.value);
+    return onValueChange;
+  }
+
   @:isVar
   public var onSubmit(get, set):Void->Void;
 

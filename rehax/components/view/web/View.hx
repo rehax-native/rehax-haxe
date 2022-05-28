@@ -26,13 +26,29 @@ class View {
   }
 
   public function mount(parent:View, atIndex:Null<Int> = null) {
-    this.parent = parent;
-    if (atIndex == null) {
-      parent.element.appendChild(element);
-    } else {
-      // parent.element.insertBefore(element, afterView.element.nextSibling);
-      parent.element.insertBefore(element, parent.element.childNodes[atIndex]);
+    if (parent.slots.exists('default')) {
+      var slot = parent.slots['default'];
+      this.parent = slot;
+
+      if (atIndex == null) {
+        slot.element.appendChild(element);
+      } else {
+        slot.element.insertBefore(element, slot.element.childNodes[atIndex]);
+      }
+
+      slot.addChild(this);
+      this.componentDidMount();
+    } else if (parent.element != null) {
+      this.parent = parent;
+      if (atIndex == null) {
+        parent.element.appendChild(element);
+      } else {
+        parent.element.insertBefore(element, parent.element.childNodes[atIndex]);
+      }
+      parent.addChild(this);
+      this.componentDidMount();
     }
+
     parent.addChild(this);
     this.componentDidMount();
   }
