@@ -17,3 +17,4 @@ typedef FlexLayout = rehax.components.layout.FlexLayout.FlexLayout;
 
 typedef Gesture = rehax.components.view.View.Gesture;
 typedef Util = rehax.components.util.Util.Util;
+typedef Timer = rehax.components.util.Util.Timer;
