@@ -39,6 +39,8 @@
 		92A5CD5527D043990048519F /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92A5CD5427D043990048519F /* Tests_macOSLaunchTests.swift */; };
 		92A5CD5A27D043990048519F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
 		92A5CD5B27D043990048519F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92A5CD3027D043990048519F /* Assets.xcassets */; };
+		92B63CF2286E4EB1001F170B /* NativeUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 92B63CF0286E4EB0001F170B /* NativeUtil.h */; };
+		92B63CF3286E4EB1001F170B /* NativeUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92B63CF1286E4EB1001F170B /* NativeUtil.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,8 @@
 		92A5CD4E27D043990048519F /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92A5CD5227D043990048519F /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		92A5CD5427D043990048519F /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		92B63CF0286E4EB0001F170B /* NativeUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeUtil.h; path = ../../rehax/components/util/cpp/NativeUtil.h; sourceTree = "<group>"; };
+		92B63CF1286E4EB1001F170B /* NativeUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeUtil.mm; path = ../../rehax/components/util/cpp/NativeUtil.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +189,8 @@
 		9264A81B27D0DC7600CEA175 /* MacBackend */ = {
 			isa = PBXGroup;
 			children = (
+				92B63CF0286E4EB0001F170B /* NativeUtil.h */,
+				92B63CF1286E4EB1001F170B /* NativeUtil.mm */,
 				929E0A692824827D00FE781A /* NativeGesture.h */,
 				929E0A682824827D00FE781A /* NativeGesture.mm */,
 				92992DF9281819E000B5127E /* NativeFlexLayout.mm */,
@@ -281,6 +287,7 @@
 				9264A82E27D0DD3400CEA175 /* NativeTextInput.h in Headers */,
 				929E0A6B2824827D00FE781A /* NativeGesture.h in Headers */,
 				9264A83627D0DD4500CEA175 /* NativeRoot.h in Headers */,
+				92B63CF2286E4EB1001F170B /* NativeUtil.h in Headers */,
 				9264A83327D0DD3C00CEA175 /* NativeText.h in Headers */,
 				9264A82527D0DD0700CEA175 /* NativeView.h in Headers */,
 				9264A83927D0DD4D00CEA175 /* NativeFragment.h in Headers */,
@@ -546,6 +553,7 @@
 				9264A83227D0DD3C00CEA175 /* NativeText.mm in Sources */,
 				9264A82F27D0DD3400CEA175 /* NativeTextInput.mm in Sources */,
 				9264A82B27D0DD2900CEA175 /* NativeVectorContainer.mm in Sources */,
+				92B63CF3286E4EB1001F170B /* NativeUtil.mm in Sources */,
 				929E0A6A2824827D00FE781A /* NativeGesture.mm in Sources */,
 				92992DFB281819E000B5127E /* NativeFlexLayout.mm in Sources */,
 				92992DFC281819E000B5127E /* NativeStackLayout.mm in Sources */,
