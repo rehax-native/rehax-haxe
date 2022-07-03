@@ -110,8 +110,10 @@ class View {
       rec.destroy();
     }
     recognizers = [];
-    native.ptr.teardown();
-    native.ptr = null;
+    if (native != null) {
+      native.ptr.teardown();
+      native = null;
+    }
   }
 
   public function addChild(child:View, atIndex:Int) {
