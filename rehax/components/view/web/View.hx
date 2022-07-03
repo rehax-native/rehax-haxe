@@ -25,6 +25,10 @@ class View {
     element = el;
   }
 
+  public function destroyFragment() {
+    element = null;
+  }
+
   public function mount(parent:View, atIndex:Null<Int> = null) {
     if (parent.slots.exists('default')) {
       var slot = parent.slots['default'];

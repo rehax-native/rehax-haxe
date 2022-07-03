@@ -15,6 +15,7 @@ enum GeneratorExpression {
   IncrMountIndex;
   Mount(varAccessor:String, mountPoint:String);
   UnMount(varAccessor:String);
+  DestroyComponentFragment(varAccessor:String);
   ComponentDidMountSelf;
   AssignSelfParent;
   SetSelfParentNull;
@@ -88,6 +89,8 @@ function convertExpression(expr:GeneratorExpression) {
       return Context.parse('var $varName = new $typeName();', Context.currentPos());
     case CreateComponentFragment(varName):
       return Context.parse('$varName.createFragment();', Context.currentPos());
+    case DestroyComponentFragment(varName):
+      return Context.parse('$varName.destroyFragment();', Context.currentPos());
     case ResultBodyDeclaration(varName, body):
       return Context.parse('$varName = ' + body + ';', Context.currentPos());
     case ResultBodyAssignment(bodyResult):
@@ -169,6 +172,7 @@ class CodeGenerator {
       mountExprs:Array<GeneratorExpression>,
       updateExprs:Array<GeneratorExpression>,
 			unmountExprs:Array<GeneratorExpression>,
+			unmountForUpdateExprs:Array<GeneratorExpression>,
       parts:Array<VariableDefinition>,
       parentPart:Null<VariableDefinition> = null,
       parentVarName:String,
@@ -244,7 +248,14 @@ class CodeGenerator {
           }
 
           mountExprs.push(Mount(varAccessor, part.mountPoint));
+
+          unmountExprs.unshift(DestroyComponentFragment(varAccessor));
+          if (!isSlot) {
+            unmountForUpdateExprs.unshift(DestroyComponentFragment(varAccessor));
+          }
+
           unmountExprs.unshift(UnMount(varAccessor));
+          unmountForUpdateExprs.unshift(UnMount(varAccessor));
 
           mountExprs.push(IncrMountIndex);
           updateExprs.push(IncrMountIndex);
@@ -259,12 +270,14 @@ class CodeGenerator {
             var childMountExpressions:Array<GeneratorExpression> = [];
             var childUpdateExpressions:Array<GeneratorExpression> = [];
             var childUnmountExpressions:Array<GeneratorExpression> = [];
+            var childUnmountForUpdateExpressions:Array<GeneratorExpression> = [];
 
             compile(
               childCreateExpressions,
               childMountExpressions,
               childUpdateExpressions,
               childUnmountExpressions,
+              childUnmountForUpdateExpressions,
               part.children,
               part,
               varName,
@@ -278,12 +291,14 @@ class CodeGenerator {
               Conditional('__rehax_$depth >= $varAccessor.length', childCreateExpressions.concat(childMountExpressions), childUpdateExpressions),
             ].concat([IncrIterator('__rehax_$depth')])));
 
-            updateExprs.push(While('$varAccessor.length > __rehax_$depth', childUnmountExpressions));
+            updateExprs.push(While('$varAccessor.length > __rehax_$depth', childUnmountForUpdateExpressions));
 						unmountExprs.unshift(While('$varAccessor.length > 0', [DeclareLocalVariable('__rehax_$depth', '$varAccessor.length - 1')].concat(childUnmountExpressions)));
+						unmountForUpdateExprs.unshift(While('$varAccessor.length > 0', [DeclareLocalVariable('__rehax_$depth', '$varAccessor.length - 1')].concat(childUnmountForUpdateExpressions)));
           } else {
             var childCreateExpressions:Array<GeneratorExpression> = [];
             var childMountExpressions:Array<GeneratorExpression> = [];
             var childUnmountExpressions:Array<GeneratorExpression> = [];
+            var childUnmountForUpdateExpressions:Array<GeneratorExpression> = [];
             var childUpdateExpressions:Array<GeneratorExpression> = [];
 
             compile(
@@ -291,6 +306,7 @@ class CodeGenerator {
               childMountExpressions,
               childUpdateExpressions,
               childUnmountExpressions,
+              childUnmountForUpdateExpressions,
               part.children,
               part,
               varName,
@@ -311,7 +327,7 @@ class CodeGenerator {
                   null
                 )
               ], [
-                Conditional('$varAccessor != null', childUnmountExpressions.concat([
+                Conditional('$varAccessor != null', childUnmountForUpdateExpressions.concat([
                   SetItemToNull(varAccessor),
                 ]), null)
               ])
@@ -319,7 +335,9 @@ class CodeGenerator {
 
             mountExprs.push(Conditional('$varAccessor != null && (${part.content})', childMountExpressions, null));
             unmountExprs.unshift(SetItemToNull(varAccessor));
+            unmountForUpdateExprs.unshift(SetItemToNull(varAccessor));
             unmountExprs.unshift(Conditional('$varAccessor != null', childUnmountExpressions, null));
+            unmountForUpdateExprs.unshift(Conditional('$varAccessor != null', childUnmountForUpdateExpressions, null));
           }
         }
 
@@ -335,6 +353,7 @@ class CodeGenerator {
       } else if (parentPart != null && parentPart.isArray) {
         createExprs.push(ResultBodyPush(parentVarName, bodyResult));
         unmountExprs.push(PopLast(parentVarAccessor));
+        unmountForUpdateExprs.push(PopLast(parentVarAccessor));
       } else {
         createExprs.push(ResultBodyDeclaration(parentVarName, bodyResult));
       }
@@ -342,6 +361,7 @@ class CodeGenerator {
       if (isTopLevel) {
         mountExprs.push(ComponentDidMountSelf);
         unmountExprs.push(SetSelfParentNull);
+        unmountForUpdateExprs.push(SetSelfParentNull);
 
         for (expr in refExprs) {
           mountExprs.push(expr);
@@ -353,8 +373,9 @@ class CodeGenerator {
     var mountExprs = [];
     var updateExprs = [];
     var unmountExprs = [];
+    var unmountForUpdateExprs = [];
 
-    compile(createExprs, mountExprs, updateExprs, unmountExprs, parts, 'body', '_body');
+    compile(createExprs, mountExprs, updateExprs, unmountExprs, unmountForUpdateExprs, parts, 'body', '_body');
 
     slotExprs.reverse();
     for (expr in slotExprs) {

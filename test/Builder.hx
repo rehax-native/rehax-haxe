@@ -31,6 +31,7 @@ class Builder {
     ],
     unmountExpressions: [
         UnMount('_body.v_0'),
+        DestroyComponentFragment('_body.v_0'),
         SetSelfParentNull,
     ],
   })
@@ -56,6 +57,7 @@ class Builder {
     ],
     unmountExpressions: [
         UnMount('_body.v_0'),
+        DestroyComponentFragment('_body.v_0'),
         SetSelfParentNull,
     ],
   })
@@ -101,8 +103,11 @@ class Builder {
     ],
     unmountExpressions: [
         UnMount('_body.v_2'),
+        DestroyComponentFragment('_body.v_2'),
         UnMount('_body.v_1'),
+        DestroyComponentFragment('_body.v_1'),
         UnMount('_body.v_0'),
+        DestroyComponentFragment('_body.v_0'),
         SetSelfParentNull,
     ],
   })
@@ -164,6 +169,7 @@ class Builder {
         ], [
           Conditional('_body.v_2 != null', [
             UnMount('_body.v_2.v_0'),
+            DestroyComponentFragment('_body.v_2.v_0'),
             SetItemToNull('_body.v_2'),
           ], null)
         ]),
@@ -172,10 +178,13 @@ class Builder {
     unmountExpressions: [
         Conditional('_body.v_2 != null', [
           UnMount('_body.v_2.v_0'),
+          DestroyComponentFragment('_body.v_2.v_0'),
         ], null),
         SetItemToNull('_body.v_2'),
         UnMount('_body.v_1'),
+        DestroyComponentFragment('_body.v_1'),
         UnMount('_body.v_0'),
+        DestroyComponentFragment('_body.v_0'),
         SetSelfParentNull,
     ],
   })
@@ -258,7 +267,9 @@ class Builder {
         ]),
         While('_body.v_2.length > __rehax_0', [
           UnMount('_body.v_2[__rehax_0].v_1'),
+          DestroyComponentFragment('_body.v_2[__rehax_0].v_1'),
           UnMount('_body.v_2[__rehax_0].v_0'),
+          DestroyComponentFragment('_body.v_2[__rehax_0].v_0'),
           PopLast('_body.v_2'),
         ]),
         PopMountIndex,
@@ -267,11 +278,15 @@ class Builder {
         While('_body.v_2.length > 0', [
           DeclareLocalVariable('__rehax_0', '_body.v_2.length - 1'),
           UnMount('_body.v_2[__rehax_0].v_1'),
+          DestroyComponentFragment('_body.v_2[__rehax_0].v_1'),
           UnMount('_body.v_2[__rehax_0].v_0'),
+          DestroyComponentFragment('_body.v_2[__rehax_0].v_0'),
           PopLast('_body.v_2'),
         ]),
         UnMount('_body.v_1'),
+        DestroyComponentFragment('_body.v_1'),
         UnMount('_body.v_0'),
+        DestroyComponentFragment('_body.v_0'),
         SetSelfParentNull,
     ],
   })
@@ -339,11 +354,14 @@ class Builder {
     ],
     unmountExpressions: [
         Conditional('_body.v_2 != null', [
-          UnMount('_body.v_2.v_0')
+          UnMount('_body.v_2.v_0'),
+          DestroyComponentFragment('_body.v_2.v_0')
         ], null),
         SetItemToNull('_body.v_2'),
         UnMount('_body.v_1'),
+        DestroyComponentFragment('_body.v_1'),
         UnMount('_body.v_0'),
+        DestroyComponentFragment('_body.v_0'),
         SetSelfParentNull,
     ],
   })

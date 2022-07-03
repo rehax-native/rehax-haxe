@@ -43,7 +43,9 @@
 
 - (void) performAction
 {
-    callback();
+    @autoreleasepool {
+        callback();
+    }
 }
 
 @end
@@ -61,6 +63,11 @@ void NativeGesture::setup(std::function<void(void)> action, std::function<void(f
     [rec setAction:@selector(performAction)];
 
     native = (void *) CFBridgingRetain(rec);
+}
+
+void NativeGesture::destroy()
+{
+    CFBridgingRelease(native);
 }
 
 void NativeGesture::setState(int state)

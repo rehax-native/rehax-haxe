@@ -11,6 +11,7 @@ extern class NativeGesture {
 	public function setup(action:() -> Void, onMouseDown:(xInView:Float, yInView:Float) -> Void, onMouseUp:(xInView:Float, yInView:Float) -> Void,
 		onMouseMove:(xInView:Float, yInView:Float) -> Void):Void;
     public function setState(state:Int):Void;
+    public function destroy():Void;
 }
 
 enum GestureState {
@@ -28,7 +29,19 @@ class Gesture {
 
     public function new(action:() -> Void) {
         this.action = action;
-        untyped __cpp__('native.setup([this] () { doAction(); }, [this] (float x, float y) { onMouseDown(x, y); }, [this] (float x, float y) { onMouseUp(x, y); }, [this] (float x, float y) { onMouseMove(x, y); })');
+        native.setup(() -> {
+            untyped __cpp__('HX_TOP_OF_STACK');
+            doAction();
+        }, (x:Float, y:Float) -> {
+            untyped __cpp__('HX_TOP_OF_STACK');
+            onMouseDown(x, y);
+        }, (x:Float, y:Float) -> {
+            untyped __cpp__('HX_TOP_OF_STACK');
+            onMouseUp(x, y);
+        }, (x:Float, y:Float) -> {
+            untyped __cpp__('HX_TOP_OF_STACK');
+            onMouseMove(x, y);
+        });
     }
 
     public function onMouseDown(xInView:Float, yInView:Float) {}
@@ -58,6 +71,10 @@ class Gesture {
                 native.setState(5);
         }
         return state;
+    }
+
+    public function destroy():Void {
+        native.destroy();
     }
 
 }

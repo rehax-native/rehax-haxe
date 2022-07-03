@@ -90,7 +90,7 @@ extern class NativeView {
 }
 
 class View {
-  private var native:Null<cpp.Pointer<NativeView>>;
+  private var native:Null<cpp.Pointer<NativeView>> = null;
   public var slots:Map<String, View> = [];
   private var isMounted = false;
   private var hoverStyle:Style;
@@ -103,6 +103,15 @@ class View {
   public function createFragment() {
     native = NativeView.createInstance();
     native.ptr.createFragment();
+  }
+
+  public function destroyFragment() {
+    for (rec in recognizers) {
+      rec.destroy();
+    }
+    recognizers = [];
+    native.ptr.teardown();
+    native.ptr = null;
   }
 
   public function addChild(child:View, atIndex:Int) {
@@ -148,6 +157,9 @@ class View {
   }
 
   private function relayout() {
+    if (native.ptr == null) {
+      return;
+    }
     if (layout == null) {
       this.layout = rehax.components.layout.StackLayout.Create({});
     } else {
@@ -305,7 +317,9 @@ class View {
     }
   }
 
+  private var recognizers:Array<Gesture> = [];
   public function addGesture(gesture:Gesture) {
+    recognizers.push(gesture);
     native.ptr.addGesture(gesture.native);
   }
 }

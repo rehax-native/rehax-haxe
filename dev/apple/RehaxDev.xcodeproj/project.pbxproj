@@ -519,7 +519,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ../.. && haxe -lib hxcpp --library fluxe -p . dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE -D fluxe -D SKIA_INCLUDE=\"$SRCROOT/deps/include\" -D HXCPP_NO_CPP11 -D HXCPP_GCC\n";
+			shellScript = "cd ../.. && haxe -lib hxcpp --library fluxe -p rehax -p dev dev.App -cpp dev/apple/lib -debug --macro \"rehax.cpp.InjectBuild.config()\" -D static_link -D REHAX_INCLUDE=\"$SRCROOT/../..\" -D include_prefix=\"rhx\" -D HXCPP_VERBOSE -D fluxe -D SKIA_INCLUDE=\"$SRCROOT/deps/include\" -D HXCPP_NO_CPP11 -D HXCPP_GCC\n";
 		};
 		92A5CD6A27D044B20048519F /* Build Rehax */ = {
 			isa = PBXShellScriptBuildPhase;

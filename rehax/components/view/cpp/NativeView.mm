@@ -360,8 +360,8 @@ void NativeView::setHorizontalPositionFixed(float x)
 void NativeView::setBackgroundColor(NativeColor color)
 {
   NSView * view = (__bridge NSView *) nativeView;
-  [view setWantsLayer:true];
-  [view setLayer:[CALayer layer]];
+  // [view setWantsLayer:true];
+  // [view setLayer:[CALayer layer]];
   NSColor *col = [NSColor colorWithDeviceRed:color.r/255.0 green:color.g/255.0 blue:color.b/255.0 alpha:color.a];
   [view.layer setBackgroundColor:[col CGColor]];
   // NSLog(@"Set Color %@", col);

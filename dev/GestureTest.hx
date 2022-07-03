@@ -58,7 +58,7 @@ class GestureTest extends Component {
     public override function componentDidMount() {
         this._body.v_0.addGesture(new CustomGesture((x:Float, y:Float) -> {
             color = Color.RGBA(x, y, 0.0, 1.0);
-            trace(color.red);
+            // trace(color.red);
             updateViews();
         }));
     }

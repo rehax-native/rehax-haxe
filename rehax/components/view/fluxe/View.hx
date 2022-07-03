@@ -21,6 +21,10 @@ class View {
     view = new fluxe.views.View();
   }
 
+  public function destroyFragment() {
+    view = null;
+  }
+
   public function mount(parent:View, atIndex:Null<Int> = null) {
     if (parent.slots.exists('default')) {
       var slot = parent.slots['default'];
