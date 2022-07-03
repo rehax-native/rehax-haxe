@@ -31,6 +31,11 @@ class StackLayout implements rehax.components.layout.Layout.ILayout {
   public function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>) {
     nativeLayout.ptr.cleanUp(container);
   }
+
+  public function destroy():Void {
+    nativeLayout.destroy();
+    nativeLayout = null;
+  }
 }
 
 #end

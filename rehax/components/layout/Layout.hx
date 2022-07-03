@@ -49,6 +49,7 @@ interface ILayout {
 interface ILayout {
   public function layout(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
   public function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void;
+  public function destroy():Void;
 }
 // typedef View = rehax.components.view.cpp.View.View;
 #end

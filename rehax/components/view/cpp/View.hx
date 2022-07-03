@@ -157,6 +157,7 @@ class View {
     }
     if (this.layout != null) {
       this.layout.cleanUp(this.native);
+      this.layout.destroy();
     }
     isMounted = false;
     this.parent = null;

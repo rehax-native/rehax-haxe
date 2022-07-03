@@ -90,6 +90,11 @@ class FlexLayout implements rehax.components.layout.Layout.ILayout {
   public function cleanUp(container:cpp.Pointer<rehax.components.view.cpp.View.NativeView>):Void {
     nativeLayout.ptr.cleanUp(container);
   }
+
+  public function destroy():Void {
+    nativeLayout.destroy();
+    nativeLayout = null;
+  }
 }
 
 #end
