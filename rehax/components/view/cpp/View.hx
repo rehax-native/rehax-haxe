@@ -176,7 +176,7 @@ class View {
 
   public var layout(default, set):Null<ILayout>;
 
-  public function set_layout(layout:Null<ILayout>):Null<Layout> {
+  public function set_layout(layout:Null<ILayout>):Null<ILayout> {
     if (this.layout != null) {
       this.layout.cleanUp(this.native);
       this.layout.destroy();
