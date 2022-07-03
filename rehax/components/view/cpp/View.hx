@@ -110,6 +110,7 @@ class View {
       rec.destroy();
     }
     recognizers = [];
+    layout = null;
     if (native != null) {
       native.ptr.teardown();
       native.destroy();
@@ -150,14 +151,11 @@ class View {
   public function componentDidMount() {}
 
   public function unmount() {
+    layout = null;
     if (parent != null) {
       native.ptr.removeFromParent();
       parent.children.remove(this);
       parent.relayout();
-    }
-    if (this.layout != null) {
-      this.layout.cleanUp(this.native);
-      this.layout.destroy();
     }
     isMounted = false;
     this.parent = null;
@@ -176,14 +174,18 @@ class View {
     }
   }
 
-  public var layout(default, set):ILayout;
+  public var layout(default, set):Null<ILayout>;
 
-  public function set_layout(layout:ILayout) {
+  public function set_layout(layout:Null<ILayout>):Null<Layout> {
     if (this.layout != null) {
       this.layout.cleanUp(this.native);
+      this.layout.destroy();
+      this.layout = null;
     }
     this.layout = layout;
-    layout.layout(this.native);
+    if (this.layout != null) {
+      layout.layout(this.native);
+    }
     return layout;
   }
 
