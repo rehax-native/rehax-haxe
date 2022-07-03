@@ -40,7 +40,22 @@ class App extends Component {
   // var body = <SomeAppTest />;
   // var body = <HeartShapeColorful />;
   // var body = <GestureTest />;
-  var body = <CustomComponentTest />;
+  // var body = <CustomComponentTest />;
+
+  private var showOther = false;
+  private function toggle() {
+    showOther = !showOther;
+    updateViews();
+  }
+  var body = <View>
+    <Button text={"Switch"} onClick={() -> toggle()} />
+    {if showOther}
+      A Version
+    {/if}
+    {if !showOther}
+      B Version
+    {/if}
+  </View>;
 
 
     // <Button text={"General Kenobi"} />;

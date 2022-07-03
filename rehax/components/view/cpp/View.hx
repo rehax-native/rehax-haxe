@@ -112,6 +112,7 @@ class View {
     recognizers = [];
     if (native != null) {
       native.ptr.teardown();
+      native.destroy();
       native = null;
     }
   }
