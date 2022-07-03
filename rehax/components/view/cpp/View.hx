@@ -155,6 +155,9 @@ class View {
       parent.children.remove(this);
       parent.relayout();
     }
+    if (this.layout != null) {
+      this.layout.cleanUp(this.native);
+    }
     isMounted = false;
     this.parent = null;
   }
