@@ -16,3 +16,20 @@ public:
 
   RHX_EXPORT void setOnClick(std::function<void(void)> onClick);
 };
+
+
+#if target_lua
+
+void luaDefineButton(lua_State *state) {
+	sol::state_view lua(state);
+
+  sol::usertype<NativeButton> clazz = lua.new_usertype<NativeButton>("NativeButton", sol::constructors<NativeButton()>(), sol::base_classes, sol::bases<NativeView>());
+  clazz["createFragment"] = &NativeButton::createFragment;
+  clazz["addView"] = &NativeButton::addView;
+  clazz["setText"] = &NativeButton::setText;
+  clazz["getText"] = &NativeButton::getText;
+  clazz["setTextColor"] = &NativeButton::setTextColor;
+  clazz["setOnClick"] = &NativeButton::setOnClick;
+}
+
+#endif

@@ -47,6 +47,9 @@ NativeColor NativeColor::create(float r, float g, float b, float a)
   return color;
 }
 
+NativeView::~NativeView()
+{}
+
 void NativeView::createFragment()
 {
   NSView * view = [FlippedView new];
@@ -386,3 +389,6 @@ void NativeView::addGesture(NativeGesture nativeGesture)
 
   [view addGestureRecognizer:rec];
 }
+
+INativeLayout::~INativeLayout()
+{}

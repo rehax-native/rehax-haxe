@@ -33,6 +33,11 @@ class Button extends View {
     button.ptr.createFragment();
   }
 
+  // public override function teardown() {
+  //   button.ptr.setOnClick(() -> {});
+  //   super.teardown();
+  // }
+
   public var text(get, set):String;
 
   public function set_text(text:String):String {

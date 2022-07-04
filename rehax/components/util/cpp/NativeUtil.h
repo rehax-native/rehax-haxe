@@ -24,3 +24,18 @@ public:
   RHX_EXPORT static NativeTimer * startInterval(int intervalMs, std::function<void(void)> tick);
   RHX_EXPORT static void stopTimer(NativeTimer * timer);
 };
+
+#if target_lua
+
+void luaDefineUtil(lua_State *state) {
+	sol::state_view lua(state);
+
+  sol::usertype<NativeTimer> clazzTimer = lua.new_usertype<NativeTimer>("NativeTimer", sol::constructors<NativeTimer()>());
+
+  sol::usertype<NativeUtil> clazz = lua.new_usertype<NativeUtil>("NativeUtil", sol::constructors<NativeUtil()>());
+  clazz["openUrl"] = &NativeUtil::openUrl;
+  clazz["startInterval"] = &NativeUtil::startInterval;
+  clazz["stopTimer"] = &NativeUtil::stopTimer;
+}
+
+#endif

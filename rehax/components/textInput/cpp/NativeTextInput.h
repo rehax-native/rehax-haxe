@@ -20,3 +20,21 @@ public:
   RHX_EXPORT void setTextColor(NativeColor color);
   RHX_EXPORT void addView(NativeView *child) override;
 };
+
+#if target_lua
+
+void luaDefineTextInput(lua_State *state) {
+	sol::state_view lua(state);
+
+  sol::usertype<NativeTextInput> clazz = lua.new_usertype<NativeTextInput>("NativeTextInput", sol::constructors<NativeTextInput()>(), sol::base_classes, sol::bases<NativeView>());
+  clazz["createFragment"] = &NativeTextInput::createFragment;
+  clazz["setText"] = &NativeTextInput::setText;
+  clazz["getText"] = &NativeTextInput::getText;
+  clazz["setOnValueChange"] = &NativeTextInput::setOnValueChange;
+  clazz["setPlaceholder"] = &NativeTextInput::setPlaceholder;
+  clazz["setTextAlignment"] = &NativeTextInput::setTextAlignment;
+  clazz["setTextColor"] = &NativeTextInput::setTextColor;
+  clazz["addView"] = &NativeTextInput::addView;
+}
+
+#endif
